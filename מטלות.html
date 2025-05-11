@@ -1,444 +1,252 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html dir="rtl">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  margin: 0;
-  min-width: 250px;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>רשימת מטלות</title>
+  <style>
+    /* עיצוב כללי */
+    body {
+      margin: 0;
+      min-width: 250px;
+    }
 
-/* Include the padding and border in an element's total width and height */
-* {
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-/* Remove margins and padding from the list */
-ul {
-  margin: 0;
-  padding: 0;
-}
+    ul {
+      margin: 0;
+      padding: 0;
+    }
 
-/* Style the list items */
-ul li {
-  cursor: pointer;
-  position: relative;
-  padding: 12px 8px 12px 40px;
+    ul li {
+      cursor: pointer;
+      position: relative;
+      padding: 12px 8px 12px 40px;
+      list-style-type: none;
+      background: #eee;
+      font-size: 18px;
+      transition: 0.2s;
+      user-select: none;
+    }
 
-  list-style-type: none;
-  background: #eee;
-  font-size: 18px;
-  transition: 0.2s;
-  
-  /* make the list items unselectable */
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
+    ul li:nth-child(odd) {
+      background: #f9f9f9;
+    }
 
-/* Set all odd list items to a different color (zebra-stripes) */
-ul li:nth-child(odd) {
-  background: #f9f9f9;
-}
+    ul li:hover {
+      background: #ddd;
+    }
 
-/* Darker background-color on hover */
-ul li:hover {
-  background: #ddd;
-}
+    ul li.checked {
+      background: #888;
+      color: #fff;
+      text-decoration: line-through;
+    }
 
-/* When clicked on, add a background color and strike out text */
-ul li.checked {
-  background: #888;
-  color: #fff;
-  text-decoration: line-through;
-}
+    ul li.checked::before {
+      content: '';
+      position: absolute;
+      border-color: #fff;
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      top: 10px;
+      left: 56px;
+      transform: rotate(45deg);
+      height: 15px;
+      width: 7px;
+    }
 
-/* Add a "checked" mark when clicked on */
-ul li.checked::before {
-  content: '';
-  position: absolute;
-  border-color: #fff;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
-  top: 10px;
-  left: 56px;
-  transform: rotate(45deg);
-  height: 15px;
-  width: 7px;
-}
+    .close {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 12px 16px 12px 16px;
+    }
 
-/* Style the close button */
-.close {
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 12px 16px 12px 16px;
-}
+    .close:hover {
+      background-color: #f44336;
+      color: white;
+    }
 
-.close:hover {
-  background-color: #f44336;
-  color: white;
-}
+    .header {
+      background-color: #f44336;
+      padding: 30px 40px;
+      color: white;
+      text-align: center;
+    }
 
-/* Style the header */
-.header {
-  background-color: #f44336;
-  padding: 30px 40px;
-  color: white;
-  text-align: center;
-}
+    .header:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
 
-/* Clear floats after the header */
-.header:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+    input[type=text] {
+      margin: 0;
+      border: none;
+      width: 75%;
+      padding: 10px;
+      float: right;
+      font-size: 16px;
+    }
 
-/* Style the input */
-input {
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  width: 75%;
-  padding: 10px;
-  float: left;
-  font-size: 16px;
-}
+    .addBtn {
+      padding: 10px;
+      width: 25%;
+      background: #d9d9d9;
+      color: #555;
+      float: right;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-/* Style the "Add" button */
-.addBtn {
-  padding: 10px;
-  width: 25%;
-  background: #d9d9d9;
-  color: #555;
-  float: left;
-  text-align: center;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-  border-radius: 0;
-}
+    .addBtn:hover {
+      background-color: #bbb;
+    }
 
-.addBtn:hover {
-  background-color: #bbb;
-}
+    .controls {
+      text-align: center;
+      padding: 10px;
+    }
 
-.toolbar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px auto;
-  flex-wrap: wrap;
-}
-
-.toolbar button {
-  padding: 10px 16px;
-  font-size: 16px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.toolbar button:hover {
-  background-color: #ddd;
-}
-
-</style>
+    .controls button {
+      margin: 0 5px;
+    }
+  </style>
 </head>
 <body>
 
-<div id="myDIV" class="header">
+<!-- כותרת ראשית -->
+<div class="header">
   <h2 style="margin:5px">רשימת מטלות</h2>
   <input type="text" id="myInput" placeholder="מטלה חדשה...">
   <span onclick="newElement()" class="addBtn">הוסף</span>
 </div>
 
-
-<div class="toolbar">
-  <button onclick="newElement()">➕ הוסף</button>
-  <button onclick="copyListToClipboard()">📋 העתק ללוח</button>
-  <button onclick="printTaskList()">🖨️ הדפס</button>
-  <button onclick="exportListToCSV()">📄 ייצוא ל-Excel</button>
-  <input type="file" id="importCSV" accept=".csv" style="display: none;" onchange="importCSV(this)">
-<button onclick="document.getElementById('importCSV').click()">📥 טען מטלות מקובץ</button>
-
+<!-- כפתורי שליטה -->
+<div class="controls">
+  <button onclick="exportCSV()">הורד CSV</button>
+  <input type="file" id="csvFile" accept=".csv" onchange="loadCSV(event)">
 </div>
 
-
-
-<ul id="myUL">
-
-  <li class="checked">לסמן כניסה</li>
-    <li>לעבור על המיילים של הצג</li>
-  <li>לעבור על המיילים של מזכירות</li>
-  
-
-
-  <li>לעבור על המיילים של צלצול</li>
-  <!--<li>Read a book</li>
-  <li>Organize office</li>-->
-</ul>
+<!-- רשימת המטלות -->
+<ul id="myUL"></ul>
 
 <script>
-// Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
-
-// Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
-
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("אופס! נראה שלא הזנת שום מטלה, כתוב משהו...");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("myInput").value = "";
-
+// ===== יצירת כפתור סגירה לכל מטלה קיימת =====
+function addCloseButton(li) {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
   span.className = "close";
   span.appendChild(txt);
   li.appendChild(span);
 
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function() {
-      var div = this.parentElement;
-      div.style.display = "none";
-    }
-  }
+  span.onclick = function () {
+    li.remove();
+    saveToLocalStorage();
+  };
 }
-document.getElementById("myInput").addEventListener("keydown", function(event) {
+
+// ===== סימון מטלה כבוצעה/לא =====
+document.getElementById("myUL").addEventListener('click', function (ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+    saveToLocalStorage();
+  }
+});
+
+// ===== יצירת מטלה חדשה =====
+function newElement() {
+  var inputValue = document.getElementById("myInput").value;
+  if (inputValue === '') {
+    alert("אנא הזן מטלה.");
+    return;
+  }
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(inputValue));
+  addCloseButton(li);
+  document.getElementById("myUL").appendChild(li);
+  document.getElementById("myInput").value = "";
+  saveToLocalStorage();
+}
+
+// ===== שמירה בלוקל סטורג' =====
+function saveToLocalStorage() {
+  let items = [];
+  document.querySelectorAll('#myUL li').forEach(li => {
+    items.push({
+      text: li.childNodes[0].nodeValue,
+      checked: li.classList.contains('checked')
+    });
+  });
+  localStorage.setItem('todoList', JSON.stringify(items));
+}
+
+// ===== טעינה מלוקל סטורג' בעת הפתיחה =====
+function loadFromLocalStorage() {
+  let items = JSON.parse(localStorage.getItem('todoList')) || [];
+  items.forEach(item => {
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(item.text));
+    if (item.checked) li.classList.add('checked');
+    addCloseButton(li);
+    document.getElementById("myUL").appendChild(li);
+  });
+}
+
+// ===== לחיצה על אנטר מפעילה הוספה =====
+document.getElementById("myInput").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    event.preventDefault(); // מונע שליחה של טופס אם יש
     newElement();
   }
 });
 
-function copyListToClipboard() {
-  var items = document.querySelectorAll("#myUL li");
-  var textToCopy = "מטלה\tבוצע\n";
-
-  items.forEach(function(item) {
-    var taskText = item.childNodes[0].nodeValue.trim();
-    var done = item.classList.contains("checked") ? "✓" : "";
-    textToCopy += taskText + "\t" + done + "\n";
+// ===== ייצוא ל־CSV עם תאריך ושם עברי =====
+function exportCSV() {
+  let rows = [["תוכן המטלה", "בוצע"]];
+  document.querySelectorAll('#myUL li').forEach(li => {
+    rows.push([
+      li.childNodes[0].nodeValue,
+      li.classList.contains('checked') ? "כן" : "לא"
+    ]);
   });
-
-  // העתקה ללוח
-  navigator.clipboard.writeText(textToCopy).then(function() {
-    alert("הרשימה הועתקה ללוח!");
-  }, function(err) {
-    alert("שגיאה בהעתקה ללוח: " + err);
-  });
-}
-
-function exportListToFile() {
-  var items = document.querySelectorAll("#myUL li");
-  var textToExport = "מטלה\tבוצע\n";
-
-  items.forEach(function(item) {
-    var taskText = item.childNodes[0].nodeValue.trim();
-    var done = item.classList.contains("checked") ? "✓" : "";
-    textToExport += taskText + "\t" + done + "\n";
-  });
-
-  var blob = new Blob([textToExport], { type: "text/plain;charset=utf-8" });
-  var link = document.createElement("a");
+  let csvContent = '\uFEFF' + rows.map(e => e.join(",")).join("\n");
+  let dateStr = new Date().toLocaleDateString('he-IL').replace(/\//g, '-');
+  let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  let link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "רשימת_מטלות.txt";
+  link.download = `רשימת מטלות מתאריך ${dateStr}.csv`;
   link.click();
 }
-function exportListToCSV() {
-  var items = document.querySelectorAll("#myUL li");
-  var csvContent = "מטלה,בוצע\n";
 
-  items.forEach(function(item) {
-    var taskText = item.childNodes[0].nodeValue.trim().replace(/,/g, " ");
-    var done = item.classList.contains("checked") ? "✓" : "";
-    csvContent += `"${taskText}","${done}"\n`;
-  });
-
-  // הוספת BOM לקידוד תקין בעברית
-  var bom = "\uFEFF";
-  var blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
-
-  var link = document.createElement("a");
-  var url = URL.createObjectURL(blob);
-  link.setAttribute("href", url);
-  link.setAttribute("download", "רשימת_מטלות.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-function printTaskList() {
-  var items = document.querySelectorAll("#myUL li");
-  var printWindow = window.open('', '', 'height=600,width=800');
-  printWindow.document.write('<html><head><title>רשימת מטלות</title>');
-  printWindow.document.write('<style>body{font-family:Arial; direction:rtl; text-align:right;} table{width:100%; border-collapse:collapse;} th, td{border:1px solid #000; padding:8px;} th{background-color:#f44336; color:#fff;}</style>');
-  printWindow.document.write('</head><body>');
-  printWindow.document.write('<h2>רשימת מטלות</h2>');
-  printWindow.document.write('<table><tr><th>מטלה</th><th>בוצע</th></tr>');
-
-  items.forEach(function(item) {
-    var taskText = item.childNodes[0].nodeValue.trim();
-    var done = item.classList.contains("checked") ? "✓" : "";
-    printWindow.document.write('<tr><td>' + taskText + '</td><td>' + done + '</td></tr>');
-  });
-
-  printWindow.document.write('</table>');
-  printWindow.document.write('</body></html>');
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
-}
-function copyListToClipboard() {
-  var items = document.querySelectorAll("#myUL li");
-  var text = "מטלה\tבוצע\n";
-  items.forEach(function(item) {
-    var task = item.childNodes[0].nodeValue.trim();
-    var done = item.classList.contains("checked") ? "✓" : "";
-    text += task + "\t" + done + "\n";
-  });
-  navigator.clipboard.writeText(text).then(() => {
-    alert("הרשימה הועתקה ללוח!");
-  });
-}
-
-function printTaskList() {
-  var items = document.querySelectorAll("#myUL li");
-  var printWindow = window.open('', '', 'height=600,width=800');
-  printWindow.document.write('<html><head><title>רשימת מטלות</title>');
-  printWindow.document.write('<style>body{font-family:Arial; direction:rtl; text-align:right;} table{width:100%; border-collapse:collapse;} th, td{border:1px solid #000; padding:8px;} th{background-color:#f44336; color:#fff;}</style>');
-  printWindow.document.write('</head><body>');
-  printWindow.document.write('<h2>רשימת מטלות</h2><table><tr><th>מטלה</th><th>בוצע</th></tr>');
-  items.forEach(function(item) {
-    var taskText = item.childNodes[0].nodeValue.trim();
-    var done = item.classList.contains("checked") ? "✓" : "";
-    printWindow.document.write('<tr><td>' + taskText + '</td><td>' + done + '</td></tr>');
-  });
-  printWindow.document.write('</table></body></html>');
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
-}
-
-
-
-function downloadCSV() {
-  const items = [];
-  document.querySelectorAll("#myUL li").forEach(li => {
-    items.push({
-      text: li.firstChild.textContent,
-      done: li.classList.contains("checked") ? "✓" : ""
-    });
-  });
-
-  // יצירת תאריך בפורמט DD/MM/YYYY
-  const today = new Date();
-  const date = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
-
-  // יצירת תוכן ה-CSV
-  let csvContent = "מטלה,בוצע\n"; // כותרת הטבלה
-  items.forEach(item => {
-    csvContent += `"${item.text}","${item.done}"\n`;
-  });
-
-  // יצירת קובץ CSV
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-
-  // יצירת שם הקובץ עם תאריך
-  const filename = `רשימת מטלות מתאריך ${date}.csv`;
-
-  // יצירת לינק להורדה
-  const link = document.createElement("a");
-  if (link.download !== undefined) { // אם הדפדפן תומך בהורדה
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-}
-
-
-function importCSV(input) {
-  const file = input.files[0];
+// ===== טעינת מטלות מקובץ CSV =====
+function loadCSV(event) {
+  const file = event.target.files[0];
   if (!file) return;
-
   const reader = new FileReader();
   reader.onload = function (e) {
-    const content = e.target.result;
-    const rows = content.trim().split("\n");
-    
-    // דלג על כותרת הטבלה
-    for (let i = 1; i < rows.length; i++) {
-      const [task, done] = rows[i].split(",");
-      const li = document.createElement("li");
-      li.appendChild(document.createTextNode(task.replace(/(^"|"$)/g, "").trim()));
-      if (done && done.includes("✓")) {
-        li.classList.add("checked");
+    const lines = e.target.result.split("\n").slice(1); // דילוג על הכותרת
+    lines.forEach(line => {
+      const [text, status] = line.split(",");
+      if (text) {
+        const li = document.createElement("li");
+        li.appendChild(document.createTextNode(text.trim()));
+        if (status && status.trim() === "כן") li.classList.add('checked');
+        addCloseButton(li);
+        document.getElementById("myUL").appendChild(li);
       }
-
-      // הוסף כפתור מחיקה
-      const span = document.createElement("SPAN");
-      const txt = document.createTextNode("\u00D7");
-      span.className = "close";
-      span.appendChild(txt);
-      li.appendChild(span);
-      span.onclick = function () {
-        this.parentElement.style.display = "none";
-      };
-
-      document.getElementById("myUL").appendChild(li);
-    }
-    input.value = ''; // אפס את הקלט
+    });
+    saveToLocalStorage();
   };
-
-  reader.readAsText(file, 'utf-8');
+  reader.readAsText(file, 'UTF-8');
 }
 
-
+// טעינה ראשונית מה־localStorage
+loadFromLocalStorage();
 </script>
-
 </body>
 </html>
