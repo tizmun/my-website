@@ -1,0 +1,76 @@
+<!-- פנקס רשימות עם שמירה אוטומטית, העלאה והורדת קבצים -->
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>פנקס רשימות</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      direction: rtl;
+      text-align: right;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 300px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    .buttons {
+      margin-top: 10px;
+    }
+    button, input[type="file"] {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>פנקס רשימות</h2>
+  <textarea id="notepad" placeholder="התחל לכתוב..."></textarea>
+
+  <div class="buttons">
+    <button onclick="downloadText()">הורד טקסט</button>
+    <input type="file" accept=".txt" onchange="uploadText(event)">
+  </div>
+
+  <script>
+    const textarea = document.getElementById('notepad');
+
+    // טען תוכן שמור מה-localStorage
+    window.onload = () => {
+      const savedText = localStorage.getItem('notepadContent');
+      if (savedText) {
+        textarea.value = savedText;
+      }
+    };
+
+    // שמור שינויים אוטומטית
+    textarea.addEventListener('input', () => {
+      localStorage.setItem('notepadContent', textarea.value);
+    });
+
+    // הורדת תוכן כקובץ
+    function downloadText() {
+      const blob = new Blob([textarea.value], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'פנקס_רשימות.txt';
+      link.click();
+    }
+
+    // העלאת קובץ טקסט
+    function uploadText(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        textarea.value = e.target.result;
+        localStorage.setItem('notepadContent', textarea.value);
+      };
+      reader.readAsText(file);
+    }
+  </script>
+</body>
+</html>
