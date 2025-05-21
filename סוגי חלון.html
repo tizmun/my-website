@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <title>טולטיפ עם חץ מעל הטולטיפ - חץ למעלה</title>
+  <style>
+    /* קונטיינר לתמונה */
+    .image-container {
+      position: relative;
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    .image-container img {
+      width: 900px;
+      display: block;
+    }
+
+    /* אזורים לחיצים */
+    .hotspot {
+      position: absolute;
+      background-color: rgba(255, 0, 0, 0.05);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* טולטיפ */
+    .tooltip {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      min-width: 150px;
+      max-width: 300px;
+      z-index: 999;
+      display: none;
+    }
+
+    /* חץ דינמי - חץ פונה למטה, צמוד מעל הטולטיפ */
+    .tooltip-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid #ccc;
+      top: -6px;  /* החץ מעל הטולטיפ */
+    }
+
+    .tooltip-arrow::after {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: -7px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 22px solid #fff;
+    }
+
+    /* כפתור סגירה */
+    .tooltip .close-btn {
+      position: absolute;
+      top: 5px;
+      left: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .tooltip-content {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- קונטיינר לתמונה -->
+<div class="image-container" id="image-container">
+  <img src="https://cleversign.co.il/wp-content/uploads/2025/05/כל-הסוגים-900.png" alt="מפה" />
+
+  <!-- האזורים הלחיצים -->
+  <div
+    class="hotspot"
+    style="top:109px; left:688px; width:190px; height:41px;"
+    data-content="כאן יופיע טקסט פשוט, ללא עיצובים בתוכו, כגון שינוי גודל, צבע, הדגשות וכדומה. ניתן לשנות את העיצוב של כולו ביחד, אך לא להדגיש חלקים ממנו."
+  ></div>
+  <div
+    class="hotspot"
+    style="top:153px; left:688px; width:190px; height:48px;"
+    data-content="מאפשר לערוך טקסט עשיר בסגנונות שונים כגון הדגשות, הגדלת גופנים, צבע ועוד. עם זאת, שימוש בטקסט עשיר מומלץ פחות, מכיון שהוא מסורבל יותר לתפעול ע״י המשתמש והתכנה"
+  ></div>
+  <div
+    class="hotspot"
+    style="top:204px; left:688px; width:190px; height:48px;"
+    data-content="מציג שעון דיגיטלי"
+  ></div>
+  <div
+    class="hotspot"
+    style="top:258px; left:688px; width:190px; height:48px;"
+    data-content="מציג מחוגי שעון מסתובבים. יש לוודא שיש מתחתיו רקע של שעון"
+  ></div>
+  <div
+    class="hotspot"
+    style="top:369px; left:688px; width:190px; height:43px;"
+    data-content="מציג מדיה כלשהי: סרטון או תמונה או קובץ שמע"
+  ></div>
+  <div
+    class="hotspot"
+    style="top:419px; left:688px; width:190px; height:42px;"
+    data-content="מציג תמונות בפורמטים שונים"
+  ></div>
+<div
+    class="hotspot"
+    style="top:469px; left:688px; width:190px; height:42px;"
+    data-content="מיועד להצגת קובץ בפורמט PDF"
+  ></div>
+<div
+    class="hotspot"
+    style="top:519px; left:688px; width:190px; height:42px;"
+    data-content="הצגת אתר אינטרנט בשלמותו"
+  ></div>
+<div
+    class="hotspot"
+    style="top:569px; left:688px; width:190px; height:42px;"
+    data-content="מציג תמונות מתוך תיקייה שנמצאת בתוך תיקיית התכנה, שם התיקייה שמציגה את התמונות הוא: media dir"
+  ></div>
+<div
+    class="hotspot"
+    style="top:619px; left:688px; width:190px; height:42px;"
+    data-content="מציג מספר קבצים לפי תזמון מוכן מראש, אודיו, וידאו או תמונות"
+  ></div>
+<div
+    class="hotspot"
+    style="top:669px; left:688px; width:190px; height:42px;"
+    data-content="נגינה של קבצי אודיו ברצף"
+  ></div>
+<div
+    class="hotspot"
+    style="top:722px; left:688px; width:190px; height:42px;"
+    data-content="הצגת קבצים רבים"
+  ></div>
+<div
+    class="hotspot"
+    style="top:773px; left:688px; width:190px; height:42px;"
+    data-content="הצגת/השמעת הקבצים לפי תאריך קבוע מראש"
+  ></div>
+<div
+    class="hotspot"
+    style="top:822px; left:688px; width:190px; height:42px;"
+    data-content="הצגת חלק מתוך אתר"
+  ></div>
+<div
+    class="hotspot"
+    style="top:872px; left:688px; width:190px; height:42px;"
+    data-content="שואב טקסט מתוך אתרים"
+  ></div>
+<div
+    class="hotspot"
+    style="top:922px; left:688px; width:190px; height:42px;"
+    data-content="רשימת תמונות"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1066px; left:688px; width:190px; height:52px;"
+    data-content="מציג את התאריך העברי"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1131px; left:688px; width:190px; height:52px;"
+    data-content="מציג את התאריך הלועזי"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1195px; left:688px; width:190px; height:52px;"
+    data-content="מציג את היום בשבוע"
+  ></div>
+<div
+    class="hotspot"
+    style="top:90px; left:388px; width:220px; height:51px;"
+    data-content="מציג את פרשת השבוע"
+  ></div>
+<div
+    class="hotspot"
+    style="top:160px; left:388px; width:220px; height:51px;"
+    data-content="מציג את ההפטרה"
+  ></div>
+<div
+    class="hotspot"
+    style="top:234px; left:388px; width:220px; height:51px;"
+    data-content="מציג את הדף היומי"
+  ></div>
+<div
+    class="hotspot"
+    style="top:305px; left:388px; width:220px; height:51px;"
+    data-content="מציג את תיאור היום, למשל חגים או ימים מיוחדים."
+  ></div>
+  
+  
+<div
+    class="hotspot"
+    style="top:374px; left:388px; width:220px; height:51px;"
+    data-content="באובייקט זה כלול מידע רב מאוד, קשה לפרט את כולו במסגרת מצומצמת זו, בין היתר הוא כולל: תיאורי היום ותאריכים, סדרי לימוד שונים, (כולל סדרי לימוד מותאמים אישית) שינויים בתפילה, זמני לבנה, כניסת ויציאת שבת, ועוד רבים. ניתן לבחור מביניהם כל מה שרוצים ולסמן, והתכנה תציג אותם בזה אחר זה"
+  ></div>
+  
+  
+<div
+    class="hotspot"
+    style="top:444px; left:388px; width:220px; height:51px;"
+    data-content="מציג מידע יהודי כגון ספירת העומר, תיאורי היום, תאריכים, קריאה והפטרה ועוד"
+  ></div>
+<div
+    class="hotspot"
+    style="top:519px; left:388px; width:220px; height:51px;"
+    data-content="סדרי לימוד שונים לפי בחירה, כגון חומש, תהילים, גמרא או משנה והלכה"
+  ></div>
+<div
+    class="hotspot"
+    style="top:589px; left:388px; width:220px; height:51px;"
+    data-content="מציג זמני השבת או החג הקרובים, כניסת ויציאת השבת."
+  ></div>
+<div
+    class="hotspot"
+    style="top:660px; left:388px; width:220px; height:51px;"
+    data-content="המולד וזמני קידוש לבנה"
+  ></div>
+<div
+    class="hotspot"
+    style="top:732px; left:388px; width:220px; height:51px;"
+    data-content="השינויים בתפילה ועוד."
+  ></div>
+
+<div
+    class="hotspot"
+    style="top:933px; left:388px; width:220px; height:51px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:989px; left:388px; width:220px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1039px; left:388px; width:220px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1089px; left:388px; width:220px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+
+<div
+    class="hotspot"
+    style="top:1140px; left:388px; width:220px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+
+<div
+    class="hotspot"
+    style="top:1190px; left:388px; width:220px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:40px; left:70px; width:245px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:90px; left:70px; width:245px; height:49px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:148px; left:70px; width:245px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:200px; left:70px; width:245px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:250px; left:70px; width:245px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:300px; left:70px; width:245px; height:45px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:485px; left:70px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+
+<div
+    class="hotspot"
+    style="top:545px; left:70px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+
+<div
+    class="hotspot"
+    style="top:608px; left:70px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:669px; left:70px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:734px; left:70px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:794px; left:70px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1014px; left:60px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1074px; left:60px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1134px; left:60px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+<div
+    class="hotspot"
+    style="top:1194px; left:60px; width:235px; height:50px;"
+    data-content="<b>טקסט פשוט</b><br><a href='#'>למידע נוסף</a>"
+  ></div>
+
+
+
+
+
+</div>
+
+<!-- טולטיפ -->
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-arrow" id="tooltip-arrow"></div>
+  <div class="close-btn" onclick="hideTooltip()">×</div>
+  <div class="tooltip-content" id="tooltip-content"></div>
+</div>
+
+<script>
+  const hotspots = document.querySelectorAll('.hotspot');
+  const tooltip = document.getElementById('tooltip');
+  const tooltipContent = document.getElementById('tooltip-content');
+  const tooltipArrow = document.getElementById('tooltip-arrow');
+  const container = document.getElementById('image-container');
+
+  hotspots.forEach(hotspot => {
+    hotspot.addEventListener('click', function (event) {
+      event.stopPropagation();
+
+      const content = hotspot.dataset.content;
+      tooltipContent.innerHTML = content;
+
+      tooltip.style.display = 'block';
+      tooltip.style.visibility = 'hidden';
+
+      // גובה ורוחב של הטולטיפ
+      const tooltipWidth = tooltip.offsetWidth;
+      const tooltipHeight = tooltip.offsetHeight;
+
+      const containerRect = container.getBoundingClientRect();
+
+      // נקודת האמצע של האזור הלחיץ יחסית לקונטיינר
+      const hotspotRect = hotspot.getBoundingClientRect();
+      const hotspotCenterX = hotspotRect.left + hotspotRect.width / 2 - containerRect.left;
+      const hotspotBottomY = hotspotRect.top + hotspotRect.height - containerRect.top;
+
+      // מיקום הטולטיפ: מאמצע האזור הלחיץ ומטה
+      let left = hotspotCenterX - tooltipWidth / 2;
+      let top = hotspotBottomY + 2; // רווח קטן מתחת לאזור הלחיץ
+
+      // התאמות גבולות למניעת יציאה מהקונטיינר
+      if (left < 0) left = 0;
+      if (left + tooltipWidth > container.offsetWidth) left = container.offsetWidth - tooltipWidth;
+
+      // מכיוון שהחץ למעלה, הוא מעל הטולטיפ, ולכן הטופ יהיה קצת יותר למטה כדי לא "להסתיר" את החץ
+      // לכן לא נוגעים ב-top מעבר ל- hotspotBottomY + 10
+
+      if (top + tooltipHeight > container.offsetHeight) {
+        top = container.offsetHeight - tooltipHeight;
+      }
+
+      // מיקום החץ במרכז מעל הטולטיפ (יחסית לטולטיפ)
+      const arrowOffset = hotspotCenterX - left - 8; // 8 = חצי רוחב החץ
+      tooltipArrow.style.left = `${arrowOffset}px`;
+
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+      tooltip.style.visibility = 'visible';
+    });
+  });
+
+  function hideTooltip() {
+    tooltip.style.display = 'none';
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!tooltip.contains(e.target)) {
+      hideTooltip();
+    }
+  });
+</script>
+
+</body>
+</html>
