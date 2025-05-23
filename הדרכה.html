@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
 <head>
+    <!--כאן יש עורך קוד נחמד שאפשר לערוך אתו בקלות https://onlinehtmleditor.dev/?utm_source=chatgpt.com 
+    וכאן יש בודק קוד נחמד שיכול לבדוק אם יש שגיאות בקוד ולאתר אותן https://validator.w3.org/#validate_by_input
+כאן מופיע הדף הזה במאגר github
+https://tizmun.github.io/my-website/%D7%94%D7%93%D7%A8%D7%9B%D7%94.html
+
+
+
+
+    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>הדרכה</title>
@@ -10,6 +19,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
+
 .nested-accordion .accordion-section {
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -39,13 +49,13 @@
   margin-right: 10px;
   transition: transform 0.2s ease;
 }
-
+  /* CSS Reset קטע זה גורם שהאקורדיון יהיה סגור ברירת מחדל
 .nested-accordion .accordion-content {
   display: none;
   padding: 10px;
   background: #fff;
 }
-
+*/
 .nested-accordion .accordion-content.active {
   display: block;
 }
@@ -63,7 +73,7 @@
 }
 .accordion-paragraph {
   direction: rtl;
-  text-align: right;
+  text-align: justify;
   font-size: 1.1em;
   line-height: 1.8;
   color: #333;
@@ -153,7 +163,16 @@ kbd {color: #000; background:black;}
     .tooltip-content {
       margin-top: 15px;
     }
-
+.img-float-right {
+  float: right;
+  margin: 0 0 10px 15px;
+  width: 300px;
+}
+.img-float-left {
+  float: left;
+  margin: 0 15px 10px 0;
+  width: 70%;
+}
 </style>
 </head>
 <body>
@@ -162,7 +181,9 @@ kbd {color: #000; background:black;}
 <p>הדרכה זו מיועדת למשתמשי תוכנת הצג החכם. התוכנה מאפשרת להציג מידע דינמי על גבי מסך מחשב, כולל טקסטים, תמונות, ווידאו ועוד.</p>
 <div class="nested-accordion">
 
-  <!-- התחלה -->
+
+
+  <!-- התחלה ========================================-->
   <div class="accordion-section">
     <div class="accordion-header">
       <span><i class="fas fa-play topic-icon"></i> התחלה</span>
@@ -170,6 +191,10 @@ kbd {color: #000; background:black;}
     </div>
     <div class="accordion-content">
       <div class="accordion-inner">
+
+
+
+ <!-- מבט כללי והכרות עם התכנה ========================================-->
         <div class="accordion-section">
           <div class="accordion-header">
             <span><i class="fas fa-info-circle topic-icon"></i> מבט כללי והכרות עם התכנה</span>
@@ -203,6 +228,12 @@ kbd {color: #000; background:black;}
             <img class="accordion-image" src="https://cleversign.co.il/wp-content/uploads/2025/05/HZZ.gif" alt="הכרות עם התכנה">
           </div>
         </div>
+
+
+
+
+<!-- מבט כללי על האובייקטים ========================================-->
+
         <div class="accordion-section">
           <div class="accordion-header">
             <span><i class="fas fa-cubes topic-icon"></i> מבט כללי על האובייקטים</span>
@@ -257,8 +288,13 @@ kbd {color: #000; background:black;}
     </div>
   </div>
   </div>
-  <!-- אפשר להמשיך להוסיף פרקים נוספים באותו מבנה -->
-<!-- עריכת אובייקטים -->
+ 
+
+
+
+<!-- עריכת אובייקטים ===================================-->
+
+  
 <div class="accordion-section">
   <div class="accordion-header">
     <span><i class="fas fa-edit topic-icon"></i> עריכת אובייקטים</span>
@@ -266,14 +302,24 @@ kbd {color: #000; background:black;}
   </div>
   <div class="accordion-content">
     <div class="accordion-inner">
+       
 
-  <!-- התחלה -->
+
+
+
+
+  <!-- התחלה =============================-->
+
+
       <div class="accordion-section">
         <div class="accordion-header">
           <span><i class="fa-solid fa-chart-line"></i> התחלה</span>
           <span class="accordion-toggle">▶️</span>
         </div>
         <div class="accordion-content">
+            <div class="accordion-paragraph">
+
+         
   <h3>חלון העריכה</h3>
 <p>בחלון העריכה מופיע כל התוכן מחולק לחמש קטגוריות המסודרות בחמש כרטיסיות נפרדות.</p>
           <p>רשימת הכרטיסיות</p>
@@ -290,19 +336,21 @@ kbd {color: #000; background:black;}
          
         </div>
       </div>
+   </div>
 
 
 
 
+      <!-- סוג חלון =============================-->
 
-      <!-- סוג חלון -->
+
       <div class="accordion-section">
         <div class="accordion-header">
           <span><i class="fas fa-window-restore topic-icon"></i> 1. סוג חלון</span>      
           <span class="accordion-toggle">▶️</span>
         </div>
         <div class="accordion-content">
-
+<div class="accordion-paragraph">
 <p>הדבר הראשון שנצטרך לעשות לאחר יצירת אובייקט חדש הוא, להגדיר את הסוג שלו.<br>הגדרת הסוג נמצאת בכרטיסייה השמאלית של עריכת הטקסטים.</p>
 
 <img src="https://cleversign.co.il/wp-content/uploads/2025/05/סוג-חלון.png" alt="סוג חלון">
@@ -343,6 +391,9 @@ kbd {color: #000; background:black;}
 החכם</strong> - הוא מחשבון זמנים בסיסי, המחשב את זמני היום בצורה פשוטה מאוד. <br>
     
     הוא מצד אחד בסיסי עם זמנים מאוד מובנים, ומצד שני נוח לבחירת שיטות שונות המובנות בו. מי שחשוב לו הקלות והנוחות של בחירת זמנים פשוטה ונוחה, עדיף להשתמש במחשבון של הצג.<br>
+    להלן יוסבר כיצר עורכים את זמני הצג החכם. <br>
+
+<!--להוסיף קישור למדריך של המחשבון של הצג החכם @-->
      <strong>
         * 
         המחשבון של חזון
@@ -362,7 +413,7 @@ kbd {color: #000; background:black;}
 
    </div>
 
-
+</div>
 
 
 </div>
@@ -372,7 +423,7 @@ kbd {color: #000; background:black;}
 
 
 
-      <!-- תוכן -->
+      <!-- תוכן =============================-->
       <div class="accordion-section">
         <div class="accordion-header">
           <span><i class="fas fa-font topic-icon"></i>2. תוכן</span>
@@ -472,13 +523,15 @@ kbd {color: #000; background:black;}
 </p>
 <p>
     בחלון התנאים יש לנו טבלה, כל תנאי שמעוניינים לכלול, מסמנים את תיבת הסימון שלו בצד ימין. ולהלן הסבר על התנאים:
-</p>
+</p><img src="https://cleversign.co.il/wp-content/uploads/2025/05/תנאים.png" alt="תנאים" class="img-float-left">
 <p>
     <strong>כללי</strong>: מוצג תמיד/אף פעם/בתנאי (לפי התנאים הבאים)
 </p>
 <p>
     <strong>טקסט:</strong> אם יש טקסט (לא רלוונטי לכאן)
 </p>
+
+
 <p>
     <strong>תזמון: </strong>כמה זמן יוצג וכמה זמן יוסתר (בשניות / דקות / ימים / שבועות), אם רוצים לעשות ‘תורנות’ בין כמה תמונות, נותנים להם מספרים סידוריים (לדוגמא 1,2,3 וכו') ומציינים כמה תמונות יש בס"ה (מספר היחידות). ועל כל אחת מציינים כמה זמן היא תוצג.&nbsp;
 </p>
@@ -525,7 +578,12 @@ kbd {color: #000; background:black;}
     מדיה לפי תאריך
 </h4>
 <p>
-    לוחצים <kbd>ערוך מאגר מידע</kbd> יוצרים מאגר “חדש”, ומוסיפים לו תאריך ותמונה ומאשרים. שימו לב!! הוספת רשומה/תמונה חדשה היא בלחצן ‘הוסף’ ולא בלחצן ‘חדש’ (לחצן ‘חדש’ יוצר קובץ חדש, ועלול לדרוס את הקובץ הקיים וכל המידע שבו ימחק!!) בשורה העליונה ניתן לבחור משך הזמן, ליישם למיין את הרשומות לפי התאריך, לשמור את הרשימה או לשמור אותה בשם אחר, לפתוח רשימה אחרת או ליצור רשימה חדשה.
+ 
+    לוחצים <kbd>ערוך מאגר מידע</kbd> יוצרים מאגר <strong>“חדש”</strong>, ומוסיפים לו תאריך ותמונה ומאשרים. 
+    
+     <img src="https://cleversign.co.il/wp-content/uploads/2025/05/רשימת-תמונות.png" alt="תאריך" class="img-float-left">  
+    
+    <strong>שימו לב!!</strong> הוספת רשומה/תמונה חדשה היא בלחצן <strong>‘הוסף’</strong> ולא בלחצן <strong>‘חדש’</strong> (לחצן ‘חדש’ יוצר קובץ חדש, ועלול לדרוס את הקובץ הקיים וכל המידע שבו ימחק!!) בשורה העליונה ניתן לבחור משך הזמן, ליישם למיין את הרשומות לפי התאריך, לשמור את הרשימה או לשמור אותה בשם אחר, לפתוח רשימה אחרת או ליצור רשימה חדשה.
 </p>
 <p>
     בשורה התחתונה ניתן לערוך חודש שלם ללא צורך לפתוח חלון עריכה שוב ושוב לכל יום בנפרד, ניתן לייבא קובץ טקסט המכיל את רשימת התמונות והתאריכים. לקפוץ ליום הנוכחי, להעתיק ולהדביק רשומות, לערוך את התאריך והתוכן, למחוק ולהוסיף רשומות בטבלה.&nbsp;
@@ -546,8 +604,88 @@ kbd {color: #000; background:black;}
     מידע יהודי
 </h4>
 <p>
-    לוחצים <kbd>ערוך טקסט</kbd> וכותבים
+    לוחצים <kbd>בחר תוכן</kbd> ובוחרים מתוך הרשימה את המידע שרוצים להציג.<div class="
+    "></div>
 </p>
+
+
+<p>
+    כל המידע שנבחר כאן, יוצג בתוך האובייקט שלנו. בצד ימין יש חלונית שמציגה את כל התוכן שבחרנו. ומעליה לחצני חץ למעלה וחץ למטה, כך שאם אנו רוצים שאחד מפריטי המידע יהיה קודם לחבירו, נבחר אותו בחלונית הימנית, ובאמצעות החץ למעלה נוכל להעביר אותו לראש הרשימה, כך שיוצג ראשון. או להוריד לסוף הרשימה באמצעות החץ למטה. לחיצה על לחצן CA מוחקת את כל מה שבחרנו, ולחצן OK מאשר.
+</p>
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/מידע-יהודי.png" alt="" width="100%">
+
+
+<h4>
+    לחצן סגנון
+</h4>
+
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/לחצן-סיגנון.png" alt="לחצן-סיגנון" width="300px" style="float: left; margin: 0 10px 10px 0;">
+<p>
+    ניתן לסגנן את המידע היהודי בצורה המתאימה ביותר למקובל בכל קהילה ובית כנסת. מתחת ללחצן “בחר תוכן” לוחצים על לחצן “סגנון” ונפתח לנו חלון העריכה של הסגנון.
+</p>
+<p>
+    הכרטיסייה הראשונה מגדירה את זמני השבת. כמה זמן הדלקת נרות לפני השקיעה, במוצאי שבת ניתן לבחור האם זה יחושב במספר דקות מסויים אחרי השקיעה. או במעלות (מה שנקרא “רום השמש”), זמן מוצאי שבת המקובל כיום ברוב הלוחות הוא 8.5- (מינוס). על הזמן הזה ניתן להוסיף דקות (כתוספת שבת).
+</p>
+<p>
+    אותו דבר בזמני רבינו תם ניתן להגדיר לפי דקות שוות או מעלות. למטה בוחרים האם זמן זה יחושב בגובה.
+</p>
+<p>
+    &nbsp;
+</p><p>
+    שימו לב שכל בחירת הזמנים כאן היא לפי זמני הצג החכם, ולכן הם ניתנים לעריכה בקלות.
+</p>
+
+
+
+
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/פרטי-זמני-שבת.png" alt="זמני שבת" width="200%">
+
+<p>
+    בכרטיסייה תאריך עברי ניתן לבחור איזה חלק מהתאריך יוצג: יום, חודש, שנה (כולל ה' של האלפים) ובכרטיסייה של התאריך הלועזי ניתן לבחור פורמט של תאריכים לועזיים.
+</p>
+<p>
+    &nbsp;
+</p>
+
+
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/צורת-תאריך-עברי.png" alt="" width="340">
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/צורת-תאריך-לועזי.png" alt="" width="200">
+
+<p>
+<p>
+    בכרטיסיית ״פרשה ולימודים״ ניתן להגדיר האם יהיה כתוב ״פרשת בראשית״ או רק ״בראשית״, לנסח את המילה ״פרשת” (למשל אפשר לכתוב ״פרשת השבוע״ או בקיצור פר' וכדומה). בלחצן עריכת לימודים 613 עורכים סדר לימודים מותאם אישית, (ניתן לשלוח רשימה מסודרת לתמיכה והם יכניסו את הכל בבת אחת.) סדר לימוד זה יוצג ע״י בחירת ״לימודים מיוחדים״ בחלון המידע היהודי.
+</p>
+  
+  </p>  
+
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/פרשה-ולימודים.png" alt="" width="100%">
+<p>
+    ב״שמות הימים״ אפשר לאיית את שמות הימים בשבוע, בסתם, וכשהם באים עם ״ליל״ או ״יום״ (כדי להציג אותם מסמנים את תיבת הסימון בצד).
+</p>
+
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/שמות-הימים.png" alt="" width="100%">
+
+<p>
+    בכרטיסיית תיאור היום בוחרים איזה תיאור יופיע, ניתן לבחור מתוך הרשימה: חגים ציוניים, ערוב תבשילין, הילולות, פרשת הנשיאים, שבת מברכין, ראש חודש, שובבי"ם, בה"ב, ויום כיפור קטן.
+</p>
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/פירוט-תיאור-היום.png" alt="" width="100%">
+
+<p>
+    &nbsp;בהילולות הצדיקים ניתן לבחור קבוצות של ימי זיכרון. לדוגמא: אישים מהמקרא, ראשונים, אחרונים וכו'.
+</p>
+<img src="https://cleversign.co.il/wp-content/uploads/2025/05/בחירת-הילולות-להצגה.png" alt="" width="100%">
+
+<p>
+    בכרטיסייה ‘איות’ ניתן לאיית מחדש את כל סוגי המידע היהודי, וכן לנסח אותו בצורה חופשית בכל שפה שנרצה.
+</p>
+<figure class="image image_resized" style="width:60.21%;">
+    <img style="aspect-ratio:983/542;" src="https://cleversign.co.il/wp-content/uploads/2025/05/איות.png" width="120%">
+</figure>
+
+
+
+
+
 <p>
     &nbsp;
 </p>
@@ -555,7 +693,10 @@ kbd {color: #000; background:black;}
     זמני השבת
 </h4>
 <p>
-    לוחצים <kbd>ערוך טקסט</kbd> וכותבים
+    לוחצים <kbd>זמני שבת</kbd> ובוחרים את הזמנים שברצוננו להציג.
+
+    <br>
+    אובייקט זה מציג את זמני השבת הקרובה והחג הקרוב. ניתן לאיית את שמות הזמנים השונים בעברית או בכל שפה אחרת.
 </p>
 <p>
     &nbsp;
@@ -696,7 +837,9 @@ kbd {color: #000; background:black;}
 </div>
 
 
-      <!-- ערוך טבלת אירועים -->
+      <!-- ערוך טבלת אירועים =============================-->
+
+
       <div class="accordion-section">
         <div class="accordion-header">
           <span><i class="fas fa-table topic-icon"></i> ערוך טבלת אירועים</span>
@@ -814,6 +957,7 @@ kbd {color: #000; background:black;}
   </div>
 </div>
 </div><script>
+  
 document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
   header.addEventListener('click', () => {
     const content = header.nextElementSibling;
