@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+
+
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הדרכה</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+
+.nested-accordion .accordion-section {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  direction: rtl;
+}
+
+.nested-accordion .accordion-header {
+  background: #f0f0f0;
+  padding: 10px 10px 10px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.nested-accordion .accordion-header i.topic-icon {
+  margin-left: 10px;
+}
+
+.nested-accordion .accordion-toggle {
+  font-size: 1.2em;
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+  /* CSS Reset קטע זה גורם שהאקורדיון יהיה סגור ברירת מחדל*/
+.nested-accordion .accordion-content {
+  display: none;
+  padding: 10px;
+  background: #fff;
+}
+
+.nested-accordion .accordion-content.active {
+  display: block;
+}
+
+.nested-accordion .accordion-inner .accordion-section {
+  margin-right: 20px;
+  background: #f9f9f9;
+}
+
+.accordion-image {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  max-width: 100%;
+}
+.accordion-paragraph {
+  direction: rtl;
+  text-align: justify;
+  font-size: 1.1em;
+  line-height: 1.8;
+  color: #333;
+}
+
+.accordion-paragraph p {
+  margin-bottom: 1em;
+}
+
+.accordion-paragraph strong {
+  color: #1a73e8;
+}
+
+.accordion-paragraph kbd {
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-family: inherit;
+}
+kbd {color: #000; background:black;}
+/* קונטיינר לתמונה */
+    .image-container {
+      position: relative;
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    .image-container img {
+      width: 900px;
+      display: block;
+    }
+
+    /* אזורים לחיצים */
+    .hotspot {
+      position: absolute;
+      background-color: rgba(255, 0, 0, 0.3);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* טולטיפ */
+    .tooltip {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      min-width: 150px;
+      max-width: 300px;
+      z-index: 999;
+      display: none;
+    }
+
+    /* חץ דינמי - חץ פונה למטה, צמוד מעל הטולטיפ */
+    .tooltip-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid #ccc;
+      top: -6px;  /* החץ מעל הטולטיפ */
+    }
+
+    .tooltip-arrow::after {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: -7px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 22px solid #fff;
+    }
+
+    /* כפתור סגירה */
+    .tooltip .close-btn {
+      position: absolute;
+      top: 5px;
+      left: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .tooltip-content {
+      margin-top: 15px;
+    }
+.img-float-right {
+  float: right;
+  margin: 0 0 10px 15px;
+  width: 300px;
+}
+.img-float-left {
+  float: left;
+  margin: 0 15px 10px 0;
+  width: 70%;
+}
+</style>
+</head>
+<body>
+    
+<h1>הדרכה לתוכנת הצג החכם</h1>
+<p>הדרכה זו מיועדת למשתמשי תוכנת הצג החכם. התוכנה מאפשרת להציג מידע דינמי על גבי מסך מחשב, כולל טקסטים, תמונות, ווידאו ועוד.</p>
+<div class="nested-accordion">
+
+
+
+  <!-- התחלה ========================================-->
+  <div class="accordion-section">
+    <div class="accordion-header">
+      <span><i class="fas fa-play topic-icon"></i> התחלה</span>
+      <span class="accordion-toggle">▶️</span>
+    </div>
+    <div class="accordion-content">
+      <div class="accordion-inner">
+
+
+
+ <!-- מבט כללי והכרות עם התכנה ========================================-->
+        <div class="accordion-section">
+          <div class="accordion-header">
+            <span><i class="fas fa-info-circle topic-icon"></i> מבט כללי והכרות עם התכנה</span>
+            <span class="accordion-toggle">▶️</span>
+          </div>
+          <div class="accordion-content">
+
+<div class="accordion-paragraph">
+  <p>
+   <a href="#" class="open-accordion-link" data-target="section-overview">למעבר למבט כללי</a>
+
+</div>
+
+
+
+            <img class="accordion-image" src="https://cleversign.co.il/wp-content/uploads/2025/05/HZZ.gif" alt="הכרות עם התכנה">
+          </div>
+        </div>
+
+
+
+
+<!-- מבט כללי על האובייקטים ========================================-->
+
+        <div class="accordion-section">
+          <div class="accordion-header">
+            <span><i class="fas fa-cubes topic-icon"></i> מבט כללי על האובייקטים</span>
+            <span class="accordion-toggle">▶️</span>
+          </div>
+          <div class="accordion-content">
+       <div class="accordion-paragraph">
+        <div>
+      יkbd>P</kbd>, או באמצעות לחיצה על הלחצן הימני של העכבר מעל אובייקט כלשהו.</p>
+       </div>
+    
+
+ ליצור חדש ולעצבן.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+ 
+
+
+
+<!-- עריכת אובייקטים ===================================-->
+
+  
+<div class="accordion-section">
+  <div class="accordion-header">
+    <span><i class="fas fa-edit topic-icon"></i> עריכת אובייקטים</span>
+    <span class="accordion-toggle">▶️</span>
+  </div>
+  <div class="accordion-content">
+    <div class="accordion-inner">
+       
+
+
+
+
+
+  <!-- התחלה =============================-->
+
+
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <span><i class="fa-solid fa-chart-line"></i> התחלה</span>
+          <span class="accordion-toggle">▶️</span>
+        </div>
+        <div class="accordion-content">
+            <div class="accordion-paragraph">
+
+
+         
+        </div>
+      </div>
+   </div>
+
+
+
+
+
+      <!-- אפשרויות -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <span><i class="fas fa-cogs topic-icon"></i> אפשרויות</span>
+          <span class="accordion-toggle">▶️</span>
+        </div>
+        <div class="accordion-content">
+     <p id="section-overview">
+      
+
+לכאן אני רוצה לקשר את כל האפשרויות של התוכנה, כולל אפשרויות כלליות ואפשרויות של אובייקטים ספציפיים.</p>
+          <p>
+
+     </p>
+          <img class="accordion-image" src="PATH_TO_IMAGE.gif" alt="אפשרויות כלליות">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div><script>
+  /*
+document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const content = header.nextElementSibling;
+    const toggleIcon = header.querySelector('.accordion-toggle');
+
+    content.classList.toggle('active');
+    toggleIcon.textContent = content.classList.contains('active') ? '▼' : '▶️';
+  });
+});
+
+</script>
+
+
+  <script>
+// פתיחה רגילה של אקורדיון בלחיצה
+document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const content = header.nextElementSibling;
+    const toggleIcon = header.querySelector('.accordion-toggle');
+
+    content.classList.toggle('active');
+    toggleIcon.textContent = content.classList.contains('active') ? '▼' : '▶️';
+  });
+});
+
+// פונקציה שפותחת אקורדיון לפי ID
+function openAccordionById(id) {
+  const section = document.getElementById(id);
+  if (!section) return;
+
+  let content = section.querySelector('.accordion-content');
+  let header = section.querySelector('.accordion-header');
+  if (content && header && !content.classList.contains('active')) {
+    content.classList.add('active');
+    const toggleIcon = header.querySelector('.accordion-toggle');
+    if (toggleIcon) toggleIcon.textContent = '▼';
+  }
+
+  // פותח גם הורים אם יש (אקורדיון מקונן)
+  let parent = section.parentElement;
+  while (parent && !parent.classList.contains('nested-accordion')) {
+    if (parent.classList.contains('accordion-content') && !parent.classList.contains('active')) {
+      parent.classList.add('active');
+      const parentHeader = parent.previousElementSibling;
+      const toggleIcon = parentHeader?.querySelector('.accordion-toggle');
+      if (toggleIcon) toggleIcon.textContent = '▼';
+    }
+    parent = parent.parentElement;
+  }
+
+  // גלילה אל המקטע
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// קישור בלחיצה שפותח את האקורדיון הרצוי
+document.querySelectorAll('.open-accordion-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('data-target');
+    if (targetId) openAccordionById(targetId);
+  });
+});
+</script>
+
+
+</body>
+
+
+</html>
