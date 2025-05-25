@@ -178,12 +178,26 @@ kbd {color: #000; background:black;}
   margin: 0 15px 10px 0;
   width: 40%;
 }
+/* מרכז div עם רוחב מוגדר ושוליים פנימיים */
+.centered-container {
+ width: 1000px;                  /* רוחב קבוע */
+  margin: 0 auto;                 /* מרכז אופקית */
+  padding: 50px;                  /* שוליים פנימיים */
+  background-color: #ffffff;      /* רקע לבן */
+  border: 2px solid #FD3DB5;      /* מסגרת בצבע מג'נטה */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* הצללה */
+  box-sizing: border-box;         /* כולל padding בתוך הרוחב */
+  border-radius: 12px;            /* פינות מעוגלות */
+}
 
 
 </style>
 </head>
 <body>
-    
+    <div class="centered-container">
+  <!-- תוכן הדיב כאן -->
+
+
 <h1>הדרכה לתוכנת הצג החכם</h1>
 <p>הדרכה זו מיועדת למשתמשי תוכנת הצג החכם. התוכנה מאפשרת להציג מידע דינמי על גבי מסך מחשב, כולל טקסטים, תמונות, ווידאו ועוד.</p>
 <div class="nested-accordion">
@@ -1046,7 +1060,10 @@ kbd {color: #000; background:black;}
     </div>
   </div>
 </div>
-</div><script>
+</div>
+</div>
+
+<script>
   
 // פתיחה רגילה של אקורדיון בלחיצה
 document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
