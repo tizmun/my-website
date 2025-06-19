@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+
+<head>
+  <!--כאן יש עורך קוד נחמד שאפשר לערוך אתו בקלות https://onlinehtmleditor.dev/?utm_source=chatgpt.com 
+    וכאן יש בודק קוד נחמד שיכול לבדוק אם יש שגיאות בקוד ולאתר אותן https://validator.w3.org/#validate_by_input
+כאן מופיע הדף הזה במאגר github
+https://tizmun.github.io/my-website/%D7%94%D7%93%D7%A8%D7%9B%D7%94.html
+
+העלאת תמונות בקישור:
+https://cleversign.co.il/wp-admin/upload.php
+
+
+
+
+    -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הדרכה</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .nested-accordion .accordion-section {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      direction: rtl;
+    }
+
+    .nested-accordion .accordion-header {
+      background: #f0f0f0;
+      padding: 10px 10px 10px 10px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nested-accordion .accordion-header i.topic-icon {
+      margin-left: 10px;
+    }
+
+    .nested-accordion .accordion-toggle {
+      font-size: 1.2em;
+      margin-right: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    /* CSS Reset קטע זה גורם שהאקורדיון יהיה סגור ברירת מחדל
+
+
+
+
+
+.nested-accordion .accordion-content {
+  display: none;
+  padding: 10px;
+  background: #fff;
+} 
+ 
+ */
+
+    .nested-accordion .accordion-content.active {
+      display: block;
+    }
+
+    .nested-accordion .accordion-inner .accordion-section {
+      margin-right: 20px;
+      background: #f9f9f9;
+    }
+
+    .accordion-image {
+      margin-top: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      max-width: 100%;
+    }
+
+    .accordion-paragraph {
+      direction: rtl;
+      text-align: justify;
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .accordion-paragraph p {
+      margin-bottom: 1em;
+    }
+
+    .accordion-paragraph strong {
+      color: #1a73e8;
+    }
+
+    .accordion-paragraph kbd {
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 2px 5px;
+      font-family: inherit;
+    }
+
+    kbd {
+      color: #000;
+      background: black;
+    }
+
+    /* קונטיינר לתמונה */
+    .image-container {
+      position: relative;
+      width: 900px;
+      margin: 0 auto;
+    }
+
+    .image-container img {
+      width: 900px;
+      display: block;
+    }
+
+    /* אזורים לחיצים */
+    .hotspot {
+      position: absolute;
+      background-color: rgba(255, 0, 0, 0.3);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* טולטיפ */
+    .tooltip {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      min-width: 150px;
+      max-width: 300px;
+      z-index: 999;
+      display: none;
+    }
+
+    /* חץ דינמי - חץ פונה למטה, צמוד מעל הטולטיפ */
+    .tooltip-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid #ccc;
+      top: -6px;
+      /* החץ מעל הטולטיפ */
+    }
+
+    .tooltip-arrow::after {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: -7px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 22px solid #fff;
+    }
+
+    /* כפתור סגירה */
+    .tooltip .close-btn {
+      position: absolute;
+      top: 5px;
+      left: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .tooltip-content {
+      margin-top: 15px;
+    }
+
+    .img-float-right {
+      float: right;
+      margin: 0 0 10px 15px;
+      width: 300px;
+    }
+
+    .img-float-left {
+      float: left;
+      margin: 0 15px 10px 0;
+      width: 70%;
+    }
+
+    .img-float-left_small {
+      float: left;
+      margin: 0 15px 10px 0;
+      width: 40%;
+    }
+
+    /* מרכז div עם רוחב מוגדר ושוליים פנימיים */
+    .centered-container {
+      width: 1000px;
+      /* רוחב קבוע */
+      margin: 0 auto;
+      /* מרכז אופקית */
+      padding: 50px;
+      /* שוליים פנימיים */
+      background-color: #ffffff;
+      /* רקע לבן */
+      border: 2px solid #FD3DB5;
+      /* מסגרת בצבע מג'נטה */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      /* הצללה */
+      box-sizing: border-box;
+      /* כולל padding בתוך הרוחב */
+      border-radius: 12px;
+      /* פינות מעוגלות */
+    }
+
+
+    /* לעצב את ההשלמה האוטומטית */
+
+        .suggestions {
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            background: white;
+            z-index: 1000;
+        }
+        .suggestion {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestion:hover {
+            background-color: #f0f0f0;
+        }
+        .highlight {
+            font-weight: bold;
+            color: blue; /* צבע ההדגשה */
+        }
+  </style>
+</head>
+
+<body>
+  <div class="centered-container">
+    <!-- תוכן הדיב כאן -->
+
+
+    <h1>פתרון תקלות בתכנת הצג החכם</h1>
+ 
+    <p>המידע מעודכן לגירסה של יב' בסיוון תשפ״ה, ועשוי להשתנות בכל עת.</p>
+    <p>מדריך זה עדיין בשלבי עריכה, ועל כן יש להתייחס לתוכנו בהתאם.</p>
+
+    <div class="nested-accordion">
+
+
+
+      <!-- התחלה ========================================-->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <span><i class="fas fa-play topic-icon"></i> כללי</span>
+          <span class="accordion-toggle">▶️</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+
+
+
+            <!-- מבט כללי והכרות עם התכנה ========================================-->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-info-circle topic-icon"></i> 
+לא מצליח לעדכן מהבית
+
+                </span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+
+                <div class="accordion-paragraph">
+                  <p>
+                    <STRONG>
+                        חשוב:
+                    </STRONG>
+                    התקלה עשויה להיות או במחשב בבית, או במחשב בבית הכנסת. ולכן יש לבצע את הבדיקות הבאות גם כאן וגם כאן. אם כי, הניסיון הוכיח שהתקלות קורות יותר במחשבים האישיים מאשר במחשבי הצג, ולכן בדרך כלל לאחר טיפול במחשב האישי - הבעיה תיפתר. 
+
+                    <br>
+ <br>
+<strong>א.</strong>
+בדוק את חיבור האינטרנט. נסה לגלוש באתר כלשהו, או לעשות חיפוש גוגל, כדי לוודא שהמחשב מחובר לאינטרנט. 
+<br><img src="https://cleversign.co.il/wp-content/uploads/2025/06/סמל-דרופבוקס-על-שולחן-המשימות.png" class="img-float-left_small" alt="דרופבוקס על שולחן המשימות">
+<strong>ב.</strong>
+בדוק שתכנת DropBox פועלת על המחשב. בשורת המשימות אמור להופיע סמל של קופסא פתוחה בצבע לבן. אם לא מופיע, לחץ על התחל (סמל ווינדוס) והקלד dropbox, לחץ אנטר והתכנה תיפתח. אם מופיע ויש עליו סימן כלשהו, עבור לסעיף הבא. 
+ <br>
+
+
+
+
+<strong>ג. </strong>
+בדוק שתכנת דרופבוקס מסתנכרנת כראוי, סמל הדרופבוקס אמור להיות נקי ללא סמלים נוספים מעליו בצבע כחול או אדום. 
+
+
+
+
+                  </p>
+                </div>
+
+
+
+                
+              </div>
+            </div>
+
+
+
+
+            <!-- מבט כללי על האובייקטים ========================================-->
+
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-cubes topic-icon"></i> מבט כללי על האובייקטים</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-paragraph">
+                  <div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- עריכת אובייקטים ===================================-->
+
+
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <span><i class="fas fa-edit topic-icon"></i> עריכת אובייקטים</span>
+          <span class="accordion-toggle">▶️</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+
+
+
+
+
+
+            <!-- התחלה =============================-->
+
+
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fa-solid fa-chart-line"></i> התחלה</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-paragraph">
+
+
+                
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <!-- סוג חלון =============================-->
+
+
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-window-restore topic-icon"></i> 1. סוג חלון</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-paragraph">
+               
+
+                  <div>
+                   
+                  
+
+
+
+
+                  </div>
+
+                </div>
+
+
+              </div>
+
+            </div>
+
+
+
+
+            <!-- תוכן =============================-->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-font topic-icon"></i>2. תוכן</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-paragraph" id="content_object">
+            
+
+
+
+
+              
+                  <div>
+
+
+                  </div>
+                
+
+                </div>
+              </div>
+
+            </div>
+
+
+            <!-- ערוך טבלת אירועים =============================-->
+
+
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-table topic-icon"></i> ערוך טבלת אירועים</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <DIV class="accordion-paragraph">
+               
+
+
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <!-- קבוצות -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-layer-group topic-icon"></i> קבוצות</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content" id="groups">
+                <div class="accordion-paragraph">
+
+
+
+
+
+                
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+
+            <!-- טקסט -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-text-height topic-icon"></i> 3. טקסט</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content" id="text-style">
+                <div class="accordion-paragraph">
+              
+
+                </div>
+              </div>
+            </div>
+
+
+            <!-- סגנון -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-paint-brush topic-icon"></i> 4. סגנון</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-paragraph">
+
+               
+               
+
+
+
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- תצוגה -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-desktop topic-icon"></i> 5. תצוגה</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-paragraph" id="display_object">
+
+
+                </div>
+              </div>
+            </div>
+
+            <!-- תנאי תצוגה -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-filter topic-icon"></i> תנאי תצוגה</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+
+                <div class="accordion-paragraph">
+
+          
+         
+             
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- תפריט ראשי -->
+      <div class="accordion-section">
+        <div class="accordion-header">
+          <span><i class="fas fa-bars topic-icon"></i> תפריט ראשי</span>
+          <span class="accordion-toggle">▶️</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+
+            <!-- תפריט קובץ -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-file-alt topic-icon"></i> תפריט קובץ</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-paragraph">
+                
+                </div>
+              </div>
+            </div>
+
+            <!-- זמן -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-clock topic-icon"></i> אובייקטים - תצוגה - זמן - עזרה</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+
+                <div class="accordion-paragraph">
+
+            
+          
+              </div>
+            </div>
+  </div>
+  
+            <!-- אפשרויות -->
+            <div class="accordion-section">
+              <div class="accordion-header">
+                <span><i class="fas fa-cogs topic-icon"></i> אפשרויות</span>
+                <span class="accordion-toggle">▶️</span>
+              </div>
+              <div class="accordion-content">
+               
+               
+               <div class="accordion-paragraph">
+
+           
+
+
+
+
+
+
+
+
+
+ </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--מכאן והלאה יש קטע ששולף את כל הID
+  
+
+<button id="getIds">שלוף ID</button>
+<ul id="idList"></ul>
+
+<script>
+    document.getElementById('getIds').addEventListener('click', () => {
+        const ids = [];
+        const allElements = document.querySelectorAll('*'); // בחר את כל האלמנטים בדף
+
+        allElements.forEach(element => {
+            if (element.id) {
+                ids.push(element.id); // הוסף את ה-ID לרשימה אם קיים
+            }
+        });
+
+        // הצגת הרשימה בממשק המשתמש
+        const idList = document.getElementById('idList');
+        idList.innerHTML = ''; // נקה את הרשימה הקיימת
+        ids.forEach(id => {
+            const listItem = document.createElement('li');
+            listItem.textContent = id; // הוסף את ה-ID לפריט ברשימה
+            idList.appendChild(listItem);
+        });
+    });
+</script>
+  -->
+
+
+
+
+
+
+
+  <script>
+
+
+
+
+// === קוד ניהול אקורדיון מקונן ===
+
+// כשעמוד נטען: ודא שאין טולטיפ פתוח ושהכותרות מוכנות
+document.addEventListener("DOMContentLoaded", function () {
+  // אתחול: סגור את כל האקורדיונים
+  document.querySelectorAll('.accordion-content').forEach(content => {
+    content.classList.remove('active');
+  });
+
+  // הוסף מאזין לכל כותרת אקורדיון
+  document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const section = header.parentElement;
+      const container = section.parentElement; // רמה אחת מעל – הקונטיינר המקומי
+
+      // סגור את שאר האקורדיונים באותה רמה (רק אחים)
+      container.querySelectorAll(':scope > .accordion-section .accordion-content').forEach(content => {
+        if (content !== header.nextElementSibling) {
+          content.classList.remove('active');
+          const icon = content.previousElementSibling.querySelector('.accordion-toggle');
+          if (icon) icon.textContent = '▶️';
+        }
+      });
+
+      // פתח או סגור את הנוכחי
+      const content = header.nextElementSibling;
+      const toggleIcon = header.querySelector('.accordion-toggle');
+      const isOpen = content.classList.contains('active');
+
+      content.classList.toggle('active', !isOpen);
+      toggleIcon.textContent = !isOpen ? '▼' : '▶️';
+    });
+  });
+});
+
+
+  </script>
+</body>
+
+
+</html>

@@ -18,10 +18,9 @@ https://cleversign.co.il/wp-admin/upload.php
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>הדרכה</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     .nested-accordion .accordion-section {
       border: 1px solid #ccc;
@@ -42,8 +41,7 @@ https://cleversign.co.il/wp-admin/upload.php
       position: relative;
       z-index: 1;
     }
-
-    .nested-accordion .accordion-header i.topic-icon {
+     .nested-accordion .accordion-header i.topic-icon {
       margin-left: 10px;
     }
 
@@ -219,34 +217,15 @@ https://cleversign.co.il/wp-admin/upload.php
       border-radius: 12px;
       /* פינות מעוגלות */
     }
-
-
-    /* לעצב את ההשלמה האוטומטית */
-
-        .suggestions {
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            position: absolute;
-            background: white;
-            z-index: 1000;
-        }
-        .suggestion {
-            padding: 10px;
-            cursor: pointer;
-        }
-        .suggestion:hover {
-            background-color: #f0f0f0;
-        }
-        .highlight {
-            font-weight: bold;
-            color: blue; /* צבע ההדגשה */
-        }
   </style>
 </head>
 
 <body>
-  <div class="centered-container">
+    
+    <div id="my-widget">
+        
+
+ <div class="centered-container">
     <!-- תוכן הדיב כאן -->
 
 
@@ -258,9 +237,7 @@ https://cleversign.co.il/wp-admin/upload.php
 
     <div class="nested-accordion">
 
-
-
-      <!-- התחלה ========================================-->
+ <!-- התחלה ========================================-->
       <div class="accordion-section">
         <div class="accordion-header">
           <span><i class="fas fa-play topic-icon"></i> התחלה</span>
@@ -270,8 +247,7 @@ https://cleversign.co.il/wp-admin/upload.php
           <div class="accordion-inner">
 
 
-
-            <!-- מבט כללי והכרות עם התכנה ========================================-->
+         <!-- מבט כללי והכרות עם התכנה ========================================-->
             <div class="accordion-section">
               <div class="accordion-header">
                 <span><i class="fas fa-info-circle topic-icon"></i> מבט כללי והכרות עם התכנה</span>
@@ -312,7 +288,6 @@ https://cleversign.co.il/wp-admin/upload.php
                   alt="הכרות עם התכנה">
               </div>
             </div>
-
 
 
 
@@ -576,6 +551,7 @@ https://cleversign.co.il/wp-admin/upload.php
                   <p>
                     נעבור פה בסקירה קצרה ומהירה על אופן עריכת התוכן ברוב האובייקטים:
                   </p>
+
 
 
 
@@ -863,13 +839,13 @@ https://cleversign.co.il/wp-admin/upload.php
                   <img src="https://cleversign.co.il/wp-content/uploads/2025/05/צורת-תאריך-לועזי.png" alt=""
                     width="200">
 
-                  <p>
+                 
                   <p>
                     בכרטיסיית ״פרשה ולימודים״ ניתן להגדיר האם יהיה כתוב ״פרשת בראשית״ או רק ״בראשית״, לנסח את המילה
                     ״פרשת” (למשל אפשר לכתוב ״פרשת השבוע״ או בקיצור פר' וכדומה). בלחצן עריכת לימודים 613 עורכים סדר
                     לימודים מותאם אישית, (ניתן לשלוח רשימה מסודרת לתמיכה והם יכניסו את הכל בבת אחת.) סדר לימוד זה יוצג
                     ע״י בחירת ״לימודים מיוחדים״ בחלון המידע היהודי.
-                  </p>
+                 
 
                   </p>
 
@@ -1230,11 +1206,6 @@ https://cleversign.co.il/wp-admin/upload.php
 
 
 
-
-
-
-
-
                   <img src="https://cleversign.co.il/wp-content/uploads/2025/05/ערוך-סטייל-יארצייט.png"
                     alt="ערוך יארצייט סטייל" class="img-float-left_small">
                   <p>
@@ -1517,7 +1488,7 @@ https://cleversign.co.il/wp-admin/upload.php
                   <p>
                     ניתן להגדיר שהזמנים יופיעו באופן חודשי (שכל חודש ישתנו הזמנים) או שהזמנים יוצמדו ליום מסויים בשנה.
                   </p>
-                  <h5 id="event-table-rounding"></h5>
+                  <h5 id="event-table-rounding">
                   עיגול הזמן
                   </h5>
                   <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-עיגול-הזמן.png"
@@ -1594,7 +1565,6 @@ https://cleversign.co.il/wp-admin/upload.php
                 </div>
               </div>
             </div>
-
 
 
 
@@ -1887,7 +1857,7 @@ https://cleversign.co.il/wp-admin/upload.php
 
                       שקוף,
                     </strong>
-
+(חשוב לזכור: שקוף - הוא רק ביחס לרקע הבסיסי ולא ביחס לאובייקט שמתחתיו. ולכן אם שמנו אובייקט שקוף מעל אובייקט אחר, לא יראו את האובייקט התחתון אלא את הרקע הבסיסי של התכנה). 
                     או
 
 
@@ -2139,16 +2109,14 @@ https://cleversign.co.il/wp-admin/upload.php
                 </div>
               </div>
             </div>
-
-            <!-- תנאי תצוגה -->
+<!-- תנאי תצוגה -->
             <div class="accordion-section">
               <div class="accordion-header">
                 <span><i class="fas fa-filter topic-icon"></i> תנאי תצוגה</span>
                 <span class="accordion-toggle">▶️</span>
               </div>
               <div class="accordion-content">
-
-                <div class="accordion-paragraph">
+          <div class="accordion-paragraph">
 
 
                   <img src="https://cleversign.co.il/wp-content/uploads/2025/05/כרטיסיית-תצוגה.jpg"
@@ -2166,8 +2134,8 @@ https://cleversign.co.il/wp-admin/upload.php
                   </p>
                   <p>
                     יפתח לנו חלון עריכת התנאים דלהלן, שבו ניתן לבחור אחד מהקריטריונים הבאים:
-                  </p>
-                  <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image003.png" class="img-float-left">
+                  </p>  
+                    <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image003.png" class="img-float-left">
                   <ul>
                     <li>
                       <a href="#condition-general">כללי</a>
@@ -2197,7 +2165,7 @@ https://cleversign.co.il/wp-admin/upload.php
                       <a href="#condition-year-range">טווח השנים</a>
                     </li>
                   </ul>
-                  <p>
+ <p>
                     כל התנאים הללו יכולים לפעול כל אחד לעצמו, וניתן גם לשלב כמה תנאים אחד על גבי השני.<br>
                     כל תנאי שנרצה להשתמש בו, נסמן תחילה את תיבת הסימון שלו בצד ימין, ואז נוכל לערוך את תוכנו. (ללא סימון
                     תיבה זו, כל האופציות שבתוכו נעולות לעריכה, והן יופיעו בצבע אפור בהיר).<br>
@@ -2247,8 +2215,8 @@ https://cleversign.co.il/wp-admin/upload.php
                     משך
                   </h5> <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image007.png" alt="משך"
                     width="300">
-             
-                  <p>
+                    
+  <p>
                     כאן מגדירים כמה זמן יוצג האובייקט, וכמה זמן יוסתר. כאמור, המספר כאן הוא יכול להיות
                     בשניות/דקות/שעות/ימים/שבועות כפי מה שהגדרנו בשדה "סוג".<br>
                     החלון הימני ("On") מגדירים כמה זמן הוא יוצג, ובשמאלי ("Off") כמה זמן יוסתר.<br>
@@ -2280,14 +2248,13 @@ https://cleversign.co.il/wp-admin/upload.php
                     <br>
                     תיאור זה יופיע גם ברמז מתחת ללחצן הכניסה לעריכת התנאים כדלהלן: (מוקף בירוק)
                   </p>
-                  <p>
-                   <p>
+    <p>
      הסבר: הספרה השמאלית ״3״ מתייחסת למספר היחידות הכולל, לאחריה הספרה ״1״ שמראה לנו שהאובייקט הזה הוא 
                     מספר סידורי 1, לאחר מכן 10 – הוא מספר היחידות המוצג, ו-0 – הוא מספר היחידות שהוא מוסתר. ולבסוף
                     Seconds שזה אומר מהו סוג היחידות.<br>
                     &nbsp;וא 
                   </p>
-                  </p>
+        </p>
                   <h5 id="condition-fixed-hours">
                     טווח שעות קבוע
                   </h5>
@@ -2381,9 +2348,12 @@ https://cleversign.co.il/wp-admin/upload.php
 
           </div>
         </div>
-      </div>
-
-      <!-- תפריט ראשי -->
+      </div>   
+      
+      
+      
+      
+         <!-- תפריט ראשי -->
       <div class="accordion-section">
         <div class="accordion-header">
           <span><i class="fas fa-bars topic-icon"></i> תפריט ראשי</span>
@@ -2516,6 +2486,8 @@ https://cleversign.co.il/wp-admin/upload.php
               </div>
             </div>
   </div>
+  
+  
   
             <!-- אפשרויות -->
             <div class="accordion-section">
@@ -2838,190 +2810,74 @@ https://cleversign.co.il/wp-admin/upload.php
       </div>
     </div>
   </div>
+  </div>
 
+   <script>
 
-  <!--מכאן והלאה יש קטע ששולף את כל הID
-  
+    // פתיחה רגילה של אקורדיון בלחיצה
+    document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const toggleIcon = header.querySelector('.accordion-toggle');
 
-<button id="getIds">שלוף ID</button>
-<ul id="idList"></ul>
-
-<script>
-    document.getElementById('getIds').addEventListener('click', () => {
-        const ids = [];
-        const allElements = document.querySelectorAll('*'); // בחר את כל האלמנטים בדף
-
-        allElements.forEach(element => {
-            if (element.id) {
-                ids.push(element.id); // הוסף את ה-ID לרשימה אם קיים
-            }
-        });
-
-        // הצגת הרשימה בממשק המשתמש
-        const idList = document.getElementById('idList');
-        idList.innerHTML = ''; // נקה את הרשימה הקיימת
-        ids.forEach(id => {
-            const listItem = document.createElement('li');
-            listItem.textContent = id; // הוסף את ה-ID לפריט ברשימה
-            idList.appendChild(listItem);
-        });
-    });
-</script>
-  -->
-
-
-
-
-<input type="text" id="input" placeholder="הקלד כאן...">
-<div id="suggestions" class="suggestions"></div>
-
-
-
-<script>
-    const items = [
-        
-        
-
-
-{name: 'ההבדל בין זמני הצג החכם לזמני חזון שמים', anchor: 'מחשבון הצג'},
-{name: 'תוכן', anchor: 'content_object'},
-{name: 'טקסט פשוט', anchor: 'h4-plain-text'},
-{name: 'טקסט עשיר', anchor: 'h4-rich-text'},
-{name: 'שעון דיגיטלי', anchor: 'h4-digital-clock'},
-{name: 'שעון אנלוגי', anchor: 'h4-analog-clock'},
-{name: 'מדיה בודדת', anchor: 'h4-single-media'},
-{name: 'תמונה', anchor: 'h4-image'},
-{name: 'דפדפן', anchor: 'h4-new-browser'},
-{name: 'תיקיית תמונות', anchor: 'h4-image-folder'},
-{name: 'אוסף מדיות מתוזמנות', anchor: 'h4-timed-media-collection'},
-{name: 'פליי ליסט', anchor: 'h4-playlist'},
-{name: 'אוסף מדיות', anchor: 'h4-media-collection'},
-{name: 'מדיה לתאריך', anchor: 'h4-media-by-date'},
-{name: 'מידע יהודי', anchor: 'h4-jewish-info'},
-{name: '', anchor: 'h4-style-button'},
-{name: 'זמני שבת', anchor: 'h4-shabbat-times'},
-{name: 'טבלת אירועים', anchor: 'h4-event-table'},
-{name: 'טבלת זמנים', anchor: 'h4-times-table'},
-{name: 'התראה על זמן', anchor: 'h4-time-alert'},
-{name: 'טקסט פשוט לתאריך', anchor: 'h4-date-plain-text'},
-{name: 'טקסט עשיר לתאריך', anchor: 'h4-date-rich-text'},
-{name: 'טבלת יארצייט', anchor: 'h4-yahrzeit-table'},
-{name: 'שורת יארצייט', anchor: 'edit_yrz_line'},
-{name: 'ערוך יארצייט סטייל', anchor: 'edit_yrz_style'},
-{name: 'טבלת יארצייט סוג שני', anchor: 'h4-yahrzeit-table2'},
-{name: 'רשימת יארצייט', anchor: 'h4-yahrzeit-list'},
-{name: 'ערוך טבלת אירועים', anchor: 'event-table-anchor'},
-{name: 'ערוך טבלת אירועים - כיתוב', anchor: 'event-table-title'},
-{name: 'ערוך טבלת אירועים - סוג הזמן', anchor: 'event-table-time-type'},
-{name: 'ערוך טבלת אירועים - התאריך לפיו יחושב הזמן', anchor: 'event-table-date-calc'},
-{name: 'ערוך טבלת אירועים - עיגול הזמן', anchor: 'event-table-rounding'},
-{name: 'ערוך טבלת אירועים - אופן התצוגה', anchor: 'event-table-display'},
-{name: 'ערוך טבלת אירועים - תנאי התצוגה', anchor: 'event-table-display-leading-zero'},
-{name: 'ערוך טבלת אירועים - תנאי הדגשה', anchor: 'event-table-highlight-condition'},
-{name: 'ערוך טבלת אירועים - הופעה לפני ואחרי האירוע', anchor: 'event-table-appearance-time'},
-{name: 'קבוצות', anchor: 'groups'},
-{name: 'עיצוב טקסט', anchor: 'text-style'},
-{name: 'כרטיסיית טקסט', anchor: 'perek-text'},
-{name: 'סגנון', anchor: 'סגנון'},
-{name: 'תצוגת אובייקט', anchor: 'display_object'},
-{name: 'תנאי תצוגה', anchor: 'תנאי תצוגה'},
-{name: 'תנאי תצוגה - כללי', anchor: 'condition-general'},
-{name: 'תנאי תצוגה - טקסט', anchor: 'condition-text'},
-{name: 'תנאי תצוגה - תזמון', anchor: 'condition-timing'},
-{name: 'תנאי תצוגה - משך', anchor: 'condition-timing-duration'},
-{name: 'תנאי תצוגה - שעות קבועות', anchor: 'condition-fixed-hours'},
-{name: 'תנאי תצוגה - זמן דינמי', anchor: 'condition-dynamic-hours'},
-{name: 'תנאי תצוגה - יום בשבוע', anchor: 'condition-days-of-week'},
-{name: 'תנאי תצוגה - טווח תאריכים', anchor: 'condition-date-range'},
-{name: 'תנאי תצוגה - סוג היום', anchor: 'condition-day-type'},
-{name: 'תנאי תצוגה - טווח שנים', anchor: 'condition-year-range'},
-{name: 'תפריט קובץ', anchor: '#kovetz'},
-{name: 'תפריטים אחרים', anchor: 'תפריטים אחרים'},
-{name: 'תפריט אפשרויות', anchor: 'options'},
-{name: 'תפריט אפשרויות - ראשי', anchor: 'ראשי'},
-{name: 'תפריט אפשרויות - מנהגים', anchor: 'מנהגים'},
-{name: 'תפריט אפשרויות - זמנים', anchor: 'זמנים'},
-{name: 'תפריט אפשרויות - מיקום', anchor: 'מיקום'},
-{name: 'תפריט אפשרויות - רזולוציה', anchor: 'רזולוציה'},
-{name: 'תפריט אפשרויות - מנהל', anchor: 'מנהל'},
-{name: 'תפריט אפשרויות - סטיילים', anchor: 'סטיילים'},
-{name: 'תפריט אפשרויות - מסכים', anchor: 'מסכים'},
-{name: 'תפריט אפשרויות - כיבוי מסך', anchor: 'כיבוי-מסך'},
-{name: 'תפריט אפשרויות - רשיונות', anchor: 'רשיונות'}
-
-
-    ];
-
-    const input = document.getElementById('input');
-    const suggestionsDiv = document.getElementById('suggestions');
-
-    input.addEventListener('input', () => {
-        const value = input.value.toLowerCase();
-        suggestionsDiv.innerHTML = '';
-        
-        if (value) {
-            const filteredItems = items.filter(item => item.name.toLowerCase().includes(value));
-            filteredItems.forEach(item => {
-                const suggestion = document.createElement('div');
-                suggestion.classList.add('suggestion');
-
-                // הדגשת התו שהקליד המשתמש
-                const highlightedName = item.name.replace(new RegExp(value, 'gi'), match => `<span class="highlight">${match}</span>`);
-                suggestion.innerHTML = highlightedName;
-
-                suggestion.onclick = () => {
-                    window.location.hash = item.anchor; // קישור לעוגן
-                    input.value = item.name; // מטעין את השם לשדה הקלט
-                    suggestionsDiv.innerHTML = ''; // מסתיר את ההמלצות
-                };
-                suggestionsDiv.appendChild(suggestion);
-            });
-        }
-    });
-</script>
-
-
-
-  <script>
-
-
-
-
-// === קוד ניהול אקורדיון מקונן ===
-
-// כשעמוד נטען: ודא שאין טולטיפ פתוח ושהכותרות מוכנות
-document.addEventListener("DOMContentLoaded", function () {
-  // אתחול: סגור את כל האקורדיונים
-  document.querySelectorAll('.accordion-content').forEach(content => {
-    content.classList.remove('active');
-  });
-
-  // הוסף מאזין לכל כותרת אקורדיון
-  document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const section = header.parentElement;
-      const container = section.parentElement; // רמה אחת מעל – הקונטיינר המקומי
-
-      // סגור את שאר האקורדיונים באותה רמה (רק אחים)
-      container.querySelectorAll(':scope > .accordion-section .accordion-content').forEach(content => {
-        if (content !== header.nextElementSibling) {
-          content.classList.remove('active');
-          const icon = content.previousElementSibling.querySelector('.accordion-toggle');
-          if (icon) icon.textContent = '▶️';
-        }
+        content.classList.toggle('active');
+        toggleIcon.textContent = content.classList.contains('active') ? '▼' : '▶️';
       });
-
-      // פתח או סגור את הנוכחי
-      const content = header.nextElementSibling;
-      const toggleIcon = header.querySelector('.accordion-toggle');
-      const isOpen = content.classList.contains('active');
-
-      content.classList.toggle('active', !isOpen);
-      toggleIcon.textContent = !isOpen ? '▼' : '▶️';
     });
-  });
-});
 
+    // פונקציה שפותחת אקורדיון לפי ID
+    function openAccordionById(id) {
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      let content = section.querySelector('.accordion-content');
+      let header = section.querySelector('.accordion-header');
+
+      // אם ה-id עצמו נמצא על כותרת - נטפל בהתאם
+      if (section.classList.contains('accordion-header')) {
+        header = section;
+        content = section.nextElementSibling;
+      }
+
+      if (content && header && !content.classList.contains('active')) {
+        content.classList.add('active');
+        const toggleIcon = header.querySelector('.accordion-toggle');
+        if (toggleIcon) toggleIcon.textContent = '▼';
+      }
+
+      // פותח גם הורים אם יש (אקורדיון מקונן)
+      let parent = section.parentElement;
+      while (parent && !parent.classList.contains('nested-accordion')) {
+        if (parent.classList.contains('accordion-content') && !parent.classList.contains('active')) {
+          parent.classList.add('active');
+          const parentHeader = parent.previousElementSibling;
+          const toggleIcon = parentHeader?.querySelector('.accordion-toggle');
+          if (toggleIcon) toggleIcon.textContent = '▼';
+        }
+        parent = parent.parentElement;
+      }
+
+      // גלילה אל המקטע
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // קישור בלחיצה שפותח את האקורדיון הרצוי
+    document.querySelectorAll('.open-accordion-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('data-target');
+        if (targetId) openAccordionById(targetId);
+      });
+    });
+
+    // פתיחה אוטומטית לפי anchor (hash) בטעינת הדף
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const id = hash.replace('#', '');
+        openAccordionById(id);
+      }
+    });
 
   </script>
 </body>
