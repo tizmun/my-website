@@ -1,0 +1,33 @@
+
+
+<!-- כותרת: שעון עצר שמתחיל אוטומטית -->
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>שעון עצר</title>
+  <style>
+    body { font-family: Arial; font-size: 2em; text-align: center; margin-top: 50px; }
+  </style>
+</head>
+<body>
+
+<div id="timer">00:00:00</div>
+
+<script>
+  let seconds = 0;
+  function formatTime(s) {
+    const hrs = String(Math.floor(s / 3600)).padStart(2, '0');
+    const mins = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+    const secs = String(s % 60).padStart(2, '0');
+    return `${hrs}:${mins}:${secs}`;
+  }
+
+  setInterval(() => {
+    seconds++;
+    document.getElementById('timer').textContent = formatTime(seconds);
+  }, 1000);
+</script>
+
+</body>
+</html>
