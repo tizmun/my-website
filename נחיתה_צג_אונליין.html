@@ -1,0 +1,158 @@
+<!-- דף נחיתה להצג החכם - גרסת ווב -->
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>הצג החכם - גרסת אונליין</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      direction: rtl;
+      text-align: right;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background-color: #48141c;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      font-size: 30px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #004d7a;
+    }
+    ul {
+      padding-right: 20px;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: #28a745;
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    .cta-button:hover {
+      background-color: #218838;
+    }
+button {
+display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: #28a745;
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 1rem;
+      cursor: pointer;
+}
+button:hover {
+      background-color: #218838;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>הצג החכם – עכשיו גם אונליין!</h1>
+  <p>ללא צורך בהתקנה. פשוט פותחים קישור – ומציגים מכל מכשיר.</p>
+</header>
+
+<div class="container">
+  <h2>למה זה טוב לכם?</h2>
+  <ul>
+    <li>⏱ נפתח מיד מכל טלפון, טאבלט או מחשב</li>
+    <li>🧑‍💼 בלי התקנות או צורך בטכנאי</li>
+    <li>🌐 פועל מכל מקום – בית, בית כנסת או מרחוק</li>
+    <li>🔒 תצוגה מאובטחת ויציבה</li>
+  </ul>
+
+  <h2>למי זה מתאים?</h2>
+  <ul>
+    <li>גבאים ובתי כנסת עם תצוגה ציבורית</li>
+    <li>מקומות בלי מחשב קבוע</li>
+    <li>קהילות שמשדרות זמני תפילות או שיעורים</li>
+  </ul>
+
+  <h2>איך זה עובד?</h2>
+  <ol>
+    <li>מקבלים קישור אישי לצג שלכם</li>
+    <li>פותחים את הקישור מכל מכשיר</li>
+    <li>אפשר לקבע למסך הבית או בדפדפן</li>
+  </ol>
+
+  <a class="cta-button" href="https://zmanimboard.com/bzs.html?UserID=0960&UserPass=551022" target="blank">הפעל דוגמה חיה</a>
+<br>
+<button onclick="openGmailPopup()">פנו אלינו במייל</button>
+
+<script>
+  function openGmailPopup() {
+    const email = "g@best2020.co.il";
+    const subject = "מעוניין בפרטים על הצג אונליין";
+    const body = `שלום וברכה, אני מעוניין לקבל פרטים על הצג אונליין.
+שם:  
+טלפון:
+בתודה מראש!`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.open(gmailUrl, 'gmailPopup', 'width=500,height=500,resizable=yes,scrollbars=yes');
+  }
+</script>
+
+  <p style="margin-top: 1rem;">או שלחו לנו הודעה בוואטסאפ:<br>📱 <a href="https://wa.me/972527135863" target="_blank">לחצו כאן לשלוח הודעה</a></p>
+
+<!-- modify this form HTML and place wherever you want your form -->
+<form
+  action="https://formspree.io/f/mldnvyrq"
+  method="POST"
+>
+
+<label>
+<input type="text" name="neme" style="height:44px; width:333px;" placeholder="שם" required
+>
+</label> <br><br>
+  <label>
+    
+    <input type="email" name="email" style="height:44px; width:333px;" placeholder="כתובת מייל" required
+>
+  </label> 
+  <br><br>
+   <label>
+    
+    <input type="tel" name="tel" style="height:44px; width:333px;" placeholder="טלפון" required
+>
+  </label> 
+  <br><br>
+  <button type="submit" style="height:44px; width:333px; background:grey;cursor:pointer;">אני רוצה לשמוע עוד על הצג אונליין</button>
+</form>
+</div>
+
+<div class="footer">
+  © 2025 הצג החכם | כל הזכויות שמורות
+</div>
+
+</body>
+</html>
