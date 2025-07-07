@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>הצג החכם אונליין</title>
-  <style>
-    body {
+  <style>    body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #471619;
@@ -47,7 +46,8 @@
       text-align: center;
       margin-top: 2rem;
     }
-    .buttons a {
+    .buttons a,
+    .buttons button {
       display: inline-block;
       background-color: #471619;
       color: #ffffff;
@@ -56,8 +56,13 @@
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      line-height: 1.5;
     }
-    .buttons a:hover {
+    .buttons a:hover,
+    .buttons button:hover {
       background-color: #5e1e1e;
     }
     form {
@@ -79,7 +84,6 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 1rem;
-      font-family: Arial, Helvetica, sans-serif;
     }
     form button {
       background-color: #471619;
@@ -110,21 +114,43 @@
       <li>✅ לא דורש התקנה – רק קישור</li>
       <li>✅ תצוגה יפה לבית כנסת</li>
       <li>✅ פשוט וקל לגבאים</li>
+       <li>✅ מחיר השקה: 40 ש"ח לחודש עבור שימוש אישי.</li>
     </ul>
 
     <img class="screenshot" src="https://cleversign.co.il/wp-content/uploads/2025/07/%D7%A6%D7%92-%D7%A0%D7%98%D7%95%D7%99.png" alt="צילום מסך של הצג">
 
     <div class="buttons">
-      <a href="https://zmanimboard.com/bzs.html?UserID=0672&UserPass=608325" target="_blank">הפעל תצוגה חיה</a>
-      <a href="mailto:info@cleversign.co.il?subject=מעוניין בתצוגת הצג החכם אונליין">שליחת מייל</a>
-      <a href="https://wa.me/972501234567" target="_blank">שלח לנו ווצאפ</a>
+      <a href="https://zmanimboard.com/bzs.html?UserID=0672&UserPass=608325" target="_blank">🖥️ הפעל תצוגה חיה לדוגמא</a>
+      <br>
+
+      <h3>מעוניינים בתצוגה אונליין אצלכם בבית הכנסת?</h3>
+       <button class="buttons" onclick="openGmailPopup()">✉️ פנו אלינו במייל</button>
+      <!--<a href="mailto:info@cleversign.co.il?subject=מעוניין בתצוגת הצג החכם אונליין">✉️ שלחו לנו מייל</a>-->
+      <a href="https://wa.me/972527135863" target="_blank">💬 או שלחו לנו ווצאפ</a>
     </div>
+   
+
+<script>
+  function openGmailPopup() {
+    const email = "g@best2020.co.il";
+    const subject = "מעוניין בפרטים על הצג אונליין";
+    const body = `שלום וברכה, אני מעוניין לקבל פרטים על הצג אונליין.
+שם:  
+טלפון:
+בתודה מראש!`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.open(gmailUrl, 'gmailPopup', 'width=500,height=500,resizable=yes,scrollbars=yes');
+  }
+</script>
+
 
     <form
   action="https://formspree.io/f/mldnvyrq"
   method="POST"
 >
-<h3>השאירו פרטים ונחזור אליכם</h3>
+<h3>או השאירו פרטים ונחזור אליכם</h3>
 <label>
 <input type="text" name="neme" placeholder="שם מלא" required
 >
