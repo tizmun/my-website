@@ -14,28 +14,40 @@
       font-size: 16px;
       margin-top: 10px;
     }
+    #openButton {
+      background-color: #48141c;
+      color: rgb(245, 226, 140);
+      border: none;
+      cursor: pointer;
+        border-radius: 5px;
+    }   
+    #openButton:hover {
+      background-color: #6a1b2c;
+      color: white;
+    }
+
   </style>
 </head>
 <body>
-  <h2>בחר בית כנסת:</h2>
+ 
   <input list="shuls" id="shulInput" placeholder="הקלד שם בית כנסת">
   <datalist id="shuls">
     
 <option value="רמת מודיעים">
-<option value="יד רמא">
+
 <option value="אשתאול נווה שלום">
 <option value="בית יצחק">
 <option value="בית תפילה">
 
 <option value="תיכון הצבי- דרכא">
-<option value="פסגות">
+
 <option value="רינת יצחק">
 <option value="סורוצקין שדה חמד">
 <option value="סלונים מוסדי הרים">
 <option value="בית בוכריס">
 <option value="באר שמואל אונסדורף ">
 <option value="בית אביי בית שמש">
-<option value="שבי דרום">
+
 
 
 
@@ -44,31 +56,31 @@
 
 <option value="ציילסהיים">
 <option value="ניצן - פנימי לאורך">
-<option value="זכור לאברהם נוף איילון">
-<option value="קהילת יעקב צרפת">
+
+
 <option value="בית חבד מאירי בת ים">
-<option value="צישינסקי">
-<option value="ישיבת יסוד התורה">
-<option value="דברי חיים בני ברק">
+
+
+
 
 <option value="שבטי ישראל מודיעין">
-<option value="אש קלמן - קהילת ראש הגבעה">
+
 <option value="הר חורב ירושלים">
 <option value="קצות החושן היכל ראובן">
 <option value="אמרי סופר צפת">
-<option value="אורנית תהילת השם">
-<option value="פאר הנצח צפת ב">
+
+
 
 <option value="קהילת רבי עקיבא זמנים">
 
 <option value="לעלוב צפת">
-<option value="היכל שלמה נתיבות">
+
 <option value="ת״ת יחי ראובן">
 <option value="ערלוי אלעד">
 <option value="רמת אלחנן">
 <option value="מעלות דפנה">
 <option value="היכל זרח">
-<option value="אשכנז אלעזר">
+
 <option value="קהילת קול תורה">
 <option value="בית חב״ד אילת">
 <option value="חפציבה">
@@ -99,27 +111,27 @@
 <option value="דרכי הוראה לרבנים">
 
   </datalist>
-  <br>
-  <button id="openButton">פתח קישור</button>
+
+  <button id="openButton"> לחץ כאן לצפיה חיה</button>
 
   <script>
     const shulLinks = {
 
 "רמת מודיעים" : "0005",
-"יד רמא" : "0006",
+
 "אשתאול נווה שלום" : "0226",
 "בית יצחק" : "0311",
 "בית תפילה" : "0316",
 
 "תיכון הצבי- דרכא" : "0356",
-"פסגות" : "0370",
+
 "רינת יצחק" : "0434",
 "סורוצקין שדה חמד" : "0443",
 "סלונים מוסדי הרים" : "0447",
 "בית בוכריס" : "0455",
 "באר שמואל אונסדורף " : "0498",
 "בית אביי בית שמש" : "0505",
-"שבי דרום" : "0525",
+
 
 
 "סלונים ירושלים לוין" : "0679",
@@ -131,11 +143,11 @@
 "קהילת יעקב צרפת" : "0827",
 "בית חבד מאירי בת ים" : "0851",
 "צישינסקי" : "0857",
-"ישיבת יסוד התורה" : "0863",
+
 "דברי חיים בני ברק" : "0880",
 
 "שבטי ישראל מודיעין" : "0972",
-"אש קלמן - קהילת ראש הגבעה" : "0983",
+
 "הר חורב ירושלים" : "0988",
 "קצות החושן היכל ראובן" : "0989",
 "אמרי סופר צפת" : "1016",
@@ -145,7 +157,7 @@
 "קהילת רבי עקיבא זמנים" : "1110",
 
 "לעלוב צפת" : "1139",
-"היכל שלמה נתיבות" : "1146",
+
 "ת״ת יחי ראובן" : "1151",
 "ערלוי אלעד" : "1193",
 "רמת אלחנן" : "1276",
