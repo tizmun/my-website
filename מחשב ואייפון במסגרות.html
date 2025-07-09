@@ -1,2 +1,27 @@
-<iframe src="https://tizmun.github.io/my-website/%D7%90%D7%99%D7%99%D7%A4%D7%95%D7%9F2.html" width="600px" height="500px" style="border:0;float: left;"></iframe>
-<iframe src="https://tizmun.github.io/my-website/%D7%9E%D7%97%D7%A9%D7%912.html" width="600px" height="500px" style="border:0;float: right;"></iframe>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>  
+    <style>
+    .iframe-container {
+  display: flex; /* מפעיל את Flexbox על הקונטיינר */
+  flex-wrap: nowrap; /* מונע מהפריטים לרדת שורה */
+  justify-content: center; /* ממקם את המסגרות במרכז הקונטיינר (אופציונלי) */
+  align-items: flex-start; /* מיישר את הפריטים לחלק העליון (אופציונלי) */
+}
+
+.iframe-container iframe {
+  /* ניתן להוסיף כאן סגנונות נוספים לכל iframe בנפרד, לדוגמה: */
+  flex-shrink: 0; /* מונע מהמסגרות להתכווץ אם אין מספיק מקום */
+  margin: 0 5px; /* מרווח קטן בין המסגרות (אופציונלי) */
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הצג החכם אונליין</title> 
+</head>
+<body>
+    <div class="iframe-container">
+  <iframe src="https://tizmun.github.io/my-website/%D7%90%D7%99%D7%99%D7%A4%D7%95%D7%9F2.html" width="600px" height="500px" style="border:0;"></iframe>
+  <iframe src="https://tizmun.github.io/my-website/%D7%9E%D7%97%D7%A9%D7%912.html" width="600px" height="500px" style="border:0;"></iframe>
+</div>
+</body>
