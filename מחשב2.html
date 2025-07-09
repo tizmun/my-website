@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /*
+  Responsive CSS MacBook Retina Mockup by Henri Peetsmann
+  https://codepen.io/henripeetsmann/
+*/
+
+        .css-mb {
+            max-width: 1000px;
+            /* Set the desired maximum width of the macbook */
+            min-width: 50px;
+            /* Set the desired minimum width of the macbook */
+            margin: 0 auto;
+            /* Align mockup to center */
+        }
+
+        .css-mb div {
+            box-sizing: border-box !important;
+            /* Just in case */
+        }
+
+        /* Center the display */
+        .css-mb .mb-display-position {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        /* The display */
+        .css-mb .mb-display {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 62.9442%;
+            background: #373435;
+
+            -webkit-border-top-left-radius: 3.5% 5.3075%;
+            -moz-border-radius-topleft: 3.5% 5.3075%;
+            border-top-left-radius: 3.5% 5.3075%;
+
+            -webkit-border-top-right-radius: 3.5% 5.3075%;
+            -moz-border-radius-toptight: 3.5% 5.3075%;
+            border-top-right-radius: 3.5% 5.3075%;
+        }
+
+        /* Webcam */
+        /* Browser may not render a perfect circle */
+        .css-mb .mb-display:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 3%;
+            left: 50%;
+            width: 1%;
+            height: 1.5164%;
+            margin-left: -0.5%;
+            border-radius: 50%;
+            background: #525252;
+        }
+
+        /* Glare */
+        /* Browser may not render the top and right offset evenly */
+        .css-mb .mb-display:after {
+            content: '';
+            display: none;
+            position: absolute;
+            right: 0.4%;
+            top: 0.64%;
+            width: 62.5%;
+            height: 100%;
+
+            background: none;
+            /* Hide the gradient on older browsers */
+            background: -moz-linear-gradient(55deg, rgba(0, 0, 0, 0) 61%, rgba(255, 255, 255, 0.05) 61%);
+            /* FF3.6+ */
+            background: -webkit-linear-gradient(36deg, rgba(0, 0, 0, 0) 61%, rgba(255, 255, 255, 0.05) 61%);
+            /* Chrome10+ and Safari5.1+ compute the degree differently */
+            background: -o-linear-gradient(55deg, rgba(0, 0, 0, 0) 61%, rgba(255, 255, 255, 0.05) 61%);
+            /* Opera 11.10+ */
+            background: -ms-linear-gradient(55deg, rgba(0, 0, 0, 0) 61%, rgba(255, 255, 255, 0.05) 61%);
+            /* IE10+ */
+            background: linear-gradient(55deg, rgba(0, 0, 0, 0) 61%, rgba(255, 255, 255, 0.05) 61%);
+
+            -webkit-border-top-right-radius: 5.3075%;
+            -moz-border-radius-toptight: 5.3075%;
+            border-top-right-radius: 5.3075%;
+        }
+
+        /* Only show glare, if the class is applied */
+        .css-mb.with-glare .mb-display:after {
+            display: block;
+        }
+
+        /* Position the screen and give make it the right size, ratio 16:10 */
+        .css-mb .mb-screen-position {
+            position: absolute;
+            top: 8.0%;
+            width: 93.2%;
+            left: 3.4%;
+            height: 0;
+            margin: 0;
+            padding-bottom: 53.75%;
+            /* Ratio */
+            /*53.75% for vimeo videos*/
+        }
+
+        /* Give parent (this element) a "height", so that child elements can use height: 100%;*/
+        .css-mb .mb-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            background: #4b4b4d;
+            /* bg color if content is not big enough, or rendering is off */
+        }
+
+        /* Image on the screen */
+        .css-mb .mb-screen img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Iframe on the screen */
+        .css-mb .mb-screen iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Macbook body */
+        .css-mb .mb-body {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 2.3%;
+            background: #e6e7e8;
+        }
+
+        /* The groove */
+        .css-mb .mb-body:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 14.0740%;
+            height: 0;
+            padding-bottom: 1.4814%;
+            margin-left: -7.037%;
+            background: #a9abae;
+
+            -webkit-border-bottom-left-radius: 7.0370% 50%;
+            -moz-border-radius-bottomleft: 7.0370% 50%;
+            border-bottom-left-radius: 7.0370% 50%;
+
+            -webkit-border-bottom-right-radius: 7.0370% 50%;
+            -moz-border-radius-bottomtight: 7.0370% 50%;
+            border-bottom-right-radius: 7.0370% 50%;
+        }
+
+        /* Macbook bottom */
+        .css-mb .mb-bottom-cover {
+            width: 100%;
+            height: 0;
+            padding-bottom: 0.7407%;
+            background: #a9abae;
+
+            -webkit-border-bottom-left-radius: 12% 600%;
+            -moz-border-radius-bottomleft: 12% 600%;
+            border-bottom-left-radius: 12% 600%;
+
+            -webkit-border-bottom-right-radius: 12% 600%;
+            -moz-border-radius-bottomtight: 12% 600%;
+            border-bottom-right-radius: 12% 600%;
+        }
+
+
+        /*
+  Responsive CSS Moto G mockup by Henri Peetsmann
+  https://codepen.io/henripeetsmann/
+*/
+
+        .css-iphone {
+            max-width: 250px;
+            /* Set the desired maximum width of the moto g */
+            min-width: 50px;
+            /* Set the desired minimum width of the moto g */
+            margin: 0 auto;
+            /* Align mockup to center */
+        }
+
+        .css-iphone div {
+            box-sizing: border-box !important;
+            /* Just in case */
+        }
+
+        /* Phone body */
+        .css-iphone .iphone-body {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 198%;
+            background: #373435;
+
+            -webkit-border-radius: 16% / 8.0808%;
+            -moz-border-radius: 16% / 8.0808%;
+            border-radius: 16% / 8.0808%;
+        }
+
+        /* Glass edge - Browser may not render the top, right, bottom, left offset evenly */
+        .css-iphone .iphone-body:before {
+            content: '';
+            position: absolute;
+            top: 0.8%;
+            right: 1.584%;
+            bottom: 0.8%;
+            left: 1.584%;
+            background: #080808;
+
+            -webkit-border-radius: 15% / 7.5757%;
+            -moz-border-radius: 15% / 7.5757%;
+            border-radius: 15% / 7.5757%;
+        }
+
+        /* Glare - Browser may not render the top and right offset evenly */
+        .css-iphone .iphone-body:after {
+            display: none;
+            /* Hide initially */
+            content: '';
+            position: absolute;
+            top: 0.8%;
+            right: 1.584%;
+            bottom: 0.8%;
+            left: 1.584%;
+
+            background: none;
+            /* Hide the gradient on older browsers */
+            background: -moz-linear-gradient(55deg, rgba(0, 0, 0, 0) 66%, rgba(255, 255, 255, 0.05) 66%);
+            /* FF3.6+ */
+            background: -webkit-linear-gradient(36deg, rgba(0, 0, 0, 0) 66%, rgba(255, 255, 255, 0.05) 66%);
+            /* Chrome10+ and Safari5.1+ compute the degree differently */
+            background: -o-linear-gradient(55deg, rgba(0, 0, 0, 0) 66%, rgba(255, 255, 255, 0.05) 66%);
+            /* Opera 11.10+ */
+            background: -ms-linear-gradient(55deg, rgba(0, 0, 0, 0) 66%, rgba(255, 255, 255, 0.05) 66%);
+            /* IE10+ */
+            background: linear-gradient(55deg, rgba(0, 0, 0, 0) 66%, rgba(255, 255, 255, 0.05) 66%);
+
+            -webkit-border-top-right-radius: 15% 7.5757%;
+            -moz-border-radius-topright: 15% 7.5757%;
+            border-top-right-radius: 15% 7.5757%;
+        }
+
+        /* Only show glare, if the class is applied */
+        .css-iphone.with-glare .iphone-body:after {
+            display: block;
+        }
+
+
+        /* Buttons */
+
+        /*Power Button*/
+        .css-iphone .iphone-buttons-right {
+            position: absolute;
+            top: 21.4646%;
+            right: -.6%;
+            width: 1.3%;
+            height: 6.8181%;
+            background: #242424;
+
+            -webkit-border-top-right-radius: 50% 5.2446%;
+            -moz-border-radius-toptight: 50% 5.2446%;
+            border-top-right-radius: 50% 5.2446%;
+
+            -webkit-border-bottom-right-radius: 50% 5.2446%;
+            -moz-border-radius-bottomright: 50% 5.2446%;
+            border-bottom-right-radius: 50% 5.2446%;
+        }
+
+
+        /* Left Buttons */
+
+        /* Lock Button */
+        .css-iphone .iphone-buttons-left {
+            position: absolute;
+            top: 13.4646%;
+            left: -.6%;
+            width: 1.3%;
+            height: 3.8181%;
+            background: #242424;
+
+            -webkit-border-top-left-radius: 50% 5.2446%;
+            -moz-border-radius-topleft: 50% 5.2446%;
+            border-top-left-radius: 50% 5.2446%;
+
+            -webkit-border-bottom-left-radius: 50% 5.2446%;
+            -moz-border-radius-bottomleft: 50% 5.2446%;
+            border-bottom-left-radius: 50% 5.2446%;
+        }
+
+        /* Vol Down Button */
+        .css-iphone .iphone-buttons-left:before {
+            content: '';
+            position: absolute;
+            top: 390.925%;
+            right: 0;
+            height: 180%;
+            width: 100%;
+            background: #242424;
+
+            -webkit-border-top-left-radius: 50% 2.9136%;
+            -moz-border-radius-topleft: 50% 2.9136%;
+            border-top-left-radius: 50% 2.9136%;
+
+            -webkit-border-bottom-left-radius: 50% 2.9136%;
+            -moz-border-radius-bottomleft: 50% 2.9136%;
+            border-bottom-left-radius: 50% 2.9136%;
+        }
+
+        /* Vol Up Button */
+        .css-iphone .iphone-buttons-left:after {
+            content: '';
+            position: absolute;
+            top: 180.925%;
+            right: 0;
+            height: 150%;
+            width: 100%;
+            background: #242424;
+
+            -webkit-border-top-left-radius: 50% 2.9136%;
+            -moz-border-radius-topleft: 50% 2.9136%;
+            border-top-left-radius: 50% 2.9136%;
+
+            -webkit-border-bottom-left-radius: 50% 2.9136%;
+            -moz-border-radius-bottomleft: 50% 2.9136%;
+            border-bottom-left-radius: 50% 2.9136%;
+        }
+
+
+        /* Home Button */
+        .css-iphone .iphone-home-button {
+            content: '';
+            position: absolute;
+            top: 103.7819%;
+            left: 50%;
+            width: 17.5410%;
+            height: 9.710%;
+            margin-left: -7.6705%;
+            background: #242424;
+
+
+            -webkit-border-radius: 50% / 50%;
+            -moz-border-radius: 50% / 50%;
+            border-radius: 50% / 50%;
+        }
+
+        .css-iphone .iphone-home-button:after {
+            content: '';
+            position: absolute;
+            top: 6.7819%;
+            left: 16%;
+            width: 85%;
+            height: 85%;
+            margin-left: -8.6705%;
+            background: #080808;
+
+
+            -webkit-border-radius: 50% / 50%;
+            -moz-border-radius: 50% / 50%;
+            border-radius: 50% / 50%;
+        }
+
+
+
+
+        /* Position the screen and give make it the right size, ratio 16:9 */
+        .css-iphone .iphone-screen-position {
+            position: absolute;
+            top: 9.3434%;
+            width: 86.5%;
+            left: 6.75%;
+            height: 0;
+            margin: 0;
+            padding-bottom: 153.7778%;
+            /* Ratio 16:9 */
+        }
+
+        /* Camera */
+        .css-iphone .iphone-screen-position:before {
+            content: '';
+            position: absolute;
+            top: -7.5%;
+            left: 28.4161%;
+            width: 4.7803%;
+            height: 2.4637%;
+            border-radius: 50%;
+            background: #222;
+        }
+
+        /* Speaker */
+        .css-iphone .iphone-screen-position:after {
+            content: '';
+            position: absolute;
+            top: -6.7819%;
+            left: 50%;
+            width: 20.5410%;
+            height: 1.2276%;
+            margin-left: -9.6705%;
+            background: #333;
+
+            -webkit-border-radius: 7% / 50%;
+            -moz-border-radius: 7% / 50%;
+            border-radius: 7% / 50%;
+        }
+
+        /* Give parent (this element) a "height", so that child elements can use height: 100%;*/
+        .css-iphone .iphone-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            background: #444;
+            /* bg color if content is not big enough, or rendering is buggy */
+        }
+
+        /* Stuff on the screen */
+        .css-iphone .iphone-screen img,
+        .css-iphone .iphone-screen iframe {
+            width: auto;
+            height: 100%;
+            border: 0;
+        }
+
+        .css-iphone .iphone-screen iframe {
+            width: 100%;
+        }
+
+
+        /*Testing blocks*/
+        .blackblock {
+            /*background-color: red;*/
+            height: 100%;
+            width: 100%;
+        }
+
+        .iphone-container {
+            /*background-color: blue;*/
+            margin: auto 10% auto 10%;
+        }
+
+
+        .iframe-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: black;
+        }
+
+        .iphone-screen {
+            position: relative;
+            /* חשוב */
+            overflow: hidden;
+            background: #444;
+        }
+
+
+
+        #rotated-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 500%;
+            height: 100%;
+            transform: rotate(90deg) scale(0.21) translateY(-100%);
+            transform-origin: top left;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Add or remove "with-glare" class. Removing the glare makes the screen interactive -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9" .blackblock>
+                <div class="blackblock"></div>
+            </div>
+            <div class="col-md-3" .col-md-4>
+                <div class="blackblock"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="blackblock">
+                    <div class="css-mb with-glare">
+                        <div class="mb-display-position">
+                            <div class="mb-display">
+                                <div class="mb-screen-position">
+                                    <div class="mb-screen">
+                                        <iframe src="https://zmanimboard.com/bzs.html?UserID=0672&UserPass=608325"
+                                            width="500" height="281" frameborder="0" webkitallowfullscreen
+                                            mozallowfullscreen allowfullscreen style="
+    transform: scale(0.23);
+    transform-origin: top left;
+    width: 800%;
+    height: 800%;
+    border: none;
+  "></iframe> 
+
+                                            <!-- Image (aspect 16:10 recommended, but not required). You might also want to change or remove the background color, in case the picture is not big enough, or rendering is off  -->
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Picture_of_Hi-Point_.45_ACP.png/330px-Picture_of_Hi-Point_.45_ACP.png"
+                                                alt="example image" />
+                                            <!-- Image by Jonas Nilsson Lee from unsplash.com -->
+
+                                            <!-- Youtube - don't forget to remove glare -->
+                                            <!-- <iframe width="960" height="480" src="https://www.youtube.com/embed/GUEZCxBcM78?rel=0&amp;showinfo=0&amp;iv_load_policy=3&amp;controls=2" frameborder="0"></iframe> -->
+
+                                            <!-- Iframe, simple website - don't forget to remove glare -->
+                                            <!-- <iframe src="http://example.com" frameborder="0"></iframe> -->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-body"></div>
+                        <div class="mb-bottom-cover"></div>
+                    </div>
+                </div>
+            </div><template>
+            <div class="col-md-3 text-center">
+                <div class="blackblock">
+                    <div class="iphone-container">
+                        <div class="css-iphone with-glare">
+                            <div class="iphone-body">
+                                <div class="iphone-screen-position">
+                                    <div class="iphone-home-button"></div>
+                                    <div class="iphone-screen">
+                                        <div class="iframe-container">
+                                            <iframe src="https://zmanimboard.com/bzs.html?UserID=0672&UserPass=608325"
+                                                alt="example image" id="rotated-frame"></iframe>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                <div class="iphone-buttons-right"></div>
+                                <div class="iphone-buttons-left"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  </template>
+        </div>
+    </div>
+</body>
+
+</html>
