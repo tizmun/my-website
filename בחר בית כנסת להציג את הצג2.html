@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>בחירת בית כנסת</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      padding: 30px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>בחר בית כנסת:</h2>
+  <input list="shuls" id="shulInput" placeholder="הקלד שם בית כנסת">
+  <datalist id="shuls">
+    
+<option value="רמת מודיעים">
+<option value="יד רמא">
+<option value="אשתאול נווה שלום">
+<option value="בית יצחק">
+<option value="בית תפילה">
+
+<option value="תיכון הצבי- דרכא">
+<option value="פסגות">
+<option value="רינת יצחק">
+<option value="סורוצקין שדה חמד">
+<option value="סלונים מוסדי הרים">
+<option value="בית בוכריס">
+<option value="באר שמואל אונסדורף ">
+<option value="בית אביי בית שמש">
+<option value="שבי דרום">
+
+
+
+<option value="סלונים ירושלים לוין">
+<option value="בני הישיבות מרכז הרמה משאת מרדכי">
+
+<option value="ציילסהיים">
+<option value="ניצן - פנימי לאורך">
+<option value="זכור לאברהם נוף איילון">
+<option value="קהילת יעקב צרפת">
+<option value="בית חבד מאירי בת ים">
+<option value="צישינסקי">
+<option value="ישיבת יסוד התורה">
+<option value="דברי חיים בני ברק">
+
+<option value="שבטי ישראל מודיעין">
+<option value="אש קלמן - קהילת ראש הגבעה">
+<option value="הר חורב ירושלים">
+<option value="קצות החושן היכל ראובן">
+<option value="אמרי סופר צפת">
+<option value="אורנית תהילת השם">
+<option value="פאר הנצח צפת ב">
+
+<option value="קהילת רבי עקיבא זמנים">
+
+<option value="לעלוב צפת">
+<option value="היכל שלמה נתיבות">
+<option value="ת״ת יחי ראובן">
+<option value="ערלוי אלעד">
+<option value="רמת אלחנן">
+<option value="מעלות דפנה">
+<option value="היכל זרח">
+<option value="אשכנז אלעזר">
+<option value="קהילת קול תורה">
+<option value="בית חב״ד אילת">
+<option value="חפציבה">
+<option value="בית דוד ורבקה">
+
+<option value="ישיבת ארחות משה">
+
+<option value="היכל יוסף נתיבות">
+<option value="חבד רמת שלמה">
+<option value="שירה חדשה">
+<option value="אוהל תורה מנשסטר">
+<option value="יופי של פתרון">
+<option value="פני שמואל">
+<option value="ישיבת גבעת רוקח">
+<option value="בי״כ נווה עוז הירוקה">
+<option value="אהבת תורה בית שמש 1">
+<option value="אהבת תורה בית שמש הנצחות">
+<option value="חבד אוהב ישראל">
+<option value="אבשלום חורי 3">
+<option value="סאטמר  היכל הכולל">
+<option value="בית רפאל שעון יהודי">
+<option value="שוחר טוב">
+<option value="היכל התורה">
+<option value="תורה ותפילה אהבת תורה בית שמש ">
+<option value="איילת השחר">
+
+<option value="אוהל יצחק">
+<option value="דרכי הוראה לרבנים">
+
+  </datalist>
+  <br>
+  <button id="openButton">פתח קישור</button>
+
+  <script>
+    const shulLinks = {
+
+"רמת מודיעים" : "0005",
+"יד רמא" : "0006",
+"אשתאול נווה שלום" : "0226",
+"בית יצחק" : "0311",
+"בית תפילה" : "0316",
+
+"תיכון הצבי- דרכא" : "0356",
+"פסגות" : "0370",
+"רינת יצחק" : "0434",
+"סורוצקין שדה חמד" : "0443",
+"סלונים מוסדי הרים" : "0447",
+"בית בוכריס" : "0455",
+"באר שמואל אונסדורף " : "0498",
+"בית אביי בית שמש" : "0505",
+"שבי דרום" : "0525",
+
+
+"סלונים ירושלים לוין" : "0679",
+"בני הישיבות מרכז הרמה משאת מרדכי" : "0712",
+
+"ציילסהיים" : "0758",
+"ניצן - פנימי לאורך" : "0772",
+"זכור לאברהם נוף איילון" : "0819",
+"קהילת יעקב צרפת" : "0827",
+"בית חבד מאירי בת ים" : "0851",
+"צישינסקי" : "0857",
+"ישיבת יסוד התורה" : "0863",
+"דברי חיים בני ברק" : "0880",
+
+"שבטי ישראל מודיעין" : "0972",
+"אש קלמן - קהילת ראש הגבעה" : "0983",
+"הר חורב ירושלים" : "0988",
+"קצות החושן היכל ראובן" : "0989",
+"אמרי סופר צפת" : "1016",
+"אורנית תהילת השם" : "1022",
+"פאר הנצח צפת ב" : "1050",
+
+"קהילת רבי עקיבא זמנים" : "1110",
+
+"לעלוב צפת" : "1139",
+"היכל שלמה נתיבות" : "1146",
+"ת״ת יחי ראובן" : "1151",
+"ערלוי אלעד" : "1193",
+"רמת אלחנן" : "1276",
+"מעלות דפנה" : "1346",
+"היכל זרח" : "1375",
+"אשכנז אלעזר" : "1393",
+"קהילת קול תורה" : "1399",
+"בית חב״ד אילת" : "1429",
+"חפציבה" : "1491",
+"בית דוד ורבקה" : "1519",
+
+"ישיבת ארחות משה" : "1606",
+
+"היכל יוסף נתיבות" : "1846",
+"חבד רמת שלמה" : "1888",
+"שירה חדשה" : "1910",
+"אוהל תורה מנשסטר" : "1964",
+"יופי של פתרון" : "1975",
+"פני שמואל" : "1980",
+"ישיבת גבעת רוקח" : "1983",
+"בי״כ נווה עוז הירוקה" : "1995",
+"אהבת תורה בית שמש 1" : "2021",
+"אהבת תורה בית שמש הנצחות" : "2026",
+"חבד אוהב ישראל" : "2028",
+"אבשלום חורי 3" : "2032",
+"סאטמר  היכל הכולל" : "2036",
+"בית רפאל שעון יהודי" : "2046",
+"שוחר טוב" : "2049",
+"היכל התורה" : "2066",
+"תורה ותפילה אהבת תורה בית שמש " : "2067",
+"איילת השחר" : "2069",
+
+"אוהל יצחק" : "2083",
+"דרכי הוראה לרבנים" : "2096"
+    };
+
+    const baseUrl = "https://zmanimboard.com/bzs.html?UserID=";
+
+    document.getElementById("openButton").addEventListener("click", function () {
+      const input = document.getElementById("shulInput").value.trim();
+      const shulId = shulLinks[input];
+
+      if (shulId) {
+        const fullUrl = baseUrl + shulId;
+
+        // פתיחת חלון במסך מלא (במסגרת ההרשאות של הדפדפן)
+        const width = window.screen.availWidth;
+        const height = window.screen.availHeight;
+
+        const win = window.open(
+          fullUrl,
+          "_blank",
+          `width=${width},height=${height},left=0,top=0,resizable=yes,scrollbars=yes`
+        );
+
+        // מיקוד לחלון החדש אם נפתח
+        if (win) {
+          win.focus();
+        } else {
+          alert("הדפדפן חסם את החלון. נא לאפשר פתיחת חלונות קופצים.");
+        }
+
+      } else {
+        alert("אנא בחר בית כנסת מהרשימה.");
+      }
+    });
+  </script>
+</body>
+</html>
