@@ -1,0 +1,107 @@
+<!-- קוד מעודכן - מתאים גם לאלמנטור וגם לדף עצמאי -->
+<html>
+<head>
+  <style>
+    /* עיצוב כללי */
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* עטיפה מרכזית */
+    .center-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px; /* אל תשתמש ב-100vh באלמנטור */
+      width: 100%;
+    }
+
+    /* קופסה פנימית */
+    .center-box {
+      border-radius: 12px;
+      padding: 30px;
+      width: 100%;
+      max-width: 500px; /* שומר על גודל סביר ולא צר מדי */
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    /* עיצוב לפי מזהים */
+    #form-container-4F7HU2R44AUBU {
+      background-color: rgba(139, 69, 19, 0.2);
+      justify-content: center;
+      align-items: center;
+      margin: 33px auto;
+      padding: 33px;
+      border-radius: 33px;
+      direction: rtl;
+      font-family: arial;
+      color: #48141c;
+      box-sizing: border-box;
+      max-width: 500px;
+       font-size: 18px !important;
+    }
+
+    #desc-label {
+      text-align: center;
+      font-size: 33px !important;
+      font-weight: bold;
+      color: #48141c;
+    }
+
+    .item-description {
+      text-align: center;
+      font-size: 22px;
+      color: #48141c;
+    }
+
+    #checkout-button {
+      background-color: #48141c; /* היה כתוב בטעות backgroud-color */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px !important;
+    }
+    #amount {
+    font-size: 18px !important;
+    text-align: center;
+    }
+    
+    .currency-label {
+         font-size: 18px !important;
+    }
+    
+    .currency-symbol {
+         font-size: 18px !important;
+    }
+    
+    #memo {
+         font-size: 18px !important;
+    }
+    
+    
+  </style>
+
+  <!-- ספריית PayPal -->
+  <script 
+    src="https://www.paypal.com/sdk/js?client-id=BAAUcz_QGHE37bxuaeaZTO7WMoBABa1j1tQERIQI2BQsZmbNdaxNnQ35VN3rmAky7rGTkHzxLYqhQ2aABw&components=hosted-buttons&disable-funding=venmo&currency=ILS">
+  </script>
+</head>
+
+<body>
+  <div class="center-wrapper">
+    <div class="center-box">
+      <div id="paypal-container-4F7HU2R44AUBU"></div>
+    </div>
+  </div>
+
+  <script>
+    paypal.HostedButtons({
+      hostedButtonId: "4F7HU2R44AUBU",
+    }).render("#paypal-container-4F7HU2R44AUBU")
+  </script>
+</body>
+</html>
