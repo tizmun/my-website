@@ -1,0 +1,140 @@
+<html>
+<head>
+<style>
+
+
+  #form-container {
+    max-width: 700px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    margin: auto;
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .row > div {
+    flex: 1;
+    min-width: 150px;
+  }
+
+  
+
+  textarea {
+    resize: vertical;
+    height: 100px;
+  }
+
+  #want {
+    background-color: #48141c;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #005ea6;
+  }
+
+  #success-message {
+    max-width: 700px;
+    margin: auto;
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #c3e6cb;
+    text-align: center;
+    font-weight: bold;
+    direction: rtl;
+  }
+</style>
+</head>
+<body>
+
+<div id="form-container">
+  <form id="myForm" target="hiddenFrame" onsubmit="submitViaIframe(); return false;">
+    <div class="row">
+      <div>
+        <input type="text" id="name" placeholder="שם מלא" required>
+      </div>
+      <div>
+        <input type="tel" id="phone" placeholder="טלפון" required>
+      </div>
+      <div>
+        <input type="email" id="email" placeholder="דוא״ל" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div style="flex: 1;">
+        <textarea id="body" placeholder="הודעה..." required></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div style="flex: 1;">
+        <button id="want" type="submit">אני רוצה לשמוע עוד פרטים על הצג החכם אונליין</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div id="success-message" style="display: none;">
+  ✅ הודעתך נשלחה בהצלחה.<br>
+  נציגנו יחזרו אליך בהקדם.<br>
+  תודה רבה!
+</div>
+
+<!-- iframe נסתר לשליחה -->
+<iframe name="hiddenFrame" style="display: none;"></iframe>
+
+<script>
+  function submitViaIframe() {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('body').value.trim();
+    const userPass = "Bc3456123";
+    const toStr = "BLA_BLA";
+
+    const subject = encodeURIComponent( name + " שלח אליך הודעה באמצעות טופס יצירת קשר בדף הבית של הצג החכם ");
+
+    const bodyText = `====================================\nשלום וברכה למזכירות חברת ב.א. פתרונות תזמון.
+    ${name} שלח אליך הודעה חשובה באמצעות טופס צור קשר בדף הבית של הצג החכם 
+    להלן פרטי ההודעה . \n שם השולח: ${name}
+דוא״ל: ${email}
+טלפון: ${phone}
+הודעה: ${message}
+נא לטפל בפניה בהקדם האפשרי.
+תודה רבה, המשך יום נעים!`;
+
+    const fullBody = encodeURIComponent(bodyText);
+
+    const url = `https://smart-bell.net/Send_Mail.aspx?FromMail=${encodeURIComponent(email)}&Phone=${encodeURIComponent(phone)}&toStr=${toStr}&subject=${subject}&body=${fullBody}&UserPass=${userPass}`;
+
+    const iframe = document.createElement("iframe");
+    iframe.name = "hiddenFrame";
+    iframe.style.display = "none";
+    iframe.src = url;
+
+    const oldIframe = document.querySelector("iframe[name='hiddenFrame']");
+    if (oldIframe) oldIframe.remove();
+    document.body.appendChild(iframe);
+
+    setTimeout(() => {
+      document.getElementById("form-container").style.display = "none";
+      document.getElementById("success-message").style.display = "block";
+    }, 500);
+  }
+</script>
+</body>
+</html>
