@@ -1,62 +1,80 @@
-<html>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
 <head>
-<style>
+  <meta charset="UTF-8">
+  <title>טופס שליחה</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      direction: rtl;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
 
+    #form-container {
+      max-width: 700px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      margin: auto;
+    }
 
-  #form-container {
-    max-width: 700px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-    margin: auto;
-  }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
 
-  .row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
+    .row > div {
+      flex: 1;
+      min-width: 150px;
+    }
 
-  .row > div {
-    flex: 1;
-    min-width: 150px;
-  }
+    .row.full-width {
+      width: 100%;
+    }
 
-  
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
 
-  textarea {
-    resize: vertical;
-    height: 100px;
-  }
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
 
-  #want {
-    background-color: #48141c;
-    color: white;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-  }
+    button {
+      background-color: #48141c;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-  button:hover {
-    background-color: #005ea6;
-  }
+    button:hover {
+      background-color: #6b1c28;
+    }
 
-  #success-message {
-    max-width: 700px;
-    margin: auto;
-    background: #d4edda;
-    color: #155724;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #c3e6cb;
-    text-align: center;
-    font-weight: bold;
-    direction: rtl;
-  }
-</style>
+    #success-message {
+      max-width: 700px;
+      margin: auto;
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #c3e6cb;
+      text-align: center;
+      font-weight: bold;
+      direction: rtl;
+    }
+  </style>
 </head>
 <body>
 
@@ -74,15 +92,15 @@
       </div>
     </div>
 
-    <div class="row">
-      <div style="flex: 1;">
+    <div class="row full-width">
+      <div style="width: 100%;">
         <textarea id="body" placeholder="הודעה..." required></textarea>
       </div>
     </div>
 
-    <div class="row">
-      <div style="flex: 1;">
-        <button id="want" type="submit">אני רוצה לשמוע עוד פרטים על הצג החכם אונליין</button>
+    <div class="row full-width">
+      <div style="width: 100%;">
+        <button type="submit">שלח הודעה</button>
       </div>
     </div>
   </form>
@@ -94,7 +112,6 @@
   תודה רבה!
 </div>
 
-<!-- iframe נסתר לשליחה -->
 <iframe name="hiddenFrame" style="display: none;"></iframe>
 
 <script>
@@ -106,14 +123,17 @@
     const userPass = "Bc3456123";
     const toStr = "BLA_BLA";
 
-    const subject = encodeURIComponent( name + " שלח אליך הודעה באמצעות טופס יצירת קשר בדף הבית של הצג החכם ");
+    const subject = encodeURIComponent(name + " שלח אליך הודעה באמצעות טופס יצירת קשר באתר חזון שמים");
 
     const bodyText = `====================================\nשלום וברכה למזכירות חברת ב.א. פתרונות תזמון.
-    ${name} שלח אליך הודעה חשובה באמצעות טופס צור קשר בדף הבית של הצג החכם 
-    להלן פרטי ההודעה . \n שם השולח: ${name}
+${name} שלח אליך הודעה חשובה באמצעות טופס צור קשר באתר זמני היום.
+להלן פרטי ההודעה:
+שם השולח: ${name}
 דוא״ל: ${email}
 טלפון: ${phone}
-הודעה: ${message}
+הודעה:
+${message}
+
 נא לטפל בפניה בהקדם האפשרי.
 תודה רבה, המשך יום נעים!`;
 
@@ -136,5 +156,6 @@
     }, 500);
   }
 </script>
+
 </body>
 </html>

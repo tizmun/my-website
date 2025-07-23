@@ -1,0 +1,512 @@
+<style>
+    /* סגנונות כפתורי הסינון */
+    .gallery-filters {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .gallery-filters button {
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        padding: 10px 20px;
+        margin: 0 5px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .gallery-filters button:hover,
+    .gallery-filters button.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    /* סגנונות הגלריה והתמונות */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 25px;
+        justify-content: center;
+    }
+
+    .gallery-item {
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f9f9f9;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+        display: block;
+    }
+
+    /* סגנונות ה-Lightbox */
+    .lightbox-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+/*
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+    }*/
+    .lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    display: block;
+    margin: auto;
+    object-fit: contain; /* שומר על יחס הגובה-רוחב ומכיל את התמונה בתוך הגבולות */
+    width: auto; /* מאפשר לרוחב להשתנות בהתאם לגובה */
+    height: auto; /* מגדיר את גובה התמונה למקסימום גובה הלייטבוקס */
+}
+
+    .lightbox-content img {
+      width: auto; /* מאפשר לרוחב להשתנות בהתאם לגובה */
+    height: 100%; /* מגדיר את גובה התמונה למקסימום גובה הלייטבוקס */
+       max-width: 100%;
+        max-height: 100%;
+        display: block;
+        margin: auto;
+        object-fit: contain;
+    }
+
+
+    /*
+מכאן והלאה קוד ה-Lightbox מעודכן עם החיצים, צריך לאט לאט למחוק את הקוד הקודם
+    */
+
+    /* Basic Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* שונה ל-hidden כדי למנוע גלילה אם התמונה גדולה מדי */
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            user-select: none; /* מונע בחירת טקסט על החיצים */
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            display: block;
+            margin: auto;
+            object-fit: contain;
+            width: auto;
+            height: 100%;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .lightbox-close:hover,
+        .lightbox-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* סגנונות חדשים לחיצי ניווט */
+        .lightbox-nav {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5); /* רקע קל לחיצים */
+        }
+
+        .lightbox-nav.prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .lightbox-nav.next {
+            right: 0;
+            border-radius: 3px 0 0 3px; /* יישור לימין */
+        }
+
+        .lightbox-nav:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* מנגנון הסתרה אם יש רק תמונה אחת או ליתר ביטחון */
+        .lightbox-nav.hidden {
+            display: none;
+        }
+</style>
+
+<div class="gallery-filters">
+    <button class="filter-btn active" data-category="all">כולם</button>
+    <button class="filter-btn" data-category="beit-kneset">בית כנסת</button>
+    <button class="filter-btn" data-category="hanzachot">הנצחות</button>
+    <button class="filter-btn" data-category="tmunot-mishetah">תמונות מהשטח</button>
+    <button class="filter-btn" data-category="beit-sefer">בית ספר</button>
+</div>
+
+<div class="gallery-grid">
+  
+  
+
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8-2-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8-2-300x169.jpg" alt="בית כנסת 1">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-300x169.jpg" alt="בית כנסת 2">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-3-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-3-300x169.jpg" alt="בית כנסת 3">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-2-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-2-300x169.jpg" alt="בית כנסת 4">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_00E04C1301BC-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_00E04C1301BC-300x169.jpg" alt="בית כנסת 5">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01_30D0421178A4-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01_30D0421178A4-300x169.jpg" alt="בית כנסת 6">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D00_A01E0B13820E-169x300.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D00_A01E0B13820E-169x300.jpg" alt="בית כנסת 7">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D00_30D0421178A4-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D00_30D0421178A4-300x169.jpg" alt="בית כנסת 8">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-147-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-147-300x169.jpg" alt="בית כנסת 9">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-138-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-138-300x169.jpg" alt="בית כנסת 10">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-130-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-130-300x169.jpg" alt="בית כנסת 11">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-115-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-115-300x169.jpg" alt="בית כנסת 12">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-114-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-114-300x169.jpg" alt="בית כנסת 13">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-87-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-87-300x169.jpg" alt="בית כנסת 14">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-81-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-81-300x169.jpg" alt="בית כנסת 15">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-80-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-80-300x169.jpg" alt="בית כנסת 16">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-68-169x300.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-68-169x300.jpg" alt="בית כנסת 17">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-61-169x300.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-61-169x300.jpg" alt="בית כנסת 18">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-54-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-54-300x169.jpg" alt="בית כנסת 19">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-53-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-53-300x169.jpg" alt="בית כנסת 20">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-45-169x300.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-45-169x300.jpg" alt="בית כנסת 21">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-44-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-44-300x169.jpg" alt="בית כנסת 22">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-41-169x300.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-41-169x300.jpg" alt="בית כנסת 23">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-38-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-38-300x169.jpg" alt="בית כנסת 24">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-17-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-17-300x169.jpg" alt="בית כנסת 25">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_A01E0B116E26-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_A01E0B116E26-300x169.jpg" alt="בית כנסת 26">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6-300x169.jpg" alt="בית כנסת 27">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6-2-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6-2-300x169.jpg" alt="בית כנסת 28">
+</div>
+<div class="gallery-item" data-category="beit-kneset">
+    <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8-300x169.jpg" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8-300x169.jpg" alt="בית כנסת 29">
+</div>
+  
+  
+<div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6862-300x225.jpeg" alt="תמונות מהשטח 1" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6862.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6681-210x300.jpeg" alt="תמונות מהשטח 2" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6681.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6670-300x169.jpeg" alt="תמונות מהשטח 3" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6670.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6577-300x225.jpeg" alt="תמונות מהשטח 4" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6577.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6149-300x225.jpeg" alt="תמונות מהשטח 5" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6149.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6144-300x225.jpeg" alt="תמונות מהשטח 6" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6144.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6112-300x225.jpeg" alt="תמונות מהשטח 7" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_6112.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5935-300x225.jpeg" alt="תמונות מהשטח 8" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5935.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5807-300x225.jpeg" alt="תמונות מהשטח 9" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5807.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5405-300x225.jpeg" alt="תמונות מהשטח 10" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5405.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5035-300x225.jpeg" alt="תמונות מהשטח 11" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_5035.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4805-300x225.jpeg" alt="תמונות מהשטח 12" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4805.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4739-300x225.jpeg" alt="תמונות מהשטח 13" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4739.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4183-300x225.jpeg" alt="תמונות מהשטח 14" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4183.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4087-300x225.jpeg" alt="תמונות מהשטח 15" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4087.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4012-300x225.jpeg" alt="תמונות מהשטח 16" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4012.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4011-300x225.jpeg" alt="תמונות מהשטח 17" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_4011.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3523-300x166.jpeg" alt="תמונות מהשטח 18" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3523.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3500-300x225.jpeg" alt="תמונות מהשטח 19" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3500.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3460-300x225.jpeg" alt="תמונות מהשטח 20" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3460.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3351-300x225.jpeg" alt="תמונות מהשטח 21" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3351.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3192-300x225.jpeg" alt="תמונות מהשטח 22" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3192.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3038-225x300.jpeg" alt="תמונות מהשטח 23" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_3038.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2973-300x225.jpeg" alt="תמונות מהשטח 24" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2973.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2780-300x225.jpeg" alt="תמונות מהשטח 25" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2780.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2754-300x225.jpeg" alt="תמונות מהשטח 26" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2754.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2421-300x225.jpeg" alt="תמונות מהשטח 27" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2421.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2360-300x225.jpeg" alt="תמונות מהשטח 28" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_2360.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_1815-300x225.jpeg" alt="תמונות מהשטח 29" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_1815.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_1033-300x225.jpeg" alt="תמונות מהשטח 30" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_1033.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_0687-300x225.jpeg" alt="תמונות מהשטח 31" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_0687.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_0686-300x225.jpeg" alt="תמונות מהשטח 32" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_0686.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/5be72027-67d3-4afe-9726-51449c66f125-300x143.jpeg" alt="תמונות מהשטח 33" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/5be72027-67d3-4afe-9726-51449c66f125.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/0e83b830-af99-42f1-aff5-eaf6fa7bf192-300x225.jpeg" alt="תמונות מהשטח 34" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/0e83b830-af99-42f1-aff5-eaf6fa7bf192.jpeg">
+    </div>
+    
+
+    
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9799-300x225.jpeg" alt="תמונות מהשטח 36" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9799.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9692-300x225.jpeg" alt="תמונות מהשטח 37" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9692.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9427-300x225.jpeg" alt="תמונות מהשטח 38" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9427.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9189-300x225.jpeg" alt="תמונות מהשטח 39" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9189.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7779-300x225.jpeg" alt="תמונות מהשטח 40" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7779.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7391-300x225.jpeg" alt="תמונות מהשטח 41" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7391.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7362-225x300.jpeg" alt="תמונות מהשטח 42" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7362.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7261-300x225.jpeg" alt="תמונות מהשטח 43" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7261.jpeg">
+    </div>
+    <div class="gallery-item" data-category="tmunot-mishetah">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7160-300x169.jpeg" alt="תמונות מהשטח 44" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7160.jpeg">
+    </div>
+    <div class="gallery-item" data-category="beit-sefer">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-52-1-300x169.jpg" alt="בית ספר 1" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-52-1.jpg">
+    </div>
+    <div class="gallery-item" data-category="beit-sefer">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-20-1-300x169.jpg" alt="בית ספר 2" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-20-1.jpg">
+    </div>
+    <div class="gallery-item" data-category="beit-sefer">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-1-1-300x169.png" alt="בית ספר 3" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-1-1.png">
+    </div>
+    <div class="gallery-item" data-category="beit-sefer">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/בית-בנותינו-בני-ברק_AC220B4F5A9F-1-300x169.jpg" alt="בית ספר 4" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/בית-בנותינו-בני-ברק_AC220B4F5A9F-1.jpg">
+    </div>
+    <div class="gallery-item" data-category="beit-sefer">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D00_AC220B4F5A9F-1-300x169.jpg" alt="בית ספר 5" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D00_AC220B4F5A9F-1.jpg">
+    </div>
+    <div class="gallery-item" data-category="beit-sefer">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D00_42010A9C0003-1-300x165.jpg" alt="בית ספר 6" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D00_42010A9C0003-1.jpg">
+    </div>
+    <div class="gallery-item" data-category="beit-sefer">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/D00_5065F3402B3C-1-300x169.jpg" alt="בית ספר 7" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/D00_5065F3402B3C-1.jpg">
+    </div>
+
+
+  
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-159-300x169.jpg" alt="הנצחות 2" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-159.jpg">
+    </div>
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-158-300x169.jpg" alt="הנצחות 3" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-158.jpg">
+    </div>
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-144-300x169.jpg" alt="הנצחות 4" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-144.jpg">
+    </div>
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-136-300x169.jpg" alt="הנצחות 5" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-136.jpg">
+    </div>
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-128-300x169.jpg" alt="הנצחות 6" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-128.jpg">
+    </div>
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-109-300x169.jpg" alt="הנצחות 7" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-109.jpg">
+    </div>
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-51-300x169.jpg" alt="הנצחות 8" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-51.jpg">
+    </div>
+    <div class="gallery-item" data-category="hanzachot">
+        <img src="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-43-300x169.jpg" alt="הנצחות 9" data-fullsrc="https://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-43.jpg">
+    </div>
+</div>
+
+<div class="lightbox-overlay">
+    <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="תמונה מוגדלת">
+        <div id="myLightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-nav prev">&#10094;</span> <span class="lightbox-nav next">&#10095;</span> <img class="lightbox-content" id="lightboxImg">
+    </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightboxOverlay = document.querySelector('.lightbox-overlay');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        // פונקציית סינון
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category;
+
+                // הסרת "active" מכל הכפתורים והוספתו לכפתור הנוכחי
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // הצגה/הסתרה של פריטי הגלריה
+                galleryItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // פתיחת Lightbox
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const fullSrc = item.querySelector('img').dataset.fullsrc;
+                lightboxImg.src = fullSrc;
+                lightboxOverlay.style.display = 'flex';
+            });
+        });
+
+        // סגירת Lightbox בלחיצה על האוברליי
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay || e.target === lightboxImg) {
+                lightboxOverlay.style.display = 'none';
+                lightboxImg.src = ''; // איפוס מקור התמונה
+            }
+        });
+    });
+</script>
