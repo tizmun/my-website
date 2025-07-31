@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>גלריית תמונות</title>
+    <style>
+        /* CSS כללי */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* סגנון כפתורי סינון קטגוריות */
+        .filter-buttons {
+            display: flex; /* מציג את הכפתורים בשורה */
+            flex-wrap: wrap; /* מאפשר גלישה לשורה הבאה בניידים */
+            justify-content: center; /* ממקם את הכפתורים במרכז */
+            margin-bottom: 25px; /* מרווח תחתון מהגלריה */
+            gap: 10px; /* מרווח בין הכפתורים */
+        }
+
+        .filter-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease; /* אנימציה למעבר צבע */
+            width: 120px; /* רוחב קבוע לכפתורים */
+        }
+
+        .filter-button:hover,
+        .filter-button.active {
+            background-color: #0056b3;
+        }
+
+        /* רספונסיביות לכפתורי סינון בנייד */
+        @media (max-width: 768px) {
+            .filter-buttons {
+                flex-direction: column; /* מסדר כפתורים בטור בנייד */
+                align-items: stretch; /* מותח את הכפתורים לרוחב מלא */
+            }
+            .filter-button {
+                width: 100%; /* רוחב מלא לכפתור בנייד */
+            }
+        }
+
+        /* סגנון קונטיינר הגלריה */
+        .gallery-container {
+            display: grid; /* משתמש ב-CSS Grid לסידור התמונות */
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* 3-4 תמונות בשורה, רספונסיבי */
+            gap: 25px; /* רווח קבוע בין הקונטיינרים */
+            justify-content: center; /* ממקם את הפריטים במרכז */
+        }
+
+        /* רספונסיביות לקונטיינר הגלריה בנייד */
+        @media (max-width: 1200px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* התאמה לגדלי מסך בינוניים */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 1-2 תמונות בשורה בנייד */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container {
+                grid-template-columns: 1fr; /* תמונה אחת בשורה במסכים קטנים מאוד */
+            }
+        }
+
+        /* סגנון קונטיינר תמונה */
+        .image-card {
+            width: 350px; /* רוחב קבוע */
+            height: 200px; /* גובה קבוע */
+            overflow: hidden; /* חותך תוכן שגולש מחוץ לקונטיינר */
+            position: relative; /* מאפשר מיקום מוחלט של האלמנטים הפנימיים */
+            cursor: pointer; /* מציג סמן יד בלחיצה */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* צל קל סביב הקונטיינר */
+            border-radius: 8px; /* פינות מעוגלות */
+            display: flex; /* מאפשר יישור תמונה בתוך הקונטיינר */
+            justify-content: center; /* מרכז תמונה אופקית */
+            align-items: center; /* מרכז תמונה אנכית */
+            background-color: #eee; /* צבע רקע כשאין תמונה */
+        }
+
+        /* סגנון תמונה בתוך הקונטיינר */
+        .image-card img {
+            width: 100%; /* התמונה ממלאת 100% רוחב */
+            height: 100%; /* התמונה ממלאת 100% גובה */
+            object-fit: contain; /* שומר על יחס גובה-רוחב ומכיל את התמונה בתוך הקונטיינר */
+            display: block; /* מסיר רווחים מיותרים מתחת לתמונה */
+        }
+
+        /* שכבת שם התמונה בריחוף */
+        .image-card .image-title-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* שחור חצי שקוף */
+            color: white;
+            padding: 10px;
+            box-sizing: border-box; /* מבטיח שה-padding לא יגדיל את הרוחב */
+            opamemory: 0; /* מוסתר בהתחלה */
+            transition: opamemory 0.3s ease; /* אנימציה להופעה */
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .image-card:hover .image-title-overlay {
+            opamemory: 1; /* מופיע בריחוף */
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none; /* מוסתר כברירת מחדל */
+            position: fixed; /* קבוע על המסך */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* רקע שחור שקוף */
+            z-index: 1000; /* מופיע מעל הכל */
+            justify-content: center; /* ממקם את התוכן במרכז אופקית */
+            align-items: center; /* ממקם את התוכן במרכז אנכית */
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%; /* רוחב מקסימלי לתוכן ה-lightbox */
+            max-height: 90%; /* גובה מקסימלי לתוכן ה-lightbox */
+            display: flex;
+            flex-direction: column; /* מסדר את הכותרת והתמונה בעמודה */
+            align-items: center;
+        }
+
+        .lightbox-content h3 {
+            color: white;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%; /* התמונה תופסת את כל הרוחב הזמין */
+            max-height: calc(100vh - 150px); /* גובה מקסימלי לתמונה (מוריד מקום לכותרת וכפתורים) */
+            object-fit: contain; /* שומר על יחס גובה-רוחב ומוודא שהתמונה כולה נראית */
+            display: block;
+        }
+
+        .lightbox .close-button,
+        .lightbox .nav-button {
+            position: absolute;
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001; /* מעל התמונה */
+        }
+
+        .lightbox .close-button {
+            top: 10px;
+            right: 10px;
+            font-size: 40px;
+        }
+
+        .lightbox .nav-button.prev {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox .nav-button.next {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* הסתרה של תמונות שאינן מתאימות לקטגוריה */
+        .image-card.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="filter-buttons">
+        <button class="filter-button active" data-category="all">הכל</button>
+        <button class="filter-button" data-category="shul">בתי כנסת</button>
+        <button class="filter-button" data-category="memory">לוחות הנצחה</button>
+        <button class="filter-button" data-category="school">מוסדות לימוד</button>
+        <button class="filter-button" data-category="liveImg">תמונות מהשטח</button>
+    </div>
+
+    <div class="gallery-container" id="galleryContainer">
+        </div>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="close-button" id="closeLightbox">&times;</button>
+            <h3 id="lightboxTitle"></h3>
+            <img src="" alt="" id="lightboxImage">
+            <button class="nav-button prev" id="prevImage">&#10094;</button>
+            <button class="nav-button next" id="nextImage">&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        // מערך המכיל את נתוני התמונות
+        // יש להחליף את ה-src בנתיבי התמונות בפועל
+        const images = [
+               { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8-2.jpg", alt: "חבד רמות", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4.jpg", alt: "נועם יונתן", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-3.jpg", alt: "לוזית", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-2.jpg", alt: "אוהל דוב", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_00E04C1301BC.jpg", alt: "תפארת משה", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_A01E0B13820E.jpg", alt: "עומד 1", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_30D0421178A4.jpg", alt: "שבת אחים", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-147.jpg", alt: "חניכי ביתר", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-138.jpg", alt: "מניין אברכים", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-130.jpg", alt: "שירת הים", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-115.jpg", alt: "שערי צדק", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-114.jpg", alt: "שפת אמת", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-87.jpg", alt: "ניצן", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-81.jpg", alt: "שבזי", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-80.jpg", alt: "מושב עוצם", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-68.jpg", alt: "עטרת שלמה", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-61.jpg", alt: "ניצן 2", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-54.jpg", alt: "באוהלי שם יעקב", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-53.jpg", alt: "בעלזא בית גדליה", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-45.jpg", alt: "ויואל משה", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-44.jpg", alt: "שומרי אמונים", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-41.jpg", alt: "נר ישראל", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-38.jpg", alt: "בישטינא", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-17.jpg", alt: "בעלזא הגדול", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_A01E0B116E26.jpg", alt: "דרכי תורה", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6.jpg", alt: "ברדיטשב", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6-2.jpg", alt: "קהילת אשכנז", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8.jpg", alt: "היכל יוסף", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-9.jpg", alt: "לזכרון עולם", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-2.png", alt: "לזכרון עולם2 חום", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_408D5CD51B68.jpg", alt: "תקות אהרן בנימין", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_40A8F0AEBBD8.jpg", alt: "שובו אלי", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-159.jpg", alt: "מרכז לתורה והוראה", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-158.jpg", alt: "תורה לי אור", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-144.jpg", alt: "עץ חיים היא", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-136.jpg", alt: "גדול באמצע", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-128.jpg", alt: "שחורים על תכלת", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-109.jpg", alt: "קוממיות", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-51.jpg", alt: "כחול", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-43.jpg", alt: "חום בהיר", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-34.jpg", alt: "חניכי דגל", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-31.jpg", alt: "מעויינים", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-21.jpg", alt: "אפור", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-18.jpg", alt: "מרחב שרון", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-12.jpg", alt: "חום כהה יותר", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-143-1.jpg", alt: "נטיעים", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-120-1.jpg", alt: "חבד", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-111-1.jpg", alt: "עיר גנים", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-89-1.jpg", alt: "אשקלון", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-52-1.jpg", alt: "תורת אמת", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-20-1.jpg", alt: "שירת יוסף", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-1-1.png", alt: "עין גדי", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/בית-בנותינו-בני-ברק_AC220B4F5A9F-1.jpg", alt: "בית בנותינו", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_AC220B4F5A9F-1.jpg", alt: "בית בנינו", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_42010A9C0003-1.jpg", alt: "בית רבן", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_5065F3402B3C-1.jpg", alt: "בית רבן 2", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/B-10-1.png", alt: "אנגלית", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/צילום-מסך4-1.png", alt: "תורת אהרן", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/נשמת-התורה-2-1.png", alt: "נשמת התורה", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/נפש-החיים-1.jpg", alt: "נפש החיים", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-בית-רבן-1.jpg", alt: "בית רבן 3", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6681-scaled.jpeg", alt: "ויואל משה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6670-scaled.jpeg", alt: "מירון", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6577-scaled.jpeg", alt: "בוכרה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6149-scaled.jpeg", alt: "תפארת", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6144-scaled.jpeg", alt: "קרית מלאכי", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6112-scaled.jpeg", alt: "מגן אברהם", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5935-scaled.jpeg", alt: "בית מאור", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5807-scaled.jpeg", alt: "מושב לוזית", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5405-scaled.jpeg", alt: "ליד ארון קודש", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5035-scaled.jpeg", alt: "קווה שטיבל נדבורנה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4805-scaled.jpeg", alt: "פרושים", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4739-scaled.jpeg", alt: "תפארת ישראל ועטרת חיים", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4183-scaled.jpeg", alt: "על קיר נחושת", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4087-scaled.jpeg", alt: "אור מרים", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4012-scaled.jpeg", alt: "נווה שלום", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4011-scaled.jpeg", alt: "היכל אליהו", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3523-scaled.jpeg", alt: "תפארת הארי", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3500-scaled.jpeg", alt: "אביעזרי גרין פארק", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3460-scaled.jpeg", alt: "חניכי רוממה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3351-scaled.jpeg", alt: "חסידים טלזסטון", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3192-scaled.jpeg", alt: "עזרה לתקווה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3038-scaled.jpeg", alt: "שלמה ויעקב", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2973-scaled.jpeg", alt: "עזרת אחים", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2780.jpeg", alt: "קטן", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2754-scaled.jpeg", alt: "משאת מרדכי", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2421-scaled.jpeg", alt: "היכל רבותינו", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2360-scaled.jpeg", alt: "בעלזא ירושלים", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_1815-scaled.jpeg", alt: "בית שלמה ויעקב", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_1033-scaled.jpeg", alt: "אוהל דוב", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_0687-scaled.jpeg", alt: "שבטי ישראל", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_0686-scaled.jpeg", alt: "זכרון מנחם מנדל", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/5be72027-67d3-4afe-9726-51449c66f125.jpeg", alt: "כחול", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/0e83b830-af99-42f1-aff5-eaf6fa7bf192.jpeg", alt: "קרסטיר", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/המרכזי-שיכון-ה2-scaled.jpeg", alt: "שיכון ה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9799-scaled.jpeg", alt: "טהרת המשפחה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9692-scaled.jpeg", alt: "אור דוד", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9427-scaled.jpeg", alt: "מעל ארון הספרים", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9189-scaled.jpeg", alt: "משרד הבינוי והשיכון", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7779-scaled.jpeg", alt: "אנטר", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7391-scaled.jpeg", alt: "תולדות אברהם יצחק", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7362-scaled.jpeg", alt: "שבט מיהודה", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7261-scaled.jpeg", alt: "ישיבת ניר", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7160-scaled.jpeg", alt: "קיר שיש", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6862-scaled.jpeg", alt: "קהל נחלת יעקב", category: "liveImg" }
+
+        ];
+
+        const galleryContainer = document.getElementById('galleryContainer');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const closeLightboxButton = document.getElementById('closeLightbox');
+        const prevImageButton = document.getElementById('prevImage');
+        const nextImageButton = document.getElementById('nextImage');
+        const filterButtons = document.querySelectorAll('.filter-button');
+
+        let currentImageIndex = 0; // אינדקס התמונה הנוכחית ב-lightbox
+
+        // פונקציה לבניית גלריית התמונות
+        function renderGallery(filterCategory = 'all') {
+            galleryContainer.innerHTML = ''; // מנקה את הגלריה הקיימת
+            let filteredImages = images;
+
+            // מסנן תמונות לפי קטגוריה, אלא אם כן הקטגוריה היא 'all'
+            if (filterCategory !== 'all') {
+                filteredImages = images.filter(image => image.category === filterCategory);
+            }
+
+            // יצירת אלמנטים של תמונות
+            filteredImages.forEach((image, index) => {
+                const imageCard = document.createElement('div');
+                imageCard.classList.add('image-card');
+                imageCard.dataset.index = images.indexOf(image); // שומר את האינדקס המקורי במערך images
+                imageCard.dataset.category = image.category; // שומר את הקטגוריה
+
+                imageCard.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}">
+                    <div class="image-title-overlay">${image.alt}</div>
+                `;
+
+                // הוספת Event Listener ללחיצה על תמונה
+                imageCard.addEventListener('click', () => openLightbox(parseInt(imageCard.dataset.index)));
+                galleryContainer.appendChild(imageCard);
+            });
+        }
+
+        // פונקציה לפתיחת ה-lightbox
+        function openLightbox(index) {
+            currentImageIndex = index;
+            updateLightboxContent();
+            lightbox.style.display = 'flex'; // מציג את ה-lightbox
+        }
+
+        // פונקציה לעדכון תוכן ה-lightbox
+        function updateLightboxContent() {
+            const image = images[currentImageIndex];
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.alt;
+            lightboxTitle.textContent = image.alt; // מציג את שם התמונה ככותרת
+        }
+
+        // פונקציה לסגירת ה-lightbox
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        // פונקציה למעבר לתמונה הקודמת ב-lightbox
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateLightboxContent();
+        }
+
+        // פונקציה למעבר לתמונה הבאה ב-lightbox
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateLightboxContent();
+        }
+
+        // Event Listeners לכפתורי ה-lightbox
+        closeLightboxButton.addEventListener('click', closeLightbox);
+        prevImageButton.addEventListener('click', showPrevImage);
+        nextImageButton.addEventListener('click', showNextImage);
+
+        // Event Listener ללחיצה על כפתורי הסינון
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // מסיר את הקלאס 'active' מכל הכפתורים
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // מוסיף את הקלאס 'active' לכפתור שנלחץ
+                button.classList.add('active');
+                const category = button.dataset.category;
+                renderGallery(category); // מרנדר מחדש את הגלריה לפי הקטגוריה
+            });
+        });
+
+        // קריאה ראשונית לפונקציה כדי לרנדר את כל התמונות בהתחלה
+        renderGallery();
+
+    </script>
+</body>
+</html>

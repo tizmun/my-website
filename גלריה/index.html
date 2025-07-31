@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>גלריית תמונות רספונסיבית</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="gallery-container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-category="all">הכל</button>
+            <button class="filter-btn" data-category="shul">בתי כנסת</button>
+            <button class="filter-btn" data-category="memory">לוחות הנצחה</button>
+            <button class="filter-btn" data-category="school">מוסדות לימוד</button>
+            <button class="filter-btn" data-category="liveImg">תמונות מהשטח</button>
+        </div>
+
+        <div class="image-grid">
+            <div class="image-item" data-category="shul">
+                <img src="http://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4.jpg" alt="shul Image 1" data-large-src="">
+            </div>
+            <div class="image-item" data-category="memory">
+                <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9692-300x225.jpeg" alt="City Image 1" data-large-src="">
+            </div>
+            <div class="image-item" data-category="school">
+                <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9427-300x225.jpeg" alt="Animal Image 1" data-large-src="">
+            </div>
+            <div class="image-item" data-category="shul">
+                <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_9189-300x225.jpeg" alt="shul Image 2" data-large-src="">
+            </div>
+            <div class="image-item" data-category="liveImg">
+                <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7779-300x225.jpeg" alt="liveImg Image 1" data-large-src="">
+            </div>
+            <div class="image-item" data-category="memory">
+                <img src="https://cleversign.co.il/wp-content/uploads/2025/07/IMG_7391-300x225.jpeg" alt="City Image 2" data-large-src="">
+            </div>
+            <div class="image-item" data-category="school">
+                <img src="" alt="Animal Image 2" data-large-src="">
+            </div>
+            <div class="image-item" data-category="liveImg">
+                <img src="" alt="liveImg Image 2" data-large-src="">
+            </div>
+            <div class="image-item" data-category="shul">
+                <img src="" alt="shul Image 3" data-large-src="">
+            </div>
+            </div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" >
+        <a class="prev" id="prev-btn">&#10095;</a>
+        <a class="next" id="next-btn">&#10094;</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

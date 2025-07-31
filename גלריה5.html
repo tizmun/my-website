@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>גלריית תמונות</title>
+    <style>
+        /* CSS כללי */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* סגנון כפתורי סינון קטגוריות */
+        .filter-buttons {
+            display: flex; /* מציג את הכפתורים בשורה */
+            flex-wrap: wrap; /* מאפשר גלישה לשורה הבאה בניידים */
+            justify-content: center; /* ממקם את הכפתורים במרכז */
+            margin-bottom: 25px; /* מרווח תחתון מהגלריה */
+            gap: 10px; /* מרווח בין הכפתורים */
+        }
+
+      /* סגנון כפתורי סינון קטגוריות */
+        .filter-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            /* אנימציה למעבר צבע וקנה מידה קטן בריחוף */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+       .filter-button:hover,
+        .filter-button.active {
+            background-color: #0056b3;
+            transform: scale(1.05); /* הגדלה קלה בריחוף */
+        }
+
+
+        /* רספונסיביות לכפתורי סינון בנייד */
+        @media (max-width: 768px) {
+            .filter-buttons {
+                flex-direction: column; /* מסדר כפתורים בטור בנייד */
+                align-items: stretch; /* מותח את הכפתורים לרוחב מלא */
+            }
+            .filter-button {
+                width: 100%; /* רוחב מלא לכפתור בנייד */
+            }
+        }
+
+        /* סגנון קונטיינר הגלריה */
+        .gallery-container {
+            display: grid; /* משתמש ב-CSS Grid לסידור התמונות */
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* 3-4 תמונות בשורה, רספונסיבי */
+            gap: 25px; /* רווח קבוע בין הקונטיינרים */
+            justify-content: center; /* ממקם את הפריטים במרכז */
+        }
+
+        /* רספונסיביות לקונטיינר הגלריה בנייד */
+        @media (max-width: 1200px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* התאמה לגדלי מסך בינוניים */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 1-2 תמונות בשורה בנייד */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container {
+                grid-template-columns: 1fr; /* תמונה אחת בשורה במסכים קטנים מאוד */
+            }
+        }
+
+        /* סגנון קונטיינר תמונה */
+           /* סגנון קונטיינר תמונה */
+        .image-card {
+            width: 350px; /* רוחב קבוע */
+            height: 200px; /* גובה קבוע */
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #eee;
+            /* אנימציות עדינות לכרטיסי התמונה */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* סגנון תמונה בתוך הקונטיינר */
+        .image-card img {
+            width: 100%; /* התמונה ממלאת 100% רוחב */
+            height: 100%; /* התמונה ממלאת 100% גובה */
+            object-fit: contain; /* שומר על יחס גובה-רוחב ומכיל את התמונה בתוך הקונטיינר */
+            display: block; /* מסיר רווחים מיותרים מתחת לתמונה */
+        }
+
+        /* שכבת שם התמונה בריחוף */
+        .image-card .image-title-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0); /* שחור חצי שקוף */
+            color: rgba(0, 0, 0, 0);
+            padding: 10px;
+            box-sizing: border-box; /* מבטיח שה-padding לא יגדיל את הרוחב */
+            opamemory: 0; /* מוסתר בהתחלה */
+            transition: opamemory 0.3s ease; /* אנימציה להופעה */
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .image-card:hover .image-title-overlay {
+            opamemory: 1; /* מופיע בריחוף */
+        }
+           .image-card:hover {
+            transform: translateY(-5px); /* הרמה קלה בריחוף */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* צל עמוק יותר בריחוף */
+        }
+
+         /* Lightbox - אפקט fade-in/out */
+        .lightbox {
+            display: flex; /* כדי לאפשר אנימציה של opacity */
+            opacity: 0; /* מוסתר בהתחלה */
+            visibility: hidden; /* נסתר לחלוטין מאינטראקציות עכבר כשנסתר */
+            transition: opacity 0.3s ease, visibility 0.3s ease; /* אנימציית מעבר */
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+  .lightbox.active { /* קלאס שיצביע שהלייטבוקס פעיל וצריך להיות גלוי */
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%; /* רוחב מקסימלי לתוכן ה-lightbox */
+            max-height: 90%; /* גובה מקסימלי לתוכן ה-lightbox */
+            display: flex;
+            flex-direction: column; /* מסדר את הכותרת והתמונה בעמודה */
+            align-items: center;
+        }
+
+        .lightbox-content h3 {
+            color: white;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+         /* אנימציה לתמונה בתוך ה-lightbox (אופציונלי) */
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: calc(100vh - 150px);
+            object-fit: contain;
+            display: block;
+            /* אנימציית כניסה של התמונה */
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scale(0.95); /* מתחיל מעט קטן יותר */
+            opacity: 0; /* מתחיל שקוף */
+        }
+   .lightbox.active .lightbox-content img {
+            transform: scale(1); /* חוזר לגודל רגיל */
+            opacity: 1; /* הופך גלוי */
+        }
+        .lightbox .close-button,
+        .lightbox .nav-button {
+            position: absolute;
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001; /* מעל התמונה */
+                transition: color 0.2s ease, transform 0.2s ease; /* אפקט בריחוף */
+        }
+
+        .lightbox .close-button {
+            top: 10px;
+            right: 10px;
+            font-size: 40px;
+        }
+  .lightbox .close-button:hover,
+        .lightbox .nav-button:hover {
+            color: #ccc; /* צבע בהיר יותר בריחוף */
+            transform: scale(1.1); /* הגדלה קלה בריחוף */
+        }
+        .lightbox .nav-button.prev {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .lightbox .nav-button.next {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* הסתרה של תמונות שאינן מתאימות לקטגוריה */
+        .image-card.hidden {
+            display: none;
+        }
+         /* אנימציה לתמונות בגלריה בכניסה */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .image-card {
+            /* ... קוד קיים ... */
+            opacity: 0; /* מוסתר בהתחלה */
+            /* ה-transition הקיים יחול גם על האנימציה, אך האנימציה תדרוס אותו בהתחלה */
+        }
+
+        .image-card.loaded {
+            animation: fadeIn 0.5s ease-out forwards; /* הפעלת האנימציה */
+            /* ה-animation-delay יוגדר ב-JS כדי ליצור אפקט מדורג */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="filter-buttons">
+       <!-- <button class="filter-button active" data-category="all" style="display:none;">הכל</button>-->
+        <button class="filter-button" data-category="shul">בתי כנסת</button>
+        <button class="filter-button" data-category="memory">לוחות הנצחה</button>
+        <button class="filter-button" data-category="school">מוסדות לימוד</button>
+        <button class="filter-button" data-category="liveImg">תמונות מהשטח</button>
+        <button class="filter-button" data-category="hbd">חבד</button>
+    </div>
+
+    <div class="gallery-container" id="galleryContainer">
+        </div>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="close-button" id="closeLightbox">&times;</button>
+            <h3 id="lightboxTitle"></h3>
+            <img src="" alt="" id="lightboxImage">
+            <button class="nav-button prev" id="prevImage">&#10095;</button>
+            <button class="nav-button next" id="nextImage">&#10094;</button>
+        </div>
+    </div>
+
+    <script>
+        // מערך המכיל את נתוני התמונות
+        // יש להחליף את ה-src בנתיבי התמונות בפועל
+        const images = [
+            
+            
+            { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_DC4A3E78CDCD.jpg", alt: "בית כנסת 1", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8-2.jpg", alt: "בית כנסת 2", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4.jpg", alt: "בית כנסת 3", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-3.jpg", alt: "בית כנסת 4", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_30D0421178A4-2.jpg", alt: "בית כנסת 5", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_00E04C1301BC.jpg", alt: "בית כנסת 6", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_30D0421178A4.jpg", alt: "בית כנסת 7", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-147.jpg", alt: "בית כנסת 8", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-138.jpg", alt: "בית כנסת 9", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-130.jpg", alt: "בית כנסת 10", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-115.jpg", alt: "בית כנסת 11", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-114.jpg", alt: "בית כנסת 12", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-87.jpg", alt: "בית כנסת 13", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-81.jpg", alt: "בית כנסת 14", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-80.jpg", alt: "בית כנסת 15", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-54.jpg", alt: "בית כנסת 16", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-53.jpg", alt: "בית כנסת 17", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-44.jpg", alt: "בית כנסת 18", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-38.jpg", alt: "בית כנסת 19", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-17.jpg", alt: "בית כנסת 20", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_A01E0B116E26.jpg", alt: "בית כנסת 21", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6.jpg", alt: "בית כנסת 22", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_74E6E2084CF6-2.jpg", alt: "בית כנסת 23", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_40A8F0AEBBD8.jpg", alt: "בית כנסת 24", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_A01E0B13820E.jpg", alt: "בית כנסת 25", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-68.jpg", alt: "בית כנסת 26", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-61.jpg", alt: "בית כנסת 27", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-45.jpg", alt: "בית כנסת 28", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-41.jpg", alt: "בית כנסת 29", category: "shul" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-9.jpg", alt: "לוחות הנצחה 1", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-2.png", alt: "לוחות הנצחה 2", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D01A_408D5CD51B68.jpg", alt: "לוחות הנצחה 3", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_40A8F0AEBBD8.jpg", alt: "לוחות הנצחה 4", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-159.jpg", alt: "לוחות הנצחה 5", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-158.jpg", alt: "לוחות הנצחה 6", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-144.jpg", alt: "לוחות הנצחה 7", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-136.jpg", alt: "לוחות הנצחה 8", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-128.jpg", alt: "לוחות הנצחה 9", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-109.jpg", alt: "לוחות הנצחה 10", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-51.jpg", alt: "לוחות הנצחה 11", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-43.jpg", alt: "לוחות הנצחה 12", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-34.jpg", alt: "לוחות הנצחה 13", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-31.jpg", alt: "לוחות הנצחה 14", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-21.jpg", alt: "לוחות הנצחה 15", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-18.jpg", alt: "לוחות הנצחה 16", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-12.jpg", alt: "לוחות הנצחה 17", category: "memory" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-143-1.jpg", alt: "מוסדות לימוד 1", category: "school" },
+//   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-120-1.jpg", alt: "מוסדות לימוד 2", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-111-1.jpg", alt: "מוסדות לימוד 3", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-89-1.jpg", alt: "מוסדות לימוד 4", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-52-1.jpg", alt: "מוסדות לימוד 5", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-20-1.jpg", alt: "מוסדות לימוד 6", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-1-1.png", alt: "מוסדות לימוד 7", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/בית-בנותינו-בני-ברק_AC220B4F5A9F-1.jpg", alt: "מוסדות לימוד 8", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_AC220B4F5A9F-1.jpg", alt: "מוסדות לימוד 9", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_42010A9C0003-1.jpg", alt: "מוסדות לימוד 10", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/D00_5065F3402B3C-1.jpg", alt: "מוסדות לימוד 11", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/B-10-1.png", alt: "מוסדות לימוד 12", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/צילום-מסך4-1.png", alt: "מוסדות לימוד 13", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/נשמת-התורה-2-1.png", alt: "מוסדות לימוד 14", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/נפש-החיים-1.jpg", alt: "מוסדות לימוד 15", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/הצג-החכם-בית-רבן-1.jpg", alt: "מוסדות לימוד 16", category: "school" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6681-scaled.jpeg", alt: "תמונות מהשטח 1", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6670-scaled.jpeg", alt: "תמונות מהשטח 2", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6577-scaled.jpeg", alt: "תמונות מהשטח 3", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6149-scaled.jpeg", alt: "תמונות מהשטח 4", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6144-scaled.jpeg", alt: "תמונות מהשטח 5", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6112-scaled.jpeg", alt: "תמונות מהשטח 6", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5935-scaled.jpeg", alt: "תמונות מהשטח 7", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5807-scaled.jpeg", alt: "תמונות מהשטח 8", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5405-scaled.jpeg", alt: "תמונות מהשטח 9", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_5035-scaled.jpeg", alt: "תמונות מהשטח 10", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4805-scaled.jpeg", alt: "תמונות מהשטח 11", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4739-scaled.jpeg", alt: "תמונות מהשטח 12", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4183-scaled.jpeg", alt: "תמונות מהשטח 13", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4087-scaled.jpeg", alt: "תמונות מהשטח 14", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4012-scaled.jpeg", alt: "תמונות מהשטח 15", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_4011-scaled.jpeg", alt: "תמונות מהשטח 16", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3523-scaled.jpeg", alt: "תמונות מהשטח 17", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3500-scaled.jpeg", alt: "תמונות מהשטח 18", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3460-scaled.jpeg", alt: "תמונות מהשטח 19", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3351-scaled.jpeg", alt: "תמונות מהשטח 20", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3192-scaled.jpeg", alt: "תמונות מהשטח 21", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_3038-scaled.jpeg", alt: "תמונות מהשטח 22", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2973-scaled.jpeg", alt: "תמונות מהשטח 23", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2780.jpeg", alt: "תמונות מהשטח 24", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2754-scaled.jpeg", alt: "תמונות מהשטח 25", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2421-scaled.jpeg", alt: "תמונות מהשטח 26", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_2360-scaled.jpeg", alt: "תמונות מהשטח 27", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_1815-scaled.jpeg", alt: "תמונות מהשטח 28", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_1033-scaled.jpeg", alt: "תמונות מהשטח 29", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_0687-scaled.jpeg", alt: "תמונות מהשטח 30", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_0686-scaled.jpeg", alt: "תמונות מהשטח 31", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/5be72027-67d3-4afe-9726-51449c66f125.jpeg", alt: "תמונות מהשטח 32", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/0e83b830-af99-42f1-aff5-eaf6fa7bf192.jpeg", alt: "תמונות מהשטח 33", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/המרכזי-שיכון-ה2-scaled.jpeg", alt: "תמונות מהשטח 34", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9799-scaled.jpeg", alt: "תמונות מהשטח 35", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9692-scaled.jpeg", alt: "תמונות מהשטח 36", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9427-scaled.jpeg", alt: "תמונות מהשטח 37", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_9189-scaled.jpeg", alt: "תמונות מהשטח 38", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7779-scaled.jpeg", alt: "תמונות מהשטח 39", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7391-scaled.jpeg", alt: "תמונות מהשטח 40", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7362-scaled.jpeg", alt: "תמונות מהשטח 41", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7261-scaled.jpeg", alt: "תמונות מהשטח 42", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_7160-scaled.jpeg", alt: "תמונות מהשטח 43", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/IMG_6862-scaled.jpeg", alt: "תמונות מהשטח 44", category: "liveImg" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/האדיטש.jpg", alt: "חבד 1", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/אזרבייגן.jpg", alt: "חבד 2", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/רמת-שלמה.jpg", alt: "חבד 3", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/רחוב-חנה.jpg", alt: "חבד 4", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/רחביה.jpg", alt: "חבד 5", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/קניון-רמות.jpg", alt: "חבד 6", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/קוזומל.jpg", alt: "חבד 7", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/פולין.png", alt: "חבד 8", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/מענדעלס-שול.jpg", alt: "חבד 9", category: "hbd" },
+   { src: "http://cleversign.co.il/wp-content/uploads/2025/07/חבד-בנגקוק.jpg", alt: "חבד 10", category: "hbd" }
+
+
+
+        ];
+
+               const galleryContainer = document.getElementById('galleryContainer');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const closeLightboxButton = document.getElementById('closeLightbox');
+        const prevImageButton = document.getElementById('prevImage');
+        const nextImageButton = document.getElementById('nextImage');
+        const filterButtons = document.querySelectorAll('.filter-button');
+
+        let currentImageIndex = 0; // אינדקס התמונה הנוכחית ב-lightbox
+        let startX; // לשמירת מיקום תחילת המגע
+
+        // פונקציה לבניית גלריית התמונות
+        function renderGallery(filterCategory = 'all') {
+            galleryContainer.innerHTML = ''; // מנקה את הגלריה הקיימת
+            let filteredImages = images;
+
+            // מסנן תמונות לפי קטגוריה, אלא אם כן הקטגוריה היא 'all'
+            if (filterCategory !== 'all') {
+                filteredImages = images.filter(image => image.category === filterCategory);
+            }
+
+            // יצירת אלמנטים של תמונות
+            filteredImages.forEach((image, index) => {
+                const imageCard = document.createElement('div');
+                imageCard.classList.add('image-card');
+                imageCard.dataset.index = images.indexOf(image); // שומר את האינדקס המקורי במערך images
+                imageCard.dataset.category = image.category; // שומר את הקטגוריה
+
+                imageCard.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}">
+                    <div class="image-title-overlay">${image.alt}</div>
+                `;
+
+                // --- הוספה עבור אנימציית כניסה ---
+                // הוספת דיליי לאנימציה כך שכל תמונה תופיע קצת אחרי קודמתה
+                imageCard.style.animationDelay = `${index * 0.08}s`; // דיליי של 80 מילישניות לכל תמונה
+                // הוסף את הקלאס 'loaded' לאחר שהאלמנט נוסף ל-DOM
+                // כדי להבטיח שהאנימציה תופעל (עוזר במקרים מסוימים של רינדור)
+                setTimeout(() => {
+                    imageCard.classList.add('loaded');
+                }, 10); // דיליי קטן כדי שהדפדפן יספיק לעבד את ה-opacity: 0
+
+                // --- סוף הוספה עבור אנימציית כניסה ---
+
+
+
+                // הוספת Event Listener ללחיצה על תמונה
+                imageCard.addEventListener('click', () => openLightbox(parseInt(imageCard.dataset.index)));
+                galleryContainer.appendChild(imageCard);
+            });
+        }
+
+        // פונקציה לפתיחת ה-lightbox
+        function openLightbox(index) {
+            currentImageIndex = index;
+            updateLightboxContent();
+            // משנה את זה: lightbox.style.display = 'flex';
+            lightbox.classList.add('active'); // מוסיף קלאס active
+        }
+
+        // פונקציה לעדכון תוכן ה-lightbox
+        function updateLightboxContent() {
+            const image = images[currentImageIndex];
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.alt;
+            lightboxTitle.textContent = image.alt; // מציג את שם התמונה ככותרת
+        }
+
+          // פונקציה לסגירת ה-lightbox
+        function closeLightbox() {
+            // משנה את זה: lightbox.style.display = 'none';
+            lightbox.classList.remove('active'); // מסיר קלאס active
+        }
+
+        // פונקציה למעבר לתמונה הקודמת ב-lightbox
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateLightboxContent();
+        }
+
+        // פונקציה למעבר לתמונה הבאה ב-lightbox
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateLightboxContent();
+        }
+
+        // --- הוספת לוגיקה למחוות החלקה (swipe) ---
+        lightbox.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        lightbox.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            const swipeThreshold = 50; // המרחק המינימלי למחוות החלקה
+
+            if (diffX > swipeThreshold) {
+                // החלקה שמאלה (מעבר לתמונה הבאה)
+                showNextImage();
+            } else if (diffX < -swipeThreshold) {
+                // החלקה ימינה (מעבר לתמונה הקודמת)
+                showPrevImage();
+            }
+        });
+        // --- סוף הוספת לוגיקה למחוות החלקה (swipe) ---
+
+
+        // Event Listeners לכפתורי ה-lightbox
+        closeLightboxButton.addEventListener('click', closeLightbox);
+        prevImageButton.addEventListener('click', showPrevImage);
+        nextImageButton.addEventListener('click', showNextImage);
+
+        // Event Listener ללחיצה על כפתורי הסינון
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // מסיר את הקלאס 'active' מכל הכפתורים
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // מוסיף את הקלאס 'active' לכפתור שנלחץ
+                button.classList.add('active');
+                const category = button.dataset.category;
+                renderGallery(category); // מרנדר מחדש את הגלריה לפי הקטגוריה
+            });
+        });
+
+        // קריאה ראשונית לפונקציה כדי לרנדר את כל התמונות בהתחלה
+         const defaultCategoryButton = document.querySelector('.filter-button[data-category="shul"]');
+        if (defaultCategoryButton) {
+            defaultCategoryButton.click(); // מדמה לחיצה על הכפתור, מה שיפעיל את הסינון ויגדיר אותו כ-active
+        } else {
+            // אם הכפתור ברירת המחדל לא נמצא, הראה את הכל (כגיבוי)
+            renderGallery('all');
+        }
+        // --- תמיכה במקלדת לניווט ב-lightbox ---
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) { // רק אם ה-lightbox פתוח
+                if (e.key === 'ArrowLeft') { // חץ שמאלה
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') { // חץ ימינה
+                    showNextImage();
+                } else if (e.key === 'Escape') { // מקש Escape
+                    closeLightbox();
+                }
+            }
+        });
+        // --- סוף תמיכה במקלדת ---
+    </script>
+</body>
+</html>

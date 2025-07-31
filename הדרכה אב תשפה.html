@@ -1,0 +1,3425 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+
+<head>
+    <!--כאן יש עורך קוד נחמד שאפשר לערוך אתו בקלות https://onlinehtmleditor.dev/?utm_source=chatgpt.com 
+    וכאן יש בודק קוד נחמד שיכול לבדוק אם יש שגיאות בקוד ולאתר אותן https://validator.w3.org/#validate_by_input
+כאן מופיע הדף הזה במאגר github
+https://tizmun.github.io/my-website/%D7%94%D7%93%D7%A8%D7%9B%D7%94.html
+
+העלאת תמונות בקישור:
+https://cleversign.co.il/wp-admin/upload.php
+
+
+
+
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הדרכה</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+
+    <style>
+        .nested-accordion .accordion-section {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        .nested-accordion .accordion-header {
+            background: #f0f0f0;
+            padding: 10px 10px 10px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nested-accordion .accordion-header i.topic-icon {
+            margin-left: 10px;
+        }
+
+        .nested-accordion .accordion-toggle {
+            font-size: 1.2em;
+            margin-right: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        /* CSS Reset קטע זה גורם שהאקורדיון יהיה סגור ברירת מחדל
+
+
+
+*/
+
+.nested-accordion .accordion-content {
+  display: none;
+  padding: 10px;
+  background: #fff;
+} 
+  
+
+
+        .nested-accordion .accordion-content.active {
+            display: block;
+        }
+
+        .nested-accordion .accordion-inner .accordion-section {
+            margin-right: 20px;
+            background: #f9f9f9;
+        }
+
+        .accordion-image {
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            max-width: 100%;
+        }
+
+        .accordion-paragraph {
+            direction: rtl;
+            text-align: justify;
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .accordion-paragraph p {
+            margin-bottom: 1em;
+        }
+
+        .accordion-paragraph strong {
+            color: #1a73e8;
+        }
+
+        .accordion-paragraph kbd {
+            background: #eee;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 2px 5px;
+            font-family: inherit;
+        }
+
+        kbd {
+            color: #000;
+            background: black;
+        }
+
+        /* קונטיינר לתמונה */
+        .image-container {
+            position: relative;
+            width: 900px;
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 900px;
+            display: block;
+        }
+
+        /* אזורים לחיצים */
+        .hotspot {
+            position: absolute;
+            background-color: rgba(255, 0, 0, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* טולטיפ */
+        .tooltip {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+            max-width: 300px;
+            z-index: 999;
+            display: none;
+        }
+
+        /* חץ דינמי - חץ פונה למטה, צמוד מעל הטולטיפ */
+        .tooltip-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #ccc;
+            top: -6px;
+            /* החץ מעל הטולטיפ */
+        }
+
+        .tooltip-arrow::after {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: -7px;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 22px solid #fff;
+        }
+
+        /* כפתור סגירה */
+        .tooltip .close-btn {
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .tooltip-content {
+            margin-top: 15px;
+        }
+
+        .img-float-right {
+            float: right;
+            margin: 0 0 10px 15px;
+            width: 300px;
+        }
+
+        .img-float-left {
+            float: left;
+            margin: 0 15px 10px 0;
+            width: 70%;
+        }
+
+        .img-float-left_small {
+            float: left;
+            margin: 0 15px 10px 0;
+            width: 40%;
+        }
+
+        /* מרכז div עם רוחב מוגדר ושוליים פנימיים */
+        .centered-container {
+            width: 1000px;
+            /* רוחב קבוע */
+            margin: 0 auto;
+            /* מרכז אופקית */
+            padding: 50px;
+            /* שוליים פנימיים */
+            background-color: #ffffff;
+            /* רקע לבן */
+            border: 2px solid #FD3DB5;
+            /* מסגרת בצבע מג'נטה */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            /* הצללה */
+            box-sizing: border-box;
+            /* כולל padding בתוך הרוחב */
+            border-radius: 12px;
+            /* פינות מעוגלות */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="my-widget">
+
+
+        <div class="centered-container">
+            <!-- תוכן הדיב כאן -->
+
+
+            <h1>הדרכה לתוכנת הצג החכם</h1>
+            <p>הדרכה זו מיועדת למשתמשי תוכנת הצג החכם. התוכנה מאפשרת להציג מידע דינמי על גבי מסך מחשב, כולל טקסטים,
+                תמונות,
+                ווידאו ועוד.</p>
+            <p>המידע מעודכן לגירסה של ג' בסיוון תשפ״ה, ועשוי להשתנות בכל עת.</p>
+            <p>מדריך זה עדיין בשלבי עריכה, ועל כן יש להתייחס לתוכנו בהתאם.</p>
+
+            <div class="nested-accordion">
+
+                <!-- התחלה ========================================-->
+                <div class="accordion-section">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-play topic-icon"></i> התחלה</span>
+                        <span class="accordion-toggle">▶️</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+
+
+                            <!-- מבט כללי והכרות עם התכנה ========================================-->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-info-circle topic-icon"></i> מבט כללי והכרות עם התכנה</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+
+                                    <div class="accordion-paragraph">
+                                        <p>
+                                            <strong>תכנת הצג החכם</strong> מאפשרת להציג על גבי המסך כל סוג של מידע —
+                                            קבוע או משתנה, כולל תמונות,
+                                            וידאו, מידע מהרשת, ועוד אפשרויות רבות שמתעדכנות כל הזמן.
+                                        </p>
+                                        <p>
+                                            ברקע מוצגת <strong>תמונה מפוארת</strong> שמשמשת כ’לוח מודעות’, ועליו מודבקים
+                                            ה’אובייקטים’. ישנם
+                                            סוגים רבים של אובייקטים, כאשר <strong>המיקום והגודל שלהם חופשיים
+                                                לחלוטין</strong> — ניתן למקם
+                                            אובייקט בכל מקום במסך, למתוח או לצמצם אותו, לקבוע מתי יופיע ומתי ייעלם.
+                                        </p>
+                                        <p>
+                                            כאשר פותחים את התוכנה, היא מופיעה אוטומטית ב<strong>’מצב תצוגה’</strong> —
+                                            מכסה את כל המסך (כולל
+                                            שורת המשימות והעכבר), כך שהיא נראית כלוח תצוגה ולא כמחשב רגיל.
+                                        </p>
+                                        <p>
+                                            <strong>כדי לצאת ממצב תצוגה למצב עריכה:</strong> יש ללחוץ עם העכבר במקום
+                                            כלשהו ולאחר מכן ללחוץ על
+                                            מקש <kbd>Esc</kbd> (הממוקם בפינה השמאלית העליונה של המקלדת).
+                                        </p>
+                                        <p>
+                                            במחשב שאינו מיועד לתצוגה אלא לעריכה, התוכנה תעבור אוטומטית למצב עריכה לאחר
+                                            מספר דקות.
+                                        </p>
+                                        <p>
+                                            לחיצה על כל אובייקט תציג את גבולותיו כריבועים לבנים קטנים. ניתן לשנות את
+                                            גודלו באמצעות גרירת אחד
+                                            הריבועים או להזיז את כולו למקום אחר באמצעות גרירת הריבוע המרכזי.
+                                        </p>
+                                    </div>
+
+
+
+                                    <img class="accordion-image"
+                                        src="https://cleversign.co.il/wp-content/uploads/2025/05/HZZ.gif"
+                                        alt="הכרות עם התכנה">
+                                </div>
+                            </div>
+
+
+
+                            <!-- מבט כללי על האובייקטים ========================================-->
+
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-cubes topic-icon"></i> מבט כללי על האובייקטים</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph">
+                                        <div>
+                                            <p>כאשר התכנה נמצאת במצב עריכה, נכנס בתפריט הראשי ל"אובייקטים" ונבחר
+                                                "מאפיינים". יפתח לנו חלון עריכת
+                                                האובייקטים.<br>ניתן להגיע לחלון זה גם באמצעות צירוף המקשים <kbd>Ctrl
+                                                </kbd>+ <kbd>P</kbd>, או
+                                                באמצעות לחיצה על הלחצן הימני של העכבר מעל אובייקט כלשהו.</p>
+                                        </div>
+                                        <p>כך יראה החלון שנפתח לנו</p>
+                                        <p><img src="https://cleversign.co.il/wp-content/uploads/2025/05/חלון-עריכת-אובייקטים.png"
+                                                alt="" width="716" height="642"></p>
+
+
+                                        <!-- <img class="accordion-image" src="PATH_TO_IMAGE.gif" alt="האובייקטים בלוח">-->
+
+                                        <ol>
+                                            <li>רשימת האובייקטים במסך.</li>
+                                            <li>לחצני הוספת או מחיקת אובייקטים.</li>
+                                            <li>מידע על התכנה.</li>
+                                            <li>איזור עריכת האובייקט</li>
+                                            <li>כרטיסיות שונות לעריכת האובייקט</li>
+                                        </ol>
+
+                                        <h2>לחצני הוספת והסרת האובייקטים</h2>
+                                        <p><img src="https://cleversign.co.il/wp-content/uploads/2025/05/לחצני-הוספת-אובייקטים.png"
+                                                alt="">
+                                        </p>
+                                        <ol>
+                                            <li>הוספת אובייקט חדש</li>
+                                            <li>מחיקת אובייקט</li>
+                                            <li>הזזת האובייקט בתוך הרשימה לכיוון מטה</li>
+                                            <li>הזזת האובייקט לכיוון מעלה.</li>
+                                            <li>העתקת האובייקט.</li>
+                                            <li>הדבקת אובייקט שהועתק (פעיל רק לאחר לחיצה על העתקה)</li>
+                                        </ol>
+
+                                        <p>ברשימת האובייקטים העמודה השמאלית מראה את סוג האובייקט (ראה להלן בהרחבה),
+                                            העמודה שלאחריה - שם
+                                            האובייקט. ולאחריה ה'מזהה' שהוא מספר סידורי מיוחד לכל אובייקט שלושת העמודות
+                                            האלו הם רק ההתחלה של טבלה
+                                            ארוכה ובהמשך יש עוד עמודות רבות של מאפיינים שונים של האובייקטים, אך אין לנו
+                                            צורך לדעת אותם..&nbsp;
+                                        </p>
+                                        <h3>1. הוספת אובייקט</h3>
+                                        <p>כדי להוסיף אובייקט חדש, נלחץ על הלחצן של הוספת האובייקט, יפתח חלון בו נתבקש
+                                            להזין את שם האובייקט
+                                            ,(נבחר לו שם קל וקליט שנזכור היטב בהמשך ובאמצעותו נזהה את האובייקט בקלות
+                                            בתוך הרשימה), אישור,
+                                            והאובייקט מוכן. כברירת מחדל הוא מונח קרוב לפינה השמאלית העליונה. משם נוכל
+                                            לגרור אותו לכל מקום שנרצה.
+                                            כעת נצטרך לבחור את סוג האובייקט ועיצובו, ועל כך - בפרקים הבאים.</p>
+                                        <p>&nbsp;</p>
+                                        <h3>2. מחיקת אובייקט</h3>
+
+                                        <p>לחיצה על לחצן המחיקה - תמחק את האובייקט הנבחר. ניתן לזהות ברשימה איזה אובייקט
+                                            נבחר כעת, שהוא מסומן
+                                            בצבע כחול. לדוגמא, בתמונה שהובאה לעיל, האובייקט הנבחר הוא מסוג טבלת אירועים
+                                            בשם 'תפילות שבת' מזהה
+                                            מס' 083. בנוסף האובייקט הנבחר מסומן בנקודות מרובעות לבנות סביבו.</p>
+
+
+                                        <h3>3. הזזת אובייקט</h3>
+                                        <p>נשתמש בלחצני הזזת האובייקטים כדי לסדר את הרשימה שלנו בצורה שיהיה לנו נוח
+                                            למצוא כל דבר. אין אפשרות
+                                            למיין את הרשימה אוטומטית בלחיצה אחת, אלא להזיז אותם במעלה הרשימה אחד אחד.
+                                        </p>
+                                        <h3>5. העתקת והדבקת אובייקט</h3>
+                                        <p>כאשר יש לנו אובייקט מוכן ומעוצב כרצוננו, ואנו צריכים אובייקט ממש דומה, במקום
+                                            ליצור חדש ולעצב מחדש,
+                                            אפשר להעתיק את הקיים ולחסוך זמן.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- עריכת אובייקטים ===================================-->
+
+
+                <div class="accordion-section">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-edit topic-icon"></i> עריכת אובייקטים</span>
+                        <span class="accordion-toggle">▶️</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+
+
+
+
+
+
+                            <!-- התחלה =============================-->
+
+
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fa-solid fa-chart-line"></i> התחלה</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph">
+
+
+                                        <h3>חלון העריכה</h3>
+                                        <p>בחלון העריכה מופיע כל התוכן מחולק לחמש קטגוריות המסודרות בחמש כרטיסיות
+                                            נפרדות.</p>
+                                        <p>רשימת הכרטיסיות</p>
+                                        <p><img src="https://cleversign.co.il/wp-content/uploads/2025/05/רשימת-הכרטיסיות.png"
+                                                alt=""></p>
+                                        <ol>
+                                            <li>סוג חלון</li>
+                                            <li>תוכן</li>
+                                            <li>טקסט</li>
+                                            <li>סגנון</li>
+                                            <li>תצוגה</li>
+                                        </ol>
+                                        <p>ולהלן נרחיב על כל אחת מהכרטיסיות האלו.</p>
+                                        <p>&nbsp;</p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- סוג חלון =============================-->
+
+
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-window-restore topic-icon"></i> 1. סוג חלון</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph">
+                                        <p>הדבר הראשון שנצטרך לעשות לאחר יצירת אובייקט חדש הוא, להגדיר את הסוג
+                                            שלו.<br>הגדרת הסוג נמצאת
+                                            בכרטיסייה השמאלית של עריכת הטקסטים.</p>
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/סוג-חלון.png"
+                                            alt="סוג חלון">
+                                        <p>סוג חלון הוא בעצם סוג התוכן שיתממשק עם האובייקט שלנו. לדוגמא, אם נבחר חלון
+                                            טקסט, נוכל להכניס לתוכו
+                                            טקסטים בלבד. אם נבחר חלון תמונה, נוכל להכניס לתוכו תמונות בלבד. וכן הלאה.
+                                        </p>
+                                        <p>
+                                            יש לבחור את סוג החלון המבוקש מתוך אחת הקטגוריות, וללחוץ למטה על ״אשר סוג״.
+                                            (חשוב ללחוץ על ״אשר סוג״,
+                                            אחרת השינויים לא יישמרו).<br>
+                                            <strong>שימו לב:</strong> לא להתבלבל בין לחצן ״אשר סוג״ (בימין) ללחצן ״OK״
+                                            שנמצא בצד שמאל. אם לא
+                                            נאשר סוג, לא יעזור ללחוץ OK<br>
+
+                                            <br>
+                                            בכרטיסייה זו ניתן גם לערוך את שם האובייקט, בשדה העליון של הטקסט (תחת הכותרת
+                                            ״שם האובייקט״).
+                                        </p>
+
+
+
+                                        <p>סוגי החלון מתחלקים לחמש קטגוריות&nbsp;</p>
+                                        <ol>
+                                            <li>כללי</li>
+                                            <li>מדיה</li>
+                                            <li>תאריך</li>
+                                            <li>יהודי</li>
+                                            <li>אירועים</li>
+                                            <li>טקסט</li>
+                                            <li>אחר</li>
+                                        </ol>
+                                        <p>להלן מופיעים כל סוגי החלון הקיימים, לחיצה על כל אחד מהם תפתח חלון הסבר על
+                                            תוכן החלון ותפעולו:</p>
+                                        <p>&nbsp;</p>
+                                        <iframe
+                                            src="https://tizmun.github.io/my-website/%D7%A1%D7%95%D7%92%D7%99%20%D7%97%D7%9C%D7%95%D7%9F.html"
+                                            height="1300" width="920"></iframe>
+
+
+                                        <div>
+                                            להלן כמה הסברים כלליים בנוגע לסוגי החלונות:
+                                            <BR>
+                                            הסיבה להופעת האופציות שאינן רלוונטיות: התכנה השתדרגה במשך השנים, וישנם הרבה
+                                            לקוחות שמחזיקים גירסה
+                                            ישנה. ולכן אופציות ישנות אינן מבוטלות, אך הן אינן ניתנות לבחירה מכאן ואילך.
+
+                                            <H3 id="מחשבון הצג">זמני חזון שמים מול זמני הצג החכם</H3>
+
+                                            <P>בתכנת הצג החכם ישנם שני מחשבוני זמנים נפרדים, הפועלים כל אחד בצורה
+                                                שונה:<br>
+
+                                                <strong> *
+                                                    המחשבון של הצג
+                                                    החכם</strong> - הוא מחשבון זמנים בסיסי, המחשב את זמני היום בצורה
+                                                פשוטה מאוד. <br>
+
+                                                הוא מצד אחד בסיסי עם זמנים מאוד מובנים, ומצד שני נוח לבחירת שיטות שונות
+                                                המובנות בו. מי שחשוב לו
+                                                הקלות והנוחות של בחירת זמנים פשוטה ונוחה, עדיף להשתמש במחשבון של
+                                                הצג.<br>
+                                                להלן יוסבר כיצר עורכים את זמני הצג החכם. <br>
+
+                                                <!--להוסיף קישור למדריך של המחשבון של הצג החכם @-->
+                                                <strong>
+                                                    *
+                                                    המחשבון של חזון
+                                                    שמים</strong>
+                                                הינו מקצועי ומורכב לתפעול, ולכן הטיפול בו נעשה על ידי צוות התמיכה של הצג
+                                                החכם בלבד. <br>
+                                                ומצד שני, ניתן לחשב באמצעותו את זמני היום בצורה מדויקת מאוד, עם כל
+                                                השיטות הקיימות, וכן ניתן להזמין
+                                                שיטות מותאמות אישית.. <br>
+                                                ולכן מי שמעוניין להתאים את הלוח שלו לשיטה מסויימת שלא קיימת בתכנה, או
+                                                שיטה מאוד מדויקת, יוכל לפנות
+                                                לצוות התמיכה של הצג החכם, והם יטפלו בזה.<br>
+
+                                                <strong>הערה:</strong> חשוב לזכור את ההבדל הזה לאורך כל התפעול של התכנה,
+                                                לעתים קרובות קורה
+                                                שמשתמשים באים בשאלה: מדוע הזמנים של התפילות לא תואמים לזמני היום, וזאת
+                                                מפני שאינם מודעים לכלל
+                                                יסודי זה.<br>
+
+
+
+                                            </P>
+
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+
+                            <!-- תוכן =============================-->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-font topic-icon"></i>2. תוכן</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph" id="content_object">
+                                        <p>
+                                            בכרטיסיית ‘תוכן’ מכניסים את התוכן לתוך האובייקט. ובנוסף יש בו כמה אפשרויות
+                                            של עריכת התוכן.
+                                        </p>
+
+                                        <p>
+                                            התוכן הוא בעצם מה שמופיע בתוך האובייקט, לדוגמא: טקסט, תמונה, וידאו, או כל
+                                            דבר אחר.
+                                            <br>
+                                            לפני שנצלול לפרטי עריכת התוכן, נסקור שני אפשרויות חשובות שמופיעות בחלון
+                                            התוכן: הראשון הוא:
+                                            <strong>'זמן החלפה' </strong> - מתי יתחלף התוכן מהתוכן של היום הנוכחי, לתוכן
+                                            של היום הבא. ניתן
+                                            להגדיר שהוא יוחלף בצאת הכוכבים, בחצות הלילה, עלות השחר, ועוד זמנים אחרים
+                                            המפורטים שם, כרגע בחלק גדול
+                                            מהאובייקטים האופציה הזו נעולה. וכדי לשנות אותה ניתן לפנות לתמיכה כדי לקבל
+                                            עזרה.
+
+                                            <br>
+                                            האפשרות השניה היא לבחור את <strong>שפת התוכן:</strong> ברירת המחדל היא
+                                            אנגלית, אך ניתן לשנות אותה
+                                            לעברית או לשפות נוספות. שינוי השפה ישפיע על אופן הצגת התוכן, לדוגמא: טקסטים
+                                            יופיעו מימין לשמאל או
+                                            משמאל לימין, תאריכים יופיעו בסגנון המתאים לשפה הנבחרת, וכדומה.
+
+                                        </p>
+                                        <p>
+                                            כל הלחצנים ותיבות הסימון שמתחת שתי אפשרויות אלו, קשורות לאובייקטים שמציגות
+                                            תוכן לפי תאריך או קבצי
+                                            יארצייט. ונפרט אותם בהמשך המדריך כאן~
+                                        </p>
+
+                                        <p>
+                                            הכנסת התוכן לתוך האובייקט על ידי לחיצה על הלחצן הרלוונטי.
+                                        </p>
+                                        <p>
+                                            בכל סוג תוכן יש כיתוב שונה בלחצן לפי הסוג שלו.
+                                        </p>
+                                        <p>
+                                            נעבור פה בסקירה קצרה ומהירה על אופן עריכת התוכן ברוב האובייקטים:
+                                        </p>
+
+
+
+
+                                        <ul>
+                                            <li><a href="#h4-plain-text">טקסט פשוט</a></li>
+                                            <li><a href="#h4-rich-text">טקסט עשיר</a></li>
+                                            <li><a href="#h4-digital-clock">שעון דיגיטלי</a></li>
+                                            <li><a href="#h4-analog-clock">שעון אנלוגי</a></li>
+                                            <li><a href="#h4-single-media">מדיה בודדת</a></li>
+                                            <li><a href="#h4-image">תמונה</a></li>
+                                            <li><a href="#h4-new-browser">דפדפן חדש</a></li>
+                                            <li><a href="#h4-image-folder">תיקיית תמונות</a></li>
+                                            <li><a href="#h4-timed-media-collection">אוסף מדיות מתוזמנות</a></li>
+                                            <li><a href="#h4-playlist">פליי-ליסט</a></li>
+                                            <li><a href="#h4-media-collection">אוסף מדיות</a></li>
+                                            <li><a href="#h4-media-by-date">מדיה לפי תאריך</a></li>
+                                            <li><a href="#h4-jewish-info">מידע יהודי</a></li>
+                                            <li><a href="#h4-style-button">לחצן סגנון</a></li>
+                                            <li><a href="#h4-shabbat-times">זמני השבת</a></li>
+                                            <li><a href="#h4-event-table">טבלת אירועים / עמודת אירועים / התראה על
+                                                    אירוע</a></li>
+                                            <li><a href="#h4-times-table">טבלת זמנים / שורת זמנים / זמנים (מתקדם) / שורת
+                                                    זמנים מתקדם</a></li>
+                                            <li><a href="#h4-time-alert">התראה על זמן / התראת זמני היום חזון שמים</a>
+                                            </li>
+                                            <li><a href="#h4-date-plain-text">טקסט פשוט לתאריך</a></li>
+                                            <li><a href="#h4-date-rich-text">טקסט עשיר לתאריך</a></li>
+                                            <li><a href="#h4-yahrzeit-table">טבלת יארצייט</a></li>
+                                            <li><a href="#h4-yahrzeit-table2">טבלת יארצייט</a></li>
+                                            <li><a href="#h4-yahrzeit-list">רשימת יארצייט</a></li>
+                                        </ul>
+
+
+
+                                        <h4 id="h4-plain-text">טקסט פשוט</h4>
+
+                                        <p>
+                                            לוחצים <kbd>ערוך טקסט</kbd> וכותבים את הטקסט. יש אופציה של טקסט קבוע שאינו
+                                            משתנה, ויש אופציה של טקסט
+                                            יומי שכשלוחצים עליו מופיעה תצוגה של ימי השבוע כך שניתן לבחור טקסט שונה לכל
+                                            יום מימות השבוע.
+                                        </p>
+                                        <p>
+                                            (כמו כן ניתן להציג טקסט מתוך אתר אינטרנט בלחיצה על URL, אך זה מציג את האתר
+                                            כולו, כולל כל הטקסט של
+                                            קוד האתר)
+                                        </p>
+
+                                        <h4 id="h4-rich-text">&nbsp;טקסט עשיר</h4>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/חלון-טקסט-עשיר.png"
+                                            alt="עריכת טקסט" class="img-float-left">
+
+                                        <p>
+                                            לוחצים <kbd>ערוך טקסט</kbd> ונפתח חלון עריכה שבו ניתן לערוך את הטקסט בצורה
+                                            עשירה, ניתן גם להדביק
+                                            טקסט שנערך בתכנה אחרת כמו למשל ‘וורד’ וכדומה. תוך כדי עריכת הטקסט ניתן ללחוץ
+                                            על סמל ה"שמור" כדי
+                                            לשמור ולהמשיך. באופן חריג, רק בטקסט עשיר, ניתן לשלוט על הגלילה של הטקסט מתוך
+                                            חלון עריכת הטקסט.
+                                            (באמצעות הלחצנים ״תנועה״, ״כיוון״ ו״מהירות״. בשאר האובייקטים, גלילת הטקסט
+                                            מוגדרת בכרטיסיית ה"טקסט"
+                                            ראה להלן
+                                            <a href="#" class="open-accordion-link" data-target="perek-text">
+
+
+
+                                                בפרק ״טקסט״
+                                            </a>
+
+                                            )
+
+
+                                        </p>
+                                        <p>
+                                            בסיום העריכה לוחצים על לחצן <kbd>OK</kbd> והטקסט נשמר על הצג.
+                                        </p>
+                                        <h4 id="h4-digital-clock">שעון דיגיטלי</h4>
+                                        <p>
+                                            לוחצים על <kbd>ערוך מבנה זמן</kbd>, ובוחרים את מבנה הזמן מתוך הרשימה, למשל:
+                                            עם שניות או בלי, שעון 12
+                                            או 24, AM PM וכדומה.
+                                        </p>
+
+                                        <h4 id="h4-analog-clock">שעון אנלוגי</h4>
+
+                                        <p>
+                                            אין הרבה מה לערוך בו, ניתן להוסיף לו שעות בלחיצה על ‘ערוך מבנה זמן’.
+                                        </p>
+                                        <h4 id="h4-single-media">מדיה בודדת</h4>
+
+                                        <p>
+                                            לוחצים&nbsp;<kbd> בחר מדיה</kbd> ובוחרים מכל מקום במחשב קובץ וידאו או אודיו,
+                                            והוא יוצג במסך.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-image">תמונה</h4>
+
+                                        <p>
+                                            לוחצים <kbd>בחר תמונה</kbd> ובוחרים קובץ תמונה או מסמך PDF, והוא יוצג בתוך
+                                            האובייקט. שם התמונה יופיע
+                                            בשדה שמעל לחצן בחירת התמונה.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-new-browser">דפדפן חדש</h4>
+
+                                        <p>
+                                            לוחצים <kbd>בחר כתובת אינטרנט</kbd> ובשדה “Address” מזינים את כתובת האתר,
+                                            ולאחר מכן לוחצים על
+                                            <kbd>Navigate</kbd> והאתר מופיע. בנוסף יש ללחוץ על Web כדי להגדיר שהאתר הוא
+                                            באינטרנט. ניתן גם לבחור
+                                            כל כמה זמן האתר יטען מחדש (Refresh frequency) וכן את הגדלה והקטנה (Zoom)
+                                            בסיום לוחצים <kbd>OK</kbd>
+                                        </p>
+                                        <p>
+                                            והאתר יופיע על הצג.
+                                        </p>
+                                        <h4 id="h4-image-folder">תיקיית תמונות</h4>
+
+                                        <p>
+                                            תיקיית התמונות מציגה באופן אוטומטי את כל התמונות שבתוכה. התיקייה נקראת Media
+                                            dir והיא נמצאת בתוך
+                                            תיקיית התכנה. ניתן לשים בתוכה תיקיות תמונות שונות ולהשתמש בהן כדלהלן:
+                                        </p>
+                                        <p>
+                                            לוחצים <kbd>ערוך רשימת תמונות</kbd> ומסמנים את התיבה של ‘תיקיית משנה’.
+                                            ובוחרים תיקייה. למטה יש בחירה
+                                            של “משך התצוגה” דהיינו כמה זמן תוצג כל תמונה במצגת. רשימת התמונות שבתיקייה
+                                            מופיעה בצד השמאלי של חלון
+                                            העריכה, ובלחיצה על כל אחת מהן היא מוצגת בצד הימני של חלון זה.
+                                            
+                                            <br>
+                                            <strong>
+                                                שימו לב:
+                                                
+                                            </strong>
+                                            
+                                            בתיקיית התמונות ניתן להציג רק תמונות בפורמט תמונה, ולא מסמכי פידיאף וכדומה.
+                                            
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-timed-media-collection">אוסף מדיות מתוזמנות</h4>
+
+                                        <p>
+                                            לוחצים <kbd>ערוך רשימת מתזמן</kbd> ונפתח חלון של הגדרת תנאי התצוגה. ראשית
+                                            נלחץ על הלחצן<kbd>הוסף
+                                                מדיה</kbd>&nbsp;
+                                        </p>
+                                        <p>
+                                            ונבחר תמונה או מסמך פי-די-אף. ואז מחליטים על התנאים שלו, אופן עריכת התנאים
+                                            מצריך הסבר ארוך בפני
+                                            עצמו, ויוסבר להלן בחלק של התנאים. אך כאן נסקור אותו בתמצות:
+                                        </p>
+                                        <p>
+                                            בחלון התנאים יש לנו טבלה, כל תנאי שמעוניינים לכלול, מסמנים את תיבת הסימון
+                                            שלו בצד ימין. ולהלן הסבר
+                                            על התנאים:
+                                        </p><img src="https://cleversign.co.il/wp-content/uploads/2025/05/תנאים.png"
+                                            alt="תנאים" class="img-float-left">
+                                        <p>
+                                            <strong>כללי</strong>: מוצג תמיד/אף פעם/בתנאי (לפי התנאים הבאים)
+                                        </p>
+                                        <p>
+                                            <strong>טקסט:</strong> אם יש טקסט (לא רלוונטי לכאן)
+                                        </p>
+
+
+                                        <p>
+                                            <strong>תזמון: </strong>כמה זמן יוצג וכמה זמן יוסתר (בשניות / דקות / ימים /
+                                            שבועות), אם רוצים לעשות
+                                            ‘תורנות’ בין כמה תמונות, נותנים להם מספרים סידוריים (לדוגמא 1,2,3 וכו')
+                                            ומציינים כמה תמונות יש בס"ה
+                                            (מספר היחידות). ועל כל אחת מציינים כמה זמן היא תוצג.&nbsp;
+                                        </p>
+                                        <p>
+                                            <strong>טווח שעות קבוע: </strong>כל יום משעה מסוימת ועד שעה מסויימת.
+                                        </p>
+                                        <p>
+                                            <strong>טווח שעות דינמי:</strong> מאחד מזמני היום (למשל עלות השחר) ולמשל
+                                            מספר שעות מסויים.
+                                        </p>
+                                        <p>
+                                            <strong>הימים בשבוע: </strong>מופיע ביום מצויים או ימים מסויימים.
+                                        </p>
+                                        <p>
+                                            <strong>טווח תאריכים:</strong> מופיע מתאריך מסויים ועד תאריך מסויים אחר (לפי
+                                            תאריך עברי או לועזי),
+                                            ניתן גם לבחור באיזה שעה בתאריך ההתחלה תתחיל התצוגה, ובאיזה שעה תסתיים. וכן
+                                            אפשר להגדיר שהתצוגה תתחיל
+                                            בזמן דינמי כלשהו.
+                                        </p>
+                                        <p>
+                                            <strong>סוג היום:</strong> בוחרים האם יוצג ביום מסויים, או יוסתר ביום זה, או
+                                            שיתעלם מהתנאי הזה,
+                                            כשבוחרים שבת או יום טוב, ניתן להגדיר שהוא מסתיים בר"ת, או כברירת המחדל
+                                            במוצאי שבת הרגיל. אם בחרנו
+                                            ערב שבת ניתן לבחור מאיזו שעה בערב שבת, החל מ12 בצהריים והלאה. מתחת שדה זה
+                                            מופיע חלון הבחירה האם כל
+                                            ימי חנוכה או אחד מהם. מימין יש לחצן C לאיפוס ההגדרות בחלון זה, ומתחתיו הקדמת
+                                            ימים לפני היום הנבחר
+                                            (עד שלושה ימים), ומתחתיו (הלחצן שכתוב ‘התעלם’) מאפשר לבחור עוד ימים באמצעות
+                                            סימון התיבה שתחתיו
+                                            “תיאור היום”.
+                                        </p>
+                                        <p>
+                                            <strong>טווח השנים</strong>: משנה מסוימת ועד שנה אחרת.
+                                        </p>
+                                        <p>
+                                            &nbsp;בראש חלון העריכה יש כמה לחצנים נוספים: ‘למעלה’ ו'למטה' לשנות את סדר
+                                            הרשימה, להוסיף תמונה,
+                                            למחוק אחת מהן או את כולן. ליישם את התוצאה בצג, והאחרון לאשר ולסגור את החלון.
+                                        </p>
+                                        <h4 id="h4-playlist">פליי-ליסט</h4>
+
+                                        <p>
+                                            לוחצים <kbd>בחר תוכן</kbd> ובוחרים האם תמונות/וידאו/אודיו, בוחרים תיקייה
+                                            והצג ישמיע את כל תוכן
+                                            התיקייה.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-media-collection">אוסף מדיות</h4>
+
+                                        <p>
+                                            לוחצים <kbd>ערוך רשימת השמעה</kbd> מוסיפים או מוחקים ומגדירים כמה זמן תוצג
+                                            כל תמונה.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-media-by-date">מדיה לפי תאריך</h4>
+
+                                        <p>
+
+                                            לוחצים <kbd>ערוך מאגר מידע</kbd> יוצרים מאגר <strong>“חדש”</strong>,
+                                            ומוסיפים לו תאריך ותמונה
+                                            ומאשרים.
+
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/רשימת-תמונות.png"
+                                                alt="תאריך" class="img-float-left">
+
+                                            <strong>שימו לב!!</strong> הוספת רשומה/תמונה חדשה היא בלחצן
+                                            <strong>‘הוסף’</strong> ולא בלחצן
+                                            <strong>‘חדש’</strong> (לחצן ‘חדש’ יוצר קובץ חדש, ועלול לדרוס את הקובץ הקיים
+                                            וכל המידע שבו ימחק!!)
+                                            בשורה העליונה ניתן לבחור משך הזמן, ליישם למיין את הרשומות לפי התאריך, לשמור
+                                            את הרשימה או לשמור אותה
+                                            בשם אחר, לפתוח רשימה אחרת או ליצור רשימה חדשה.
+                                        </p>
+                                        <p>
+                                            בשורה התחתונה ניתן לערוך חודש שלם ללא צורך לפתוח חלון עריכה שוב ושוב לכל יום
+                                            בנפרד, ניתן לייבא קובץ
+                                            טקסט המכיל את רשימת התמונות והתאריכים. לקפוץ ליום הנוכחי, להעתיק ולהדביק
+                                            רשומות, לערוך את התאריך
+                                            והתוכן, למחוק ולהוסיף רשומות בטבלה.&nbsp;
+                                        </p>
+                                        <p>
+                                            לסיום לוחצים אישור. ,&nbsp;
+                                        </p>
+                                        <p>
+                                            בלחצן שמעליו: <kbd>בחר מאגר נתונים</kbd> בוחרים את הקובץ שבו נמצאת טבלת
+                                            המידע של התמונות ותאריכיהם.
+                                            שם הטבלה מופיע בשדה העליונה.
+                                        </p>
+                                        <p>
+                                            שימו לב: ניתן להעלות לכאן רק קובץ טקסט (עם הסיומת .txt) ולא סוגי קבצים אחרים
+                                            כגון אקסל או וורד
+                                            וכדומה. הדבר גורם לשגיאה בתכנה.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-jewish-info">מידע יהודי</h4>
+
+                                        <p>
+                                            לוחצים <kbd>בחר תוכן</kbd> ובוחרים מתוך הרשימה את המידע שרוצים להציג.
+                                        <div class="
+    "></div>
+                                        </p>
+
+
+                                        <p>
+                                            כל המידע שנבחר כאן, יוצג בתוך האובייקט שלנו. בצד ימין יש חלונית שמציגה את כל
+                                            התוכן שבחרנו. ומעליה
+                                            לחצני חץ למעלה וחץ למטה, כך שאם אנו רוצים שאחד מפריטי המידע יהיה קודם
+                                            לחבירו, נבחר אותו בחלונית
+                                            הימנית, ובאמצעות החץ למעלה נוכל להעביר אותו לראש הרשימה, כך שיוצג ראשון. או
+                                            להוריד לסוף הרשימה
+                                            באמצעות החץ למטה. לחיצה על לחצן CA מוחקת את כל מה שבחרנו, ולחצן OK מאשר.
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מידע-יהודי.png"
+                                            alt="" width="100%">
+
+
+                                        <h4 id="h4-style-button">לחצן סגנון</h4>
+
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/לחצן-סיגנון.png"
+                                            alt="לחצן-סיגנון" width="300px" style="float: left; margin: 0 10px 10px 0;">
+                                        <p>
+                                            ניתן לסגנן את המידע היהודי בצורה המתאימה ביותר למקובל בכל קהילה ובית כנסת.
+                                            מתחת ללחצן “בחר תוכן”
+                                            לוחצים על לחצן “סגנון” ונפתח לנו חלון העריכה של הסגנון.
+                                        </p>
+                                        <p>
+                                            הכרטיסייה הראשונה מגדירה את זמני השבת. כמה זמן הדלקת נרות לפני השקיעה,
+                                            במוצאי שבת ניתן לבחור האם זה
+                                            יחושב במספר דקות מסויים אחרי השקיעה. או במעלות (מה שנקרא “רום השמש”), זמן
+                                            מוצאי שבת המקובל כיום ברוב
+                                            הלוחות הוא 8.5- (מינוס). על הזמן הזה ניתן להוסיף דקות (כתוספת שבת).
+                                        </p>
+                                        <p>
+                                            אותו דבר בזמני רבינו תם ניתן להגדיר לפי דקות שוות או מעלות. למטה בוחרים האם
+                                            זמן זה יחושב בגובה.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <p>
+                                            שימו לב שכל בחירת הזמנים כאן היא לפי זמני הצג החכם, ולכן הם ניתנים לעריכה
+                                            בקלות.
+                                        </p>
+
+
+
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/פרטי-זמני-שבת.png"
+                                            alt="זמני שבת" width="100%">
+
+                                        <p>
+                                            בכרטיסייה תאריך עברי ניתן לבחור איזה חלק מהתאריך יוצג: יום, חודש, שנה (כולל
+                                            ה' של האלפים) ובכרטיסייה
+                                            של התאריך הלועזי ניתן לבחור פורמט של תאריכים לועזיים.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/צורת-תאריך-עברי.png"
+                                            alt="" width="340">
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/צורת-תאריך-לועזי.png"
+                                            alt="" width="200">
+
+
+                                        <p>
+                                            בכרטיסיית ״פרשה ולימודים״ ניתן להגדיר האם יהיה כתוב ״פרשת בראשית״ או רק
+                                            ״בראשית״, לנסח את המילה
+                                            ״פרשת” (למשל אפשר לכתוב ״פרשת השבוע״ או בקיצור פר' וכדומה). בלחצן עריכת
+                                            לימודים 613 עורכים סדר
+                                            לימודים מותאם אישית, (ניתן לשלוח רשימה מסודרת לתמיכה והם יכניסו את הכל בבת
+                                            אחת.) סדר לימוד זה יוצג
+                                            ע״י בחירת ״לימודים מיוחדים״ בחלון המידע היהודי.
+
+
+                                        </p>
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/פרשה-ולימודים.png"
+                                            alt="" width="100%">
+                                        <p>
+                                            ב״שמות הימים״ אפשר לאיית את שמות הימים בשבוע, בסתם, וכשהם באים עם ״ליל״ או
+                                            ״יום״ (כדי להציג אותם
+                                            מסמנים את תיבת הסימון בצד).
+                                        </p>
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/שמות-הימים.png"
+                                            alt="" width="100%">
+
+                                        <p>
+                                            בכרטיסיית תיאור היום בוחרים איזה תיאור יופיע, ניתן לבחור מתוך הרשימה: חגים
+                                            ציוניים, ערוב תבשילין,
+                                            הילולות, פרשת הנשיאים, שבת מברכין, ראש חודש, שובבי"ם, בה"ב, ויום כיפור קטן.
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/פירוט-תיאור-היום.png"
+                                            alt="" width="100%">
+
+                                        <p>
+                                            &nbsp;בהילולות הצדיקים ניתן לבחור קבוצות של ימי זיכרון. לדוגמא: אישים
+                                            מהמקרא, ראשונים, אחרונים וכו'.
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/בחירת-הילולות-להצגה.png"
+                                            alt="" width="100%">
+
+                                        <p>
+                                            בכרטיסייה ‘איות’ ניתן לאיית מחדש את כל סוגי המידע היהודי, וכן לנסח אותו
+                                            בצורה חופשית בכל שפה שנרצה.
+                                        </p>
+                                        <figure class="image image_resized" style="width:60.21%;">
+                                            <img style="aspect-ratio:983/542;"
+                                                src="https://cleversign.co.il/wp-content/uploads/2025/05/איות.png"
+                                                width="100%">
+                                        </figure>
+
+
+
+
+
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-shabbat-times">זמני השבת</h4>
+
+                                        <p>
+                                            לוחצים <kbd>זמני שבת</kbd> ובוחרים את הזמנים שברצוננו להציג.
+
+                                            <br>
+                                            אובייקט זה מציג את זמני השבת הקרובה והחג הקרוב. ניתן לאיית את שמות הזמנים
+                                            השונים בעברית או בכל שפה
+                                            אחרת.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-event-table">טבלת אירועים / עמודת אירועים / התראה על אירוע</h4>
+
+                                        <p>
+                                            לוחצים <kbd>ערוך טבלת אירועים</kbd> ומזינים את האירועים והתפילות הרצויות.
+                                            <br>
+                                            מכיון שנושא זה הוא ארוך ומורכב, הקדשנו לו פרק נפרד בפני עצמו.
+                                            למעבר להסבר המלא על עריכת טבלת אירועים - <a href="#"
+                                                class="open-accordion-link" data-target="event-table-anchor">
+
+                                                לחץ כאן</a>
+
+                                        </p>
+                                        <p id="event-alert-format">
+                                            פה רק נסביר את הפעולה של לחצן ה'סגנון' ב'התראה על אירוע'.
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/סגנון-התראה-לאירוע.png"
+                                            alt="התראה על אירוע" class="img-float-left">
+
+                                        <p>
+                                            <strong>סגנון התראה על אירוע:</strong> כאמור לעיל, אובייקט זה מציג את האירוע
+                                            הקרוב שהולך להיות, למשל
+                                            שעוד מעט תהיה תפילת מנחה
+
+                                            <br>
+
+                                            ניתן לבחור איזה פרטים יופיעו על האירוע הקרוב. הפרטים האלו הם מה שמילאנו
+                                            בעריכת טבלת האירועים.
+                                        </p>
+
+                                        <!----><img
+                                            src="https://cleversign.co.il/wp-content/uploads/2025/05/פרטי-אירוע.png"
+                                            alt="התראה על אירוע" class="img-float-left">
+
+                                        <p>
+                                            <strong>עיצוב תוכן ההתראה:</strong> ניתן לבחור איזה מידע נרצה להציג על
+                                            התפילה הקרובה. נתבונן בחלון
+                                            עריכת האירועים. יש בו כמה שדות טקסט: בסיס - שם התפילה (למשל: שחרית מניין א',
+                                            או מנחה גדולה וכדומה),
+                                            סוג: זה סוג התפילה. האם שחרית, מנחה או ערבית, או אחר. מיקום: באיזה חדר מחדרי
+                                            בית הכנסת מתקיימת
+                                            התפילה. הערה: מידע נוסף הקשור לתפילה זו. למשל ״עם סליחות״, או ״מסיימים לפני
+                                            סוף זמן ק״ש״ וכדומה.
+                                            באמצעות חלון הסגנון, ניתן לבחור איזה שדה מתוכם יוצג, הם מיוצגים על ידי קודי
+                                            מספר, לכל שדה מספר משלו,
+                                            ומוקף בשני מקפים אמצעיים משני צידיו. בין הקודים ניתן להקליד רווח, או אנטר
+                                            כדי שיופיעו בשורות נפרדות.
+                                        </p>
+
+
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/התפילה-הסתיימה.png"
+                                            alt="התראה על אירוע" height="300" style="float: left;">
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/ספירה-לאחור.png"
+                                            alt="התראה על אירוע" height="300" style="float: left;">
+
+
+
+                                        <p>
+                                            רשימת הקודים היא <strong>0</strong>-שם התפילה, <strong>1</strong>-הערה,
+                                            <strong>2</strong>-סוג
+                                            התפילה, <strong>3</strong>-מיקום התפילה, <strong>4</strong>-שעת התפילה,
+                                            <strong>5</strong>-טיימר
+                                            שסופר כמה זמן נשאר עד התפילה הזו.
+
+                                            <br>
+                                            בשדה השני נזין טקסט שנרצה שיופיע לאחר סיום הספירה לאחור. (למשל: התפילה
+                                            הסתיימה).
+
+                                            <br>
+                                            בדוגמא שבתמונות שלפנינו, הקודים שכתבנו בתמונה הראשונה, יציגו לנו את התמונה
+                                            הימנית,
+
+                                            לאחר שיעבור זמנה של התפילה הזו יופיע הטקסט שכתבנו: התפילה הסתיימה.
+                                            <br>
+                                            ההתראה תעלם מהמסך לאחר מספר הדקות שהגדרנו בחלון העריכה בשדה ״משך״.
+
+
+                                        </p>
+
+
+
+
+
+
+
+                                        <h4 id="h4-times-table">טבלת זמנים / שורת זמנים / זמנים (מתקדם) / שורת זמנים
+                                            מתקדם</h4>
+
+                                        <p>
+                                            לוחצים <kbd>בחר זמנים</kbd> ובוחרים זמנים מתוך הרשימה. רשימת הזמנים של הצג
+                                            היא קבועה ואינה ניתנת
+                                            לשינוי. ניתן להגדיר את אופן חישוב הזמנים בתפריט 'אפשרויות' - 'זמנים'.
+                                            רשימת הזמנים של חזון שמים ('מתקדם'), ניתנת לשינוי ע״י התמיכה הטכנית בלבד.
+
+                                            <br>
+                                            ההבדל בין 'טבלה' ל'שורה' הוא: שבטבלה שם הזמן מופיע בצד אחד, ובצד השני מופיע
+                                            הזמן בשעות. ואילו
+                                            ב'שורה' השם והשעה מופיעים יחדיו. (בשורה אנכית או אופקית לפי בחירה).
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+
+                                        <h4 id="h4-time-alert">התראה על זמן / התראת זמני היום חזון שמים</h4>
+
+                                        <p>
+                                            לוחצים <kbd>ערוך התראה</kbd> בוחרים אלו זמנים יציגו התראה, וכמה זמן מראש
+                                            וכדומה.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+
+                                        <h4 id="h4-date-plain-text">טקסט פשוט לתאריך</h4>
+
+                                        <p>
+                                            לוחצים <kbd>ערוך מאגר מידע</kbd> אם יש מאגר ניתן להוסיף ולמחוק בו תאריכים,
+                                            אם אין מאגר אפשר ליצור
+                                            חדש ואפשר לייבא רשימה מוכנה מראש.
+                                            <br>
+                                            הסבר על העבודה עם מאגרי המידע ראה לעיל בפרק על
+
+                                            <a href="#h4-media-by-date">
+                                                מדיה לפי תאריך. </a>
+
+
+
+                                            <br>
+                                            הסבר על ייבוא רשימה מוכנה מראש:
+                                            <br>
+                                            לוחצים <kbd>ייבוא קובץ טקסט</kbd> בוחרים את הקובץ הרצוי, ומאשרים.
+                                            <br>
+                                            קובץ הטקסט צריך להיות בפורמט הבא:
+                                            <br>
+                                            העמודה הראשונה צריכה להיות תאריך (עברי או לועזי) ולאחריה עמודות נוספות
+                                            מופרדות בטאבים.
+                                        </p>התכנה תשאל אותנו האם העמודה הראשונה היא תאריך, והאם התאריך עברי (אם לא עברי,
+                                        אז הוא לועזי). לאחר
+                                        בחירת הקובץ, התכנה תמיר אותו לפורמט המתאים לצג החכם,
+                                        ותשמור אותו במאגר המידע של הצג החכם.
+                                        <br>
+                                        מעתה ואילך, המאגר הזה יופיע ברשימה של מאגרי המידע, וניתן יהיה לערוך אותו בכל עת.
+
+                                        <br>
+                                        <STROng>
+                                            שימו לב:
+                                        </STROng>
+
+                                        לאחר יצירת הקובץ ניתן לפתוח אותו באמצעות לחצן <kbd>פתח</kbd> ולערוך אותו. ואין
+                                        צורך לייבא שוב לאחר
+                                        שייבאנו אותו פעם אחת.
+                                        <br>
+                                        שימו לב: ניתן להעלות לכאן רק קובץ טקסט (עם הסיומת .txt) ולא סוגי קבצים אחרים
+                                        כגון אקסל או וורד וכדומה.
+                                        הדבר גורם לשגיאה בתכנה.
+
+                                        <br>
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-date-rich-text">טקסט עשיר לתאריך</h4>
+
+                                        <p>
+                                            לוחצים <kbd>ערוך מאגר מידע</kbd> ועובדים עם מאגרי המידע כמו שכתוב לעיל.
+                                            <br>
+                                            ההבדל הוא שהמאגר הזה הוא מאגר טקסט עשיר, כלומר ניתן להוסיף תמונות, טבלאות,
+                                            קישורים וכדומה. ועורך
+                                            הטקסט שלו הוא כמו עורך הטסקט העשיר, ראה לעיל בפרק על
+
+                                            <a href="#h4-rich-text">
+                                                עורך טקסט עשיר. </a>
+
+
+
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-yahrzeit-table">טבלת יארצייט (הסוג הראשון)</h4>
+
+                                        <p>
+                                            לוחצים
+                                            <kbd>
+
+                                                בחר קובץ יארצייט
+                                            </kbd>
+                                            ובוחרים את הקובץ מתוך התיקייה. הקובץ חייב להיות בפורמט המתאים, ועם סיומת
+                                            yrz. אחרת הוא לא יעבוד או
+                                            יגרום לשגיאות בתכנה.
+                                            אם אין לכם קובץ כזה נא פנו לתמיכה ובקשו. ניתן לקבל קובץ יארצייט בסיסי
+                                            לדוגמא, ואתם תערכו אותו
+                                            בעצמכם. אם יש לכם כבר רשימה מוכנה של שמות ותאריכי פטירה - שלחו לנו ונכין לכם
+                                            ממנו את קובץ
+                                            היארצייט.
+
+                                            <br>
+
+
+
+
+
+
+
+
+
+                                            לוחצים <kbd>ערוך טבלת יארצייט</kbd> ויפתח לנו חלון כזה:
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/עריכת-קובץ-יארצייט.png"
+                                            alt="edit_yrz" width="100%">
+
+
+
+                                        <p>
+                                            ולהלן הסבר על כל הלחצנים מימין לשמאל:
+
+
+                                            <strong>
+                                                + סימן פלוס
+                                            </strong>
+
+                                            - מוסיף רשומה חדשה.
+                                            <strong>
+                                                X איקס
+                                            </strong>
+                                            - מוחק את הרשומה הנבחרת.
+                                            <strong>
+                                                ערוך
+                                            </strong>
+                                            - עריכת הרשומה הנבחרת.
+                                            <strong>
+                                                יישם
+                                            </strong>
+                                            מיישם את השינויים שערכנו ומציג אותם באובייקט.
+                                            <strong>
+                                                אשר
+                                            </strong>
+
+                                            - מאשר את השינויים וסוגר את חלון העריכה.
+
+                                            <strong>
+                                                שמור בשם
+                                            </strong>
+                                            - שומר את הקובץ בשם חדש.
+
+                                            <strong>
+                                                שמור
+                                            </strong>
+                                            - לשמור את השינויים.
+
+                                            <strong>
+                                                פתח
+                                            </strong>
+                                            - לפתוח קובץ יארצייט אחר.
+                                            <strong>
+                                                קובץ חדש
+                                            </strong>
+                                            מתחיל קובץ יארצייט חדש ריק.
+                                            <strong>
+                                                ייבא CSV
+                                            </strong>
+                                            מאפשר לייבא קובץ CSV (רשומות מופרדות בפסיקים),
+
+                                            בשדה
+                                            <strong>
+                                                All Dates
+                                            </strong>
+                                            בוחרים האם להציג את כל הרשומות, או רק הרשומות התקינות, או להיפך: רק הרשומות
+                                            שאינן תקינות (שחלה שגיאה
+                                            בתאריך, כך ניתן למצוא שגיאות בקלות)&#46; בסמל השמאלי ביותר בוחרים אלו עמודות
+                                            מהטבלה יוצגו: כברירת
+                                            מחדל מוצגים כל העמודות, וכשמתחילים לסמן עמודות ברשימה בחלון הנפתח, יעלמו כל
+                                            העמודות ורק מה שבחרנו
+                                            יוצג, כך ניתן להציג רק את העמודות הרלוונטיות&#46;
+                                            בשורה השניה של סרגל הסימניות ניתן לערוך חיפוש לפי עמודה נבחרת, למיין את
+                                            הרשימה, ולנקות מסרונים
+                                            שנשלחים מהמערכת&#46; (ישנה אופציה בתכנה לשלוח מייל או מסרון אוטומטי לקראת
+                                            יום פטירה של קרוב משפחה)
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/עריכת-רשומת-יארצייט.jpg"
+                                            class="img-float-left_small" alt="edityrzline">
+
+                                        <h5 id="edit_yrz_line">
+                                            עריכת רשומת יאהרצייט
+                                        </h5>
+                                        <p>
+                                            להלן נסקור את חלון עריכת הרשומות של היארצייט:
+
+                                            <br>
+
+                                            למעלה מופיעה תיבת סימון שבה נבחר האם הרשומה פעילה או מוסתרת. מתחתיה שתי שדות
+                                            שמיועדות לרשום את שם
+                                            הנפטר ומשפחתו באותיות לועזיות. לאחר מכן שדות של תואר, שם פרטי, בן, שם אב, שם
+                                            משפחה, ז"ל או ע"ה (או
+                                            זצ"ל וכדומה), נפטר (נפטרה, נלב"ע וכדומה).
+                                            הערה נוספת (כמו למשל תנצב"ה), שם התורם (הונצח ע"י פלוני), מייל ומספר נייד
+                                            לקבלת הודעות, כך שהתורם
+                                            יקבל הודעה על יום הזיכרון של יקירו.
+
+                                            <br>
+
+                                            <strong>
+                                                טקסט חופשי
+                                            </strong>
+                                            הוא פיתוח חדש, שמיועד למקרה של רשומות לא מסודרות, או שמופיעים בכל ריבוע כמה
+                                            שמות, או שאין תאריכים,
+                                            ואי אפשר להכניס תבנית מסודרת כמו בשדות לעיל, במקרה כזה משתמשים בטקסט החופשי.
+                                            מקלידים את הטקסט שאנו
+                                            רוצים בתוך השדה, מכניסים את מעברי השורות שרוצים (למשל כמו בתמונה: לע"נ למעלה
+                                            בשורה אחת, ואחריה שורה
+                                            של השם, ושורה של תאריך הפטירה, בשורות הבאות ניתן לשים עוד שמות, או תאריכים,
+                                            או כל תוספת שרוצים
+                                            להוסיף).
+
+                                            <br>
+                                            עריכת התאריך: לפי תאריך עברי או לועזי, מסמנים האם יופיע תאריך על המסך, והאם
+                                            יופיע גם . אם נסמן מתחת
+                                            לתאריך את After Sunset, שמשמעותו שהפטירה היתה לאחר השקיעה, השם יופיע בתאריך
+                                            של מחרתו.
+                                            <br>
+                                            התאריך מופיע בשדה התחתון. לסיום ניתן ללחוץ על אוקיי או ביטול. התכנה תשאל
+                                            אותנו אם לשמור ובזה סיימנו
+                                            את עריכת הרשומה.
+
+
+
+                                        </p>
+
+                                        <br>
+
+
+                                        <h5 id="edit_yrz_style">
+
+                                            עריכת הסגנון של היארצייט
+                                        </h5>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/ערוך-סטייל-יארצייט.png"
+                                            alt="ערוך יארצייט סטייל" class="img-float-left_small">
+                                        <p>
+
+
+
+
+
+
+                                            לוחצים <kbd>ערוך יארצייט סטייל</kbd> ונפתח לנו החלון שבתמונה.
+                                            בשדה השמאלי למעלה (בשם Type) יש שלוש אופציות לבחירה: יומי, הבא, ו'אחרים'.
+                                            (זה מופיע באנגלית: Daily, Next, Others).
+                                            <br>
+                                            סוג אובייקט זה, בנוי להציג שלוש קבוצות של משבצות זיכרון: האחת למעלה 'יומי' -
+                                            מציג את כל השמות של התאריך של היום., השניה מתחתיה 'הבא' - מציג את השמות של
+                                            השבוע הקרוב. והשלישי זה כל השאר.
+                                            יש לבחור כאן בכל אחת מהקבוצות ולהגדיר את המראה והסגנון שלה.
+                                            <br>
+                                            הגדרת הסגנון היא כדלהלן: מספר עמודות מקסימלי (אם יהיו פחות שמות לאותו יום,
+                                            יהיו פחות עמודות, אבל אם יהיו יותר שמות מזה, לא יכנסו כולם בפעם אחת אלא
+                                            יתחלפו ביניהם לסירוגין).
+                                            לידו יש את מגדיר מספר שורות מקסימלי. ב'יומי' וב'הבא' אין אופציה ליותר משורה
+                                            אחת. ולכן אופציה זו תקפה רק ב'אחרים'.
+                                            לאחר מכן נבחר תמונה שתהווה רקע למשבצות של אותו סוג (כאמור: יומי, הבא או
+                                            אחרים).
+                                            מתחתיו נגדיר האם להציג נר, ואם כן, יש לבחור תמונה של נר, ניתן לבחור תמונת
+                                            GIF שתאפשר להציג נר שנראה דולק והשלהבת שלו זזה.
+                                            <br>
+                                            לאחר מכן נגדיר את גודל הנר. ואת מיקומו. בעזרת מאפייני ציר X וציר Y, הגובה H
+                                            והרוחב W.
+                                            <br>
+                                            מתחת מופיע הגדרת גודל הגופן של השם, צבעו, מיקומו וגודלו.
+                                            ולאחר מכן גודל הפונט של המידע (מתי נפטר וכו') צבעו, גדלו ומיקומו.
+                                            <br>
+                                            נחזור על כל התהליך הזה בכל שלושת סוגי המשבצות: יומי, הבא, אחרים. ונלחץ על
+                                            אישור.
+                                            <br>
+                                            האובייקט צריך להיות מספיק גדול בשביל שיוכל להציג את כל המשבצות הנ"ל, אחרת
+                                            הוא לא יוכל להציג את התוכן שלו.
+                                            שאר מאפייני התצוגה (כגון סוג הפונט, רקע וכו' נערכים דרך חלון מאפייני
+                                            האובייקט הרגיל).
+
+                                            לפעמים השינוי לא יוצג עד שנסגור ונפתח את התכנה מחדש.
+                                            <br>
+                                            כעת אמור להיות מוצג לפנינו אובייקט בערך כזה: (כל אחד לפי הצבעים הרקעים
+                                            והגופנים שהוא בחר).
+                                            <br>
+                                            השורה העליונה מציגה את היומי, (כעת יש רק שם אחד ליום זה, ולכן יש שם רק תא
+                                            אחד).
+                                            השורה השניה מציגה את 'הבא', ושאר השורות מציגות את ה'אחרים'.
+
+
+
+
+
+
+
+
+
+
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אובייקט-טבלת-יארצייט-סוג-ראשון.png"
+                                            alt="יארצייט-סוג-ראשון" width="100%">
+
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <p>
+
+                                        </p>
+                                        <div>
+
+
+                                            <h4 id="h4-yahrzeit-table2">טבלת יארצייט (הסוג השני)</h4>
+
+                                            <p>
+                                                צורת בחירת ועריכת קבצי היארצייט שווים בשני האובייקטים, ולכן כדי לדעת
+                                                כיצד עורכים את קבצי היארצייט ראה
+
+                                                <a href="#h4-yahrzeit-table">
+                                                    כאן
+
+                                                </a>.
+                                                כעת נסביר כיצד עובדים עם עריכת הסגנון של קובץ יארצייט זה.
+
+
+
+                                            </p>
+
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/סגנון-טבלת-יארצייט.png"
+                                                alt="signon tavlat" class="img-float-left_small">
+                                            <p>
+
+
+
+                                                לוחצים <kbd>סגנון</kbd> ונפתח החלון הבא.
+                                                <br>
+
+                                                בצד שמאל למעלה של החלון, נראה כמה שדות של מספרים.
+                                                השדה העליון הוא 'טיימר' שמגדיר כל כמה זמן יתחלפו השמות בטבלת היארצייט.
+                                                מתחתיו 'רווח אופקי' (בין משבצת למשבצת שלצידה), מתחתיו מגדירים את ה'רווח
+                                                האנכי', (בין משבצת למשבצת שמתחתיה), מתחת מגדירים 'ספירת עמודות' (כמה
+                                                עמודות בטבלה), וספירת שורות (כמה שורות בטבלה).
+
+
+
+
+
+
+
+                                            </p>
+                                        </div>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4 id="h4-yahrzeit-list">רשימת יארצייט</h4>
+                                        <p>
+                                            לוחצים <kbd>סגנון</kbd> ובוחרים את הסגנון הרצוי
+                                        </p>
+                                        <p>
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/סגנונות-רשימת-יארצייט.png"
+                                                alt="ערוך יארצייט סטייל" class="img-float-left_small">
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p><br>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <!-- ערוך טבלת אירועים =============================-->
+
+
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-table topic-icon"></i> ערוך טבלת אירועים</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <DIV class="accordion-paragraph">
+                                        <p id="event-table-anchor"></p>
+                                        טבלת אירועים היא אובייקט המאפשר להציג מידע דינמי על אירועים שונים, כגון תפילות,
+                                        חגים, או כל אירוע אחר
+                                        שתרצה להציג. טבלה זו יכולה להיות מותאמת אישית לפי הצרכים שלך.
+                                        </p>
+                                        <p>
+                                            להלן הסבר על אופן עריכת טבלת אירועים, כולל יצירת אירועים, הגדרת תאריכים,
+                                            שעות, מיקומים ועוד.
+                                            <br>
+                                            להתחלת עריכת האירועים יש ללחוץ על <kbd>ערוך טבלת אירועים</kbd> בחלון עריכת
+                                            האובייקט. ויפתח לנו החלון
+                                            הבא:
+
+
+
+
+
+
+
+
+
+                                        </p>
+                                        <img class="accordion-image"
+                                            src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-א.png"
+                                            alt="טבלת אירועים">
+                                        <p>
+                                            בחלון זה ניתן להוסיף אירועים חדשים, לערוך אירועים קיימים, למחוק אירועים,
+                                            ולסדר את האירועים לפי סדר
+                                            התצוגה הרצוי.
+                                        </p>
+                                        <p>
+                                            תחילה נפרט את סרגל הכלים העליון. החלק השמאלי ביותר מיועד לטפל ברשומות הטבלה:
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-סרגל-עליון.png"
+                                            alt="סרגל כלים טבלת אירועים" width="100%">
+                                        <p>
+                                            <strong>הוסף אירוע:</strong> לחיצה על לחצן זה תפתח חלון חדש שבו ניתן להזין
+                                            את פרטי האירוע החדש.
+                                        <p>
+                                            כדי להוסיף תפילה לחץ הוסף אירוע, כשיש כמה תפילות ניתן לסדר אותם לפי הסדר
+                                            הרצוי באמצעות לחצני החיצים
+                                            (למעלה ולמטה). ניתן למחוק את האירוע הנבחר, או את כל האירועים בטבלה.
+                                        </p>
+                                        <p>
+                                            בחלק האמצעי של הסרגל העליון, מבצעים פעולות בקובץ של הטבלה: שמירה רגילה או
+                                            שמור בשם. טען טבלה חדשה
+                                            (רק קבצים עם סיומת “SchText”) או “חדש” ליצירת טבלה חדשה.
+                                        </p>
+                                        <p>
+                                            <strong>שימו לב!! לחיצה על ״חדש״ יוצרת קובץ חדש, ושמירתו עלולה לדרוס את
+                                                הקובץ הקודם - ולאבד את כל
+                                                הנתונים שהיו לכם. חשוב מאוד לא להתבלבל בינו לבין הלחצן ״הוסף
+                                                אירוע״.</strong>
+                                        </p>
+                                        <p>
+                                            בסיום העריכה לוחצים על לחצן ״אשר״ והחלון נסגר.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+                                        <h4>
+                                            מאפייני האירוע
+                                        </h4>
+                                        <p>
+                                            עריכת מאפייני האירוע מתחלקת לשמונה חלקים עיקריים:
+                                        </p>
+                                        <ol>
+                                            <li>
+                                                <a href="#event-table-title">כיתוב</a>
+                                            </li>
+                                            <li>
+                                                <a href="#event-table-time-type">סוג הזמן</a>
+                                            </li>
+                                            <li>
+                                                <a href="#event-table-date-calc">התאריך לפיו יחושב הזמן</a>
+                                            </li>
+                                            <li>
+                                                <a href="#event-table-rounding">עיגול הזמן</a>
+                                            </li>
+                                            <li>
+                                                <a href="#event-table-display">אופן התצוגה</a>
+                                            </li>
+                                            <li>
+                                                <a href="#event-table-display-leading-zero">תנאי התצוגה</a>
+                                            </li>
+                                            <li>
+                                                <a href="#event-table-highlight-condition">תנאי הדגשה</a>
+                                            </li>
+                                            <li>
+                                                <a href="#event-table-appearance-time">זמן הופעה לפני ואחרי האירוע</a>
+                                            </li>
+                                        </ol>
+                                        <p>
+                                            ונפרט אותם אחד אחד:
+                                        </p>
+                                        <h5 id="event-table-title">
+                                            כיתוב
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-כיתוב.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            מסמנים את תיבת הסימון ״פעיל״ כדי שהתפילה תוצג ברשימה.
+                                        </p>
+                                        <p>
+                                            בשדה ‘בסיס’ כותבים את שם התפילה כפי שאנו רוצים שיוצג על הצג.
+                                        </p>
+                                        <p>
+                                            השדות האחרים (סוג, מיקום, ו'הערה') משמשים בעיקר לאובייקט ‘התראה על אירוע’,
+                                            ראה <a href="#h4-event-table">כאן</a> כיצד משתמשים בהם.
+                                        </p>
+                                        <h5 id="event-table-time-type">
+                                            סוג הזמן
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-סוג-הזמן.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            ראשית נבחר האם מדובר בזמן קבוע (כל יום התפילה באותה שעה) ונציין את השעה
+                                            (בפורמט 24 שעות בלבד!! אחר
+                                            כך נבחר איך להציג את זה על המסך, אבל כאן חייבים להשתמש בפורמט 24), או בזמן
+                                            דינמי (שהתפילה משתנה כל
+                                            יום לפי זמני היום, כמו שחרית בנץ, מנחה וערבית סביב השקיעה, וכדומה).
+                                        </p>
+                                        <p>
+                                            <!--כאן צריך להוסיף את הקישור לקטע של מחשבון הצג  -->
+                                            אם בחרנו זמן דינמי, נבחר את הזמן הרצוי, למשל שקיעה/זריחה וכדומה. זמנים אלו
+                                            שניתנים לבחירה בשדה
+                                            השמאלי - הם זמני הצג החכם. וכמו שהסברנו <a href="#מחשבון הצג">כאן</a> הם
+                                            זמנים פשוטים וקלים לעריכה,
+                                            אך לא תמיד יתאימו במדוייק לשיטות מיוחדות. ולכן אם נרצה שהתפילה תחושב לפי
+                                            זמני חזון שמים, נבחר בשדה
+                                            השמאלי ‘חזון שמים’ ויפתח לנו אפשרות בשדה הימני לבחור את הזמן מתוך הרשימה.
+                                        </p>
+                                        <p>
+                                            בשדה ‘הוספת דקות’ נגדיר כמה דקות לפני או אחרי הזמן (כדי להגדיר ‘לפני’
+                                            מוסיפים סימן מינוס לפני
+                                            המספר), למשל מנחה עשר דקות לפני השקיעה וערבית עשרים דקות אחרי השקיעה.
+                                        </p>
+                                        <p>
+                                            השדה ‘משך’ מגדיר כמה זמן התפילה עדיין רלוונטית. (לדוגמא: בשחרית שבת, רבע שעה
+                                            אחרי תחילת התפילה,
+                                            יכולים לאחוז רק באמצע או תחילת פסוקי דזמרה, אבל במנחה של חול, רבע שעה אחרי
+                                            תחילת התפילה היא כבר
+                                            הסתיימה) הפרט הזה ישמש אותנו אם נרצה להדגיש את התפילה הקרובה, כל עוד שהיא
+                                            רלוונטית ואפשר ‘לתפוס’ את
+                                            המניין. וכן באובייקט של ‘התראה על האירוע הבא’ ההתראה תוצג כל עוד התפילה
+                                            עדיין רלוונטית.
+                                        </p>
+                                        <h5 id="event-table-date-calc">
+                                            התאריך לפיו יחושב הזמן
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-התאריך.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            חלק זה רלוונטי רק אם בחרנו ‘זמן דינמי’, ואז נוכל לבחור: האם זמן התפילה ישתנה
+                                            כל יום (למשל כל יום
+                                            מנחה עשר דקות לפני השקיעה של אותו יום), או שישתנה רק פעם בשבוע. (השבוע מתחיל
+                                            מראשון עד שבת, לא ניתן
+                                            לשנות הגדרה זו), ואז נבחר מתי משתנה הזמן לזמן של שבוע הבא. (שמות הימים
+                                            מופיעים באנגלית), בדרך כלל
+                                            היום בו מתחיל אצלנו שבוע חדש הוא יום ראשון, ולכן נבחר Next Sunday.
+                                        </p>
+                                        <p>
+                                            כעת יש להגדיר לפי איזה יום בשבוע יחושבו הזמנים: המוקדם בשבוע או המאוחר
+                                            בשבוע, או לפי יום מסויים.
+                                        </p>
+                                        <p>
+                                            חשוב: אם רוצים להציג בכל ימות השבוע את זמני תפילות שבת הקרובה - יש להגדיר
+                                            יום שינוי Next Sunday.
+                                            והיום בשבוע ״שבת״ (או ״שישי״ עבור תפילות ערב שבת וליל שבת), אם נבחר בטעות
+                                            ‘יום השינוי - שבת’ ו'היום
+                                            בשבוע - שבת' - אזי החל מיום השבת יופיעו בצג זמני התפילות של שבת הבאה (מכיון
+                                            שהגדרנו שבשבת מתחיל
+                                            השבוע החדש (דהיינו יום השינוי) ויוצגו זמני השבת הבאה).
+                                        </p>
+                                        <p>
+                                            עוד דבר חשוב שיש טועים בו: ברשימת ימי השבוע יש רשימה עם מינוס (שזה אומר שבוע
+                                            קודם) ורשימה ללא מינוס.
+                                            אם רוצים שבמשך השבוע יוצגו הזמנים של השבת הקרובה, (או יום פלוני בתוך השבוע
+                                            הזה) חייבים לבחור את
+                                            הימים שמופיעים ללא סימן המינוס.&nbsp;
+                                        </p>
+                                        <p>
+                                            ניתן להגדיר שהזמנים יופיעו באופן חודשי (שכל חודש ישתנו הזמנים) או שהזמנים
+                                            יוצמדו ליום מסויים בשנה.
+                                        </p>
+                                        <h5 id="event-table-rounding">
+                                            עיגול הזמן
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-עיגול-הזמן.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            גם קטע זה קשור לזמן הדינמי, כיצד לעגל כאשר זמני היום יוצאים עם שניות, כיצד
+                                            לקבוע את התפילה. בחירת 0
+                                            דקות אומרת שהזמן לא יעוגל, עיגול דקה מאפשר לעגל לדקה הקרובה או המוקדם / הבא.
+                                            אפשר לעגל לחמש דקות או
+                                            יותר (מצוי במקרה שלא רוצים שתפילה תהיה בדקות מדוייקות אלא בזמן עגול, (במקום
+                                            4:43, יעוגל ל4:45 או
+                                            4:40). &nbsp;
+                                        </p>
+                                        <h5 id="event-table-display">
+                                            אופן התצוגה
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-אופן-התצוגה.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            נגדיר האם התפילה תוצג בשניות או בדקות שלמות, או רבעי דקות. ואפשר לא להציג
+                                            כלל את הזמן. אלא רק את שם
+                                            התפילה. אופציה זו משמשת אצל רבים עבור כותרת של קבוצת תפילות. דוגמא כשיש הרבה
+                                            מניינים, כותבים בכותרת:
+                                            שחרית, ומגדירים ללא זמן, ואח"כ ממלאים את הזמנים: מניין א', מניין ב', מניין
+                                            ג', וכן הלאה. וכן מי
+                                            שמעוניין להכניס זמני חול ושבת ביחד יכתוב כותרת ‘זמני חול - שחרית מנחה ערבית,
+                                            ואח״כ זמני שבת - מנחה
+                                            קב״ש ערבית שחרית וכו’).
+                                            <br>
+                                            אם בחרנו לא להציג את הזמן, האופציות שקשורות לזמן ינעלו, ולא ניתן יהיה לערוך
+                                            אותן.
+                                        </p>
+                                        <p>
+                                            האם יופיע בפורמט שעון 12 או 24,&nbsp;
+                                        </p>
+                                        <p>
+                                            האם בתוספת AM PM
+                                        </p>
+                                        <p>
+                                            האם להוסיף אפס מקדים או לא (למשל 06:00 או 6:00)
+                                        </p>
+                                        <h5 id="event-table-display-leading-zero">
+                                            תנאי תצוגה
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-תנאי-תצוגה.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            האם תפילה זו תופיע בכל ימות השנה, או רק מתאריך מסויים עד תאריך אחר (עברי או
+                                            לועזי)
+                                        </p>
+                                        <p>
+                                            אם הגדרנו בכל תאריך, נוכל להוסיף ימים יוצאים מן הכלל, שבהם יוצג או לא יוצג
+                                            אירוע זה. פירוט של התנאים
+                                            מופיע כאן ~.
+                                        </p>
+                                        <h5 id="event-table-highlight-condition">
+                                            תנאי הדגשה
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-תנאי-הדגשה.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            אם הגדרנו שאנו רוצים להדגיש את התפילה הקרובה (כדי שמי שמגיע לבית הכנסת, ישים
+                                            לב מיד מתי ואיפה המניין
+                                            הקרוב - שמופיע בהדגשה. איך מגדירים זאת, ראה כאן~), נגדיר באיזה יום תופיע
+                                            ההדגשה. (למשל אם אנו מציגים
+                                            את זמני תפילות שבת גם במהלך השבוע, לא נרצה ששחרית שבת יודגש כל בוקר, אז
+                                            נגדיר שזה רק בשבת, וכן שאר
+                                            התנאים.)
+                                        </p>
+                                        <p>
+                                            <strong>חשוב: לא להתבלבל בין תנאי התצוגה לתנאי ההדגשה.</strong>
+                                        </p>
+                                        <h5 id="event-table-appearance-time">
+                                            זמן הופעה לפני ואחרי האירוע
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אירועים-זמן-הופעה.png"
+                                            alt="אירועים כיתוב" width="100%">
+                                        <p>
+                                            מתי יופיע האירוע הזה, האם בזמן הקרוב, או מספר דקות לפני ואחרי לפי ההגדרה
+                                            שנרצה.
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- קבוצות -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-layer-group topic-icon"></i> קבוצות</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content" id="groups">
+                                    <div class="accordion-paragraph">
+
+
+
+
+
+                                        <h5>
+                                            הקדמה
+                                        </h5>
+                                        <p>
+                                            הדרך הנוחה והפשוטה ביותר להציג בנפרד זמני תפילות בימי חול / שבתות / מועדים
+                                            בנפרד בצורה מסודרת, היא
+                                            באמצעות חלוקה לקבוצות, כך שכל קבוצה תוצג בנפרד.
+                                        </p> <img class="img-float-left_small"
+                                            src="https://cleversign.co.il/wp-content/uploads/2025/05/קבוצות1.png"
+                                            alt="עיצוב טקסט">
+                                        <p>
+                                            בתוך כל קבוצה ניתן להכניס רשימת תפילות. כך שניתן יהיה להציג אותם יחד.
+                                        </p>
+                                        <p>
+                                            לדוגמא: קבוצת תפילות חול, תפילות שבת, פסח, שבועות, ראש השנה, יום כיפור,
+                                            סוכות וכן הלאה.
+                                        </p>
+                                        <p>
+                                            כל אובייקט אירועים, מציג אירועים מקבוצה מסויימת או מספר קבוצות.&nbsp;
+                                        </p>
+                                        <h5>
+                                            איך מגדירים את הקבוצות
+                                        </h5>
+                                        <p>
+                                            לוחצים על ‘בחר קבוצות’ ובוחרים את הקבוצה שאנו מעוניינים שזמניה יופיעו
+                                            באובייקט הנוכחי, ניתן לבחור גם
+                                            כמה קבוצות ביחד לאובייקט אחד, ואז זמניהם יופיעו בזה אחר זה. אנו ממליצים
+                                            להציג בכל אובייקט רק קבוצה
+                                            אחת.
+                                        </p>
+                                        <p>
+                                            מעתה כשנפתח את חלון עריכת רשימת האירועים, יפתח לנו ישירות הרשימה שנמצאת
+                                            בקבוצה הפעילה באובייקט זה.
+                                            מעל הלחצן של ‘ערוך טבלת אירועים’ מופיע שם הקבוצה הפעילה באובייקט זה.
+                                        </p>
+                                        <p>
+                                            בחלון בחירת הקבוצות ניתן בלחיצה אחת להסתיר את כל הקבוצות באובייקט זה, או
+                                            להציג את כולן. וכן ניתן
+                                            להציג את הקבוצות על פי לוח השנה. ונושא זה יבואר בקטע הבא.
+                                        </p>
+                                        <h5>
+                                            הצגת קבוצות על פי לוח השנה
+                                        </h5>
+                                        <p>
+                                            באמצעות הגדרה זו של הצגה על פי לוח השנה, ניתן להציג רק קבוצה אחת שתתחלף לפי
+                                            תאריכים. לדוגמא בראש
+                                            השנה יוצגו זמני ראש השנה, ביום כיפור יוצגו זמניו, ובסוכות זמני סוכות.
+                                        </p>
+                                        <p>
+                                            הדרך לעשות זאת היא ללחוץ על ‘בחר קבוצות’, ובחלון שנפתח לסמן את התיבה ״על פי
+                                            לוח השנה״. כעת כל יום
+                                            תוצג הקבוצה הפעילה בלוח השנה של אותו יום. אך קודם אנו צריכים להגדיר את לוח
+                                            השנה שלנו, באיזה תאריכים
+                                            תהיה כל קבוצה. ועל כך בפרק הבא.
+                                        </p>
+                                        <H5>
+                                            הגדרת לוח השנה, ועריכת הקבוצות
+                                        </H5>
+
+                                        <p>
+                                            בכדי לערוך את רשימת הקבוצות, ולשלב אותן בתוך ימות השנה, יש להכנס לחלון עריכת
+                                            לוח השנה. ניתן להגיע
+                                            אליו בשתי דרכים: א. בחר קבוצות &gt;&gt;&gt; לחצן צהוב עם האות G, &nbsp;ב.
+                                            ערוך טבלת
+                                            אירועים&gt;&gt;&gt; לחצן צהוב עם האות G (ליד רשימת הקבוצות)
+                                        </p>
+                                        <p>
+                                            יפתח לנו החלון הזה:
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/חלון-קבוצות.png"
+                                            alt="עיצוב טקסט" width="100%">
+
+                                        <p>
+                                            בצד ימין למעלה נראה את רשימת הקבוצות ולחצני עריכתם,
+                                        </p>
+                                        <p>
+                                            באמצעות לחצנים אלו ניתן: להוסיף קבוצה, למחוק, לשנות את סדר הקבוצות על ידי
+                                            הזזתן למעלה או למטה. (חשוב
+                                            לדעת שהקבוצות התחתונות עולות על גבי העליונות, כך שאם יהיו התנגשויות בין
+                                            קבוצות (ששתיהן יהיו באותו
+                                            יום) תוצג רק הקבוצה התחתונה מביניהן). לשמור את רשימת הקבוצות, ולאשר ולסגור
+                                            את החלון.
+                                        </p>
+                                        <p>
+                                            כדי להוסיף קבוצה נלחץ על לחצן הוסף, ומייד תתווסף קבוצה חדשה עם שם ברירת מחדל
+                                            כלשהו.&nbsp;
+                                        </p>
+                                        <p>
+                                            ניתן לערוך את הקבוצות בצד השמאלי למעלה כדלהלן:
+                                        </p>
+                                        <p>
+                                            לסמן האם הקבוצה פעילה, אם יש קבוצות שאיננו רוצים שיוצגו במעגל השנה (למשל
+                                            קבוצות שאינן תלויות במעגל
+                                            השנה, כדוגמת ברית מילה או הכנסת ספר תורה), צבע רקע הקבוצה וצבע טקסט. (צבעים
+                                            אלו יסייעו לנו לזהות
+                                            בקלות את הקבוצות על פני לוח השנה, כל יום יופיע בצבע של הקבוצה שלו). ובתוך
+                                            החלון עורכים את שם הקבוצה.
+                                            לכל קבוצה יש מספר סידורי (מזהה) וכן מופיע מתחת שם הקבוצה, כמה אירועים יש
+                                            בקבוצה זו.
+                                        </p>
+                                        <p>
+                                            בחלק שמתחתיו מגדירים באילו ימים בשנה הקבוצה הזו תהיה פעילה. בוחרים בטווח האם
+                                            מתאריך עברי או לועזי
+                                            כלשהו, ועד לתאריך אחר. או ‘בכל תאריך’ בתנאי שהוא אחד מהימים המופיעים ברשימה
+                                            שבתמונה לפנינו:
+                                        </p>
+
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/בכל-תאריך.png"
+                                            alt="עיצוב טקסט" width="100%">
+
+
+                                        <p>
+                                            ניתן להגדיר גם שקבוצה מסוימת תופיע רק בשעון קיץ או חורף, וכן שהיא תופיע
+                                            בימים נבחרים מתוך ימי השבוע.
+                                            (לדוגמא רק בשבתות, או רק ימי שישי או כל יום אחר).
+                                        </p>
+                                        <p>
+                                            בתחתית החלון מופיע לוח שנה, ובו מסומנים בצבעים הקבוצות הפעילות בכל
+                                            יום.&nbsp;
+                                        </p>
+                                        <p>
+                                            בתמונה להלן נראה דוגמא לסידור קבוצות: קבוצת חול נמצאת בראש הרשימה, והיא
+                                            הקבוצה ברירת המחדל בכל
+                                            התאריכים, מתחתיה מופיעה קבוצת שבת ש'עולה עליה' בכל ימי השבת, ועל שתיהן עולה
+                                            קבוצת ‘חנוכה’ שמוגדרת
+                                            להופיע רק בימי חנוכה (מכה כסלו ועד סוף חנוכה)
+                                        </p>
+                                        <p>
+                                            כך בימי החול יוצגו זמני החול, ובימי שבת - זמני שבת, ובחנוכה- חנוכה.
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/צבועים.png"
+                                            alt="עיצוב טקסט" width="100%">
+                                        <p>
+                                            בלחצנים שמעל לוח השנה ניתן להגדיר האם יוצג לוח עברי או לועזי, לבחור שנה,
+                                            לנקות את כל הקבוצות מהלוח.
+                                        </p>
+
+                                        <a href="#perek-text">פרק טקסט~</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+                            <!-- טקסט -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-text-height topic-icon"></i> 3. טקסט</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content" id="text-style">
+                                    <div class="accordion-paragraph">
+                                        <img class="img-float-left_small"
+                                            src="https://cleversign.co.il/wp-content/uploads/2025/05/כרטיסייה-טקסט.png"
+                                            alt="עיצוב טקסט">
+                                        <p id="perek-text">
+                                            כרטיסייה זו, אחראית לחלק מעיצוב הטקסט (חלק מעיצוב הטקסטס מוגדר בכרטיסייה זו,
+                                            והשאר מוגדר בכרטיסייה
+                                            סגנון).<br>
+                                            באיזור העליון של הכרטייה בוחרים את הגופן, (הבחירה היא לא מכלל גופני המחשב,
+                                            אלא רק גופנים המותקנים
+                                            בתוך התכנה.) הגופן הנבחר מופיע בצבע כחול מתחת לחלון בחירת הגופנים.
+
+
+                                            <br>
+                                            אם רוצים לבחור גופן אחר שאינו מותקן בתכנה, לוחצים על 'בחר גופן' ומכניסים את
+                                            הגופן הרצוי מתוך המחשב.
+                                            מתחת לזה נמצא חלון בחירת הגודל, ולצידו לחצני הגדלה והקטנה. ומתחתיו תיבת
+                                            סימון של הדגשת הגופן.
+
+
+
+
+                                            ב'אפקט' ניתן לבחור מה קורה האם הטקסט
+                                            <strong>
+                                                יגלל
+                                            </strong> (סימון התיבה
+                                            <strong>
+                                                'אוטומטי'
+                                            </strong>
+                                            תגרום שהטקסט יגלל רק אם הוא גולש
+
+                                            מחוץ לאובייקט).
+                                            <strong>
+                                                עמעום
+                                            </strong>
+
+                                            או
+
+                                            <strong>
+                                                מהיר
+                                            </strong>
+                                            מחליף את הטקסט חלק אחרי חלק, ואפשר לבחור
+
+                                            <strong>
+                                                'ללא'
+                                            </strong>
+
+                                            . ואז הטקסט שגולש מחוץ לאובייקט לא יראה.
+
+
+
+
+
+
+
+
+                                            <br>
+
+                                            ב<strong>כיוון</strong> מגדירים את הכיוון של הגלילה. תיבת הסימון העליונה
+                                            מגדירה גלילה לכיוון מעלה.
+                                            והימנית - ימינה, השמאלית -שמאלה, והתחתונה לכיוון מטה.
+
+
+
+                                            <br>
+                                            בדרך כלל, ההגדרה הנכונה היא: בטקסט שהוא שורות שורות - גוללים למעלה. כך
+                                            מופיעות השורות בזו אחר זו.
+                                            ובטקסט שהוא שורה אחת (בעברית) - גוללים ימינה, כך שניתן לקרוא אותו תוך כדי
+                                            גלילה.
+
+                                            <br>
+                                            <strong>פיקסלים לדילוג</strong> - מגדיר כמה פיקסלים ידולגו בכל גלילה. אם
+                                            הגדרנו גלילה למעלה, אז כל
+                                            גלילה תגלול את הטקסט למעלה ב-20 פיקסלים, וכן הלאה. כדי לקבל גלילה חלקה
+                                            ועדינה מומלץ להגדיר על
+                                            מינימום (1),
+
+                                            <br>
+                                            <strong>דילוגים בשניה</strong> - מגדיר כמה דילוגים יהיו בכל שניה. ככל שנעלה
+                                            את המספר, כך הגלילה תהיה
+                                            יותר מהירה. שימו לב שהגלילה לא מהירה מידי עד שלא יוכלו לקרוא את הטקסט.
+                                            ומאידך איטי מידי, מעייף את
+                                            הקורא שצריך להמתין עם הקריאה עד שיופיע לו הטקסט מרוב איטיות הגלילה.
+
+                                            <br>
+                                            <strong>המרווח בין השורות</strong> - כפשוטו: כמה רווח יהיה בין שורה לשורה
+                                            בטקסט. לדוגמא אם יש לנו
+                                            מקום ברווח ניתן רווח יותר גדול בין השורות.
+                                            <br>
+                                            <strong>תו הפרדה</strong> - מגדיר את ההפרדה בין מחזורי הגלילה של הטקסט. כך
+                                            הקורא יוכל לדעת שהטקסט
+                                            הסתיים כאן והתחיל שוב מהתחלה.
+                                            <br>
+
+
+                                        </p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- סגנון -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-paint-brush topic-icon"></i> 4. סגנון</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph">
+
+                                        <img class="img-float-left_small"
+                                            src="https://cleversign.co.il/wp-content/uploads/2025/05/סגנון.png"
+                                            alt="סגנון">
+
+                                        <p id="סגנון">
+                                            <strong>
+
+                                                צבע
+                                            </strong>
+                                            - כאן נגדיר את
+                                            <strong>
+
+                                                צבע החזית
+                                            </strong>
+                                            שזה הצבע של הטקסט עצמו. וכן את
+                                            <strong>
+
+                                                צבע ההדגשה
+                                            </strong>
+                                            - שזה הצבע של טקסט מודגש. כשאנחנו רוצים להציג את
+
+
+                                            <a href="#">
+
+                                                התפילה הקרובה
+                                            </a>
+                                            או את הזמן הקרוב, הוא יודגש כשיגיע תורו להיות 'הבא בתור'. ההדגשה עובדת רק
+                                            בתנאי שסימננו את תיבת
+                                            הסימון של
+
+                                            <strong>
+                                                הדגש שורה.
+
+                                            </strong>
+
+
+
+
+
+
+
+                                            <br>
+                                            <strong>
+
+                                                רקע
+                                            </strong>
+
+                                            - מגדירים את הרקע של האובייקט. האם הוא
+                                            <strong>
+
+                                                שקוף,
+                                            </strong>
+                                            (חשוב לזכור: שקוף - הוא רק ביחס לרקע הבסיסי ולא ביחס לאובייקט שמתחתיו. ולכן
+                                            אם שמנו אובייקט שקוף מעל אובייקט אחר, לא יראו את האובייקט התחתון אלא את הרקע
+                                            הבסיסי של התכנה).
+                                            או
+
+
+                                            <strong>
+                                                אחיד
+
+                                            </strong>
+
+                                            - ואז בוחרים צבע במלבן השמאלי. או שהרקע יהיה
+
+                                            <strong>
+                                                תמונה,
+
+                                            </strong>
+
+                                            ונבחר בצד שמאל את התמונה מתוך המחשב. או שהוא יהיה מתוך
+
+                                            <strong>
+                                                קישור לרשת
+
+                                            </strong>
+                                            ונבחר את הכתובת של התמונה באינטרנט.
+
+
+                                            אם בחרנו
+                                            <strong>
+
+                                                מתיחה,
+                                            </strong>
+
+                                            התמונה תתפרס על כל שטח האובייקט, אם בחרנו
+                                            <strong>הצג מסיכה
+
+                                            </strong>
+                                            האובייקט יוצג מאחורי המסיכה. (מסיכה הכוונה לרקע נוסף שמכסה את כל האובייקטים,
+                                            וחלק ממנו משאירים שקוף
+                                            כמו חלון, כדי שהאובייקטים ייראו מציצים מתוכו. אפקט זה מוסיף חינניות לצג.
+                                            הסבר על העבודה עם המסיכה
+                                            ראה כאן ~).
+                                            <BR>
+
+                                            <strong>
+
+                                                ישור
+
+                                            </strong>
+                                            - מגדירים את יישור הטקסט בתוך האובייקט. האם הוא יהיה מיושר לימין, לשמאל,
+                                            למרכז או לשני הצדדים
+                                            (מרווחים משני הצדדים).
+                                            וכן האם הטקסט יעמוד בחלק העליון של האובייקט, באמצע, או בחלק התחתון.
+
+
+
+
+
+                                            <br>
+                                            בשדה מתחתיו, ישנם שתי שדות מספר, (עם לחצני דפדוף בין המספרים), שהן פעילות רק
+                                            באובייקטים שמציגים
+                                            טבלאות כמו למשל טבלת אירועים או טבלת זמנים.
+                                            <strong>
+
+                                                הימני
+
+                                            </strong>
+                                            , מגדיר את גודל הגופנים של שם התפילה/הזמן ביחס לגופן של השעות. אם נכתוב 200,
+                                            הגופן של זמני התפילות
+                                            יוצג בגודל כפול מהגופן של השעה. ואם נכתוב 50, אז הוא יהיה חצי ממנו.
+                                            <strong>
+                                                והשמאלי
+                                            </strong>,
+                                            מגדיר את רוחב העמודה של שם התפילה/הזמן, ביחס לעמודה של השעות. אם יהיה כתוב
+                                            שם 50, שתי העמודות תהיינה
+                                            שוות. ואם כתוב 75, אז עמודת שם התפילה תתפוס 3/4 מהאובייקט, ועמודת השעות
+                                            תתפוס 1/4 מהאובייקט.
+
+
+
+
+
+
+
+
+
+
+                                            <br>
+
+
+                                            <strong>
+                                                שוליים
+
+                                            </strong>
+
+                                            - רוחב השוליים של האובייקט (בפיקסלים) מצד
+
+                                            <strong>
+
+                                                ימין
+                                            </strong>
+
+                                            או מצד
+                                            <strong>
+
+                                                שמאל
+                                            </strong>
+
+                                            אם נגדיל את המספר של
+
+
+
+                                            <strong>
+
+                                                הכל
+                                            </strong>
+
+                                            אז תופיע לנו מסגרת שחורה מסביב האובייקט. ועובייה (בפיקסלים) כעובי המספר
+                                            שבחרנו.
+
+
+
+                                            <br>
+                                            בשדה של
+
+                                            <strong>
+                                                מסגרת
+
+                                            </strong>
+                                            אפשר לבחור
+                                            <strong>
+
+                                                None
+                                            </strong>
+                                            שזו ברירת המחדל של התכנה. ואז האובייקט יופיע ללא מסגרת., אם נבחר
+                                            <strong>
+
+                                                Single
+                                            </strong>
+
+                                            תופיע לנו מסגרת של פיקסל מסביב לאובייקט. ואם נבחר
+
+                                            <strong>
+                                                3D
+
+                                            </strong>
+                                            תופיע לנו מסגרת תלת מימדית דקיקה, שתתן תחושה שהאובייקט שקוע בתוך המסך.
+
+
+                                            <strong>
+
+
+                                            </strong>
+
+
+                                            <br>
+
+                                            <strong>
+                                                מיקום הטאבים
+
+
+
+                                            </strong>
+                                            - מיועד ליישר טקסט פשוט שכולל בתוכו תוי 'טאב'. (אם נדביק לתוך עורך הטקסט
+                                            הפשוט, תוכן מתוך טבלת אקסל,
+                                            הוא יופיע מסודר עם טאבים). באמצעות לחצנים אלו, ניתן להגדיר מיקום של ארבעה
+                                            טאבים, (הלחצן השמאלי מגדיר
+                                            את הטאב הראשון, ואחריו השני,שלישי ורביעי משמאל לימין). מי שמכיר את ה'טאבים'
+                                            בוורד, יוכל להבין די
+                                            בקלות איך עובדים עם הטאבים של הצג החכם.
+
+
+
+                                            <br>
+                                            חלון ה<strong>
+                                                Media Type
+                                            </strong> - מגדיר לאובייקט של 'אוסף מדיות' איזה סוג מידיה להציג: אודיו,
+                                            וידאו, תמונה, או מסמך.
+
+
+
+
+
+
+                                            <br>
+
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- תצוגה -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-desktop topic-icon"></i> 5. תצוגה</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph" id="display_object">
+
+
+                                        הגדרות תצוגה מתקדמות כגון גודל, מיקום, שכבה וכדומה.<br>
+                                        <img class="img-float-left_small"
+                                            src="https://cleversign.co.il/wp-content/uploads/2025/05/כרטיסיית-תצוגה.jpg"
+                                            alt="תצוגה">
+                                        <p>
+                                            בחזון העליון נבחר האם האובייקט יוצג תמיד, או לא יוצג לעולם, או שיוצג בתנאי.
+                                            אם בחרנו 'תנאי' יתאפשר
+                                            לנו ללחוץ על לחצן 'ערוך' ולערוך את התנאי שאנו רוצים להציג את האובייקט. פירוט
+                                            מלא על עריכת התנאים
+                                            מופיע בקטע הבא. מתחת ל'ערוך' מופיע קיצור של אחד מהתנאים, וגם זה יפורט להלן.
+                                            <br>
+                                            בחלון של
+                                            <strong>
+                                                מיקום וגודל
+                                            </strong>
+                                            מגדירים את המיקום של האובייקט, כאשר ה -
+
+                                            <strong>X</strong>
+                                            מגדיר מיקום אופקי (0 הוא הצד השמאלי ביותר, 100 הוא 100 פיקסל שמאלה מהקצה,
+                                            וכן הלאה). וה -
+                                            <strong>Y</strong>
+                                            מגדיר את המיקום האנכי של האובייקט, (0 הוא הקצה העליון ומשם יורדים לפי מספר
+                                            הפיקסלים הנבחר). הרוחב
+                                            (בפיקסלים) מגדירים באות
+                                            <strong>W</strong>
+                                            שהוא קיצור של Width.
+                                            והגובה של האובייקט באות
+                                            <strong>H</strong>
+                                            דהיינו-
+                                            (Height)
+                                            <br>
+
+                                            <strong>שכבה</strong> - חשוב למקרה שיש כמה אובייקטים אחד מעל השני, והאחד
+                                            מסתיר את השני. ובאמצעות
+                                            החיצים, נוכל להעלות אובייקט אחד מעל השני וכך נחליט מי יסתיר את מי.
+                                            <br>
+
+                                            כל האובייקטים שבצג מסודרים בשכבות (אם יש שני אובייקטים, אז אחד יהיה שכבה מס'
+                                            1 והשני 2 וכן הלאה).
+                                            לחיצה על חץ בודד (למעלה או למטה) מזיזה אותו במקום אחד. שני החיצים מורידים את
+                                            האובייקט בבת אחת מתחת
+                                            כולם או מעל כולם.
+                                            <br>
+                                            מספר השכבה של האובייקט הנוכחי מופיע מתחת לחיצים.
+                                            <br>
+
+
+
+
+
+                                            <strong>ווב - מיקום וגודל</strong> - מגדיר מיקום וגודל של אובייקט שמציג
+                                            דפדפן אינטרנט. תצוגת הדפדפן
+                                            היא שונה מאובייקטים אחרים כגון תמונות וכדומה. מכיון שלפעמים אנו רוצים להציג
+                                            רק חלק מהעמוד, ולכן יש
+                                            את הלחצנים הבאים:
+
+
+                                            <strong>שמאלה</strong> - להזיז את האתר שמאלה או ימינה בתוך
+                                            האובייקט.<strong>עליון</strong> - להזיז
+                                            את האתר למעלה או למטה. (לדוגמא אם נרצה להציג אובייקט שנמצא בנקודה מסויימת
+                                            בתוך האתר, ולא את כל האתר.
+                                            נוכל לנווט בתוך האתר אל האובייקט הרצוי - באמצעות הזזה ימינה ושמאלה למעלה
+                                            ולמטה).
+                                            מתחתם נמצאים בחירת אורך ורוחב האתר.(אין הכוונה לאורך והרוחב של האובייקט
+                                            שהגדרנו קודם, אלא לאורך
+                                            ורוחב של דף האינטרנט בתוך האובייקט, גם הגדרה זו תסייע לנו להציג נקודה
+                                            מסויימת ומוגדרת בתוך האתר).
+                                            לחצן ה-
+
+                                            <strong>זום</strong> - מגדיל ומקטין את גודל האתר, ולחצן
+                                            ה<strong>reset</strong> - מאפס את הגודל
+                                            ומתאים אותו לחלון.<strong></strong>
+
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- תנאי תצוגה -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-filter topic-icon"></i> תנאי תצוגה</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph">
+
+
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/כרטיסיית-תצוגה.jpg"
+                                            class="img-float-left_small">
+                                        <p id="תנאי תצוגה">
+                                            במידה ואנו רוצים שאחד האובייקטים יוצג רק בתנאי כלשהו, יש לפעול לפי הסדר
+                                            הבא:<br>
+                                            נכנס למאפייני האובייקט<br>
+                                            (דרך התפריט: אובייקטים&gt;&gt;<br>
+                                            מאפיינים, או עכבר ימני על האובייקט, או בקיצור CTRL+P).
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image002.png"
+                                            class="img-float-left_small">
+                                        <p>
+                                            נכנס לכרטיסייה "תצוגה" ונסמן את תיבת הרדיו "בתנאי", ונלחץ על "ערוך תנאי"
+                                        </p>
+                                        <p>
+                                            יפתח לנו חלון עריכת התנאים דלהלן, שבו ניתן לבחור אחד מהקריטריונים הבאים:
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image003.png"
+                                            class="img-float-left">
+                                        <ul>
+                                            <li>
+                                                <a href="#condition-general">כללי</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-text">טקסט</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-timing">תזמון</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-fixed-hours">טווח שעות קבוע</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-dynamic-hours">טווח שעות דינמי</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-days-of-week">הימים בשבוע</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-date-range">טווח תאריכים</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-day-type">סוג היום</a>
+                                            </li>
+                                            <li>
+                                                <a href="#condition-year-range">טווח השנים</a>
+                                            </li>
+                                        </ul>
+                                        <p>
+                                            כל התנאים הללו יכולים לפעול כל אחד לעצמו, וניתן גם לשלב כמה תנאים אחד על גבי
+                                            השני.<br>
+                                            כל תנאי שנרצה להשתמש בו, נסמן תחילה את תיבת הסימון שלו בצד ימין, ואז נוכל
+                                            לערוך את תוכנו. (ללא סימון
+                                            תיבה זו, כל האופציות שבתוכו נעולות לעריכה, והן יופיעו בצבע אפור בהיר).<br>
+                                            להלן נסקור את התנאים אחד לאחד בצורה מפורטת:
+                                        </p>
+
+
+
+                                        <br>
+                                        <br>
+                                        <br>
+
+                                        <h5 id="condition-general">
+                                             <br>
+                                            כללי
+                                        </h5>
+                                        <p>
+                                            מגדיר האם בכלל יש תנאי או שזה מוצג "תמיד", או שלא מוצג אף פעם ("לעולם לא")
+                                            או שזה יוצג "רק בתנאי".
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image004.png"
+                                            width="100%">
+                                        <h5 id="condition-text">
+                                            טקסט
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image005.png"
+                                            alt="text" width="100%">
+
+                                        <p>
+                                            ישנם אובייקטים שמציגים טקסט שמתחלף לפי ימים או תאריכים וכדומה. כך שלעתים יש
+                                            ימים או זמנים אחרים שבהם
+                                            אין טקסט להציג באובייקט זה. אם נרצה שהאובייקט לא יוצג אם אין בו טקסט, נסמן
+                                            את תיבת הסימון הזו.
+                                        </p>
+                                        <h5 id="condition-timing">
+                                            תזמון
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image006.png"
+                                            alt="tizmun" width="100%">
+
+                                        <p>
+                                            כשאנו רוצים שהאובייקט יוצג במשך זמן מסויים בלבד, במחזוריות כלשהי (למשל כל
+                                            שעה הוא יוצג לחמש דקות, או
+                                            כל יום, וכן הלאה).<br>
+                                            בשטח זה ישנם חמשה חלונות בחירה, ולהלן נסביר איך להשתמש בהם:<br>
+                                            Type (סוג יחידת הזמן)<br>
+
+                                            <br>
+                                            בחלון השמאלי (Type) מגדירים את יחידת הזמן שעליה אנו מתכוונים בחלונות ה"משך",
+                                            אם נכתוב לדוגמא את
+                                            הספרה 1 בחלון "משך", היא יכולה להתפרש כשניה אחת ("Seconds"), או דקה
+                                            ("Minutes") או שעה ("Hours") וכן
+                                            יום ("Days"), ושבוע ("Weeks")
+                                        </p>
+                                        <h5 id="condition-timing-duration">
+                                            משך
+                                        </h5> <img
+                                            src="https://cleversign.co.il/wp-content/uploads/2025/05/image007.png"
+                                            alt="משך" width="300">
+
+                                        <p>
+                                            כאן מגדירים כמה זמן יוצג האובייקט, וכמה זמן יוסתר. כאמור, המספר כאן הוא יכול
+                                            להיות
+                                            בשניות/דקות/שעות/ימים/שבועות כפי מה שהגדרנו בשדה "סוג".<br>
+                                            החלון הימני ("On") מגדירים כמה זמן הוא יוצג, ובשמאלי ("Off") כמה זמן
+                                            יוסתר.<br>
+                                            לאחר הגדרה זו, האובייקט יוצג ויוסתר במחזוריות למשך אורכי הזמן שקבענו שוב
+                                            ושוב.<br>
+                                            מספר היחידות ומספר סידורי<br>
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image008.png"
+                                                alt="סידורי" width="200">
+
+                                            <br>
+                                            באפשרות זו נשתמש במידה ויש לנו כמה אובייקטים, ואנו מעוניינים שהם יתחלפו
+                                            ביניהם בתדירות קבועה.<br>
+                                            נניח שיש לנו שלושה אובייקטים, ואנו מעוניינים שכל אחד יוצג במשך שתי שניות בזה
+                                            אחר זה. נגדיר בשלושתם
+                                            מספר היחידות=3, וניתן לכל אחד מספר סידורי אחר בין 1 ל3. (בשדה "משך" נכתוב 2,
+                                            ובשדה Type נכתוב
+                                            Seconds) ואז הם יתחלפו ביניהם: מס' 1 יוצג למשך 2 שניות, לאחריו אובייקט 2,
+                                            ואח"כ 3, ושוב יחזרו להופיע
+                                            בזה אחר זה 2 שניות כל אחד.<br>
+                                            אם הוגדר זמן On וגם זמן Off - כל אובייקט יוצג, יוסתר, ולאחר מכן יגיע תורו של
+                                            האובייקט הבא להופיע
+                                            ולהעלם, וכן השלישי, וחוזר לראשון.
+                                        </p>
+                                        <p>
+                                            שורת הסיכום<br>
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image009.png"
+                                                alt="שורת הסיכום" width="100%">
+                                            בתחתית החלונות מופיע סיכום התזמון. למשל במקרה כפי שתיארנו יופיע למטה הכיתוב
+                                            הבא: (המסומן בצהוב)<br>
+                                            פירוש: "משך המחזור כולו 30 יחידות" – במקרה שלנו כל יחידה היא שניה, ולכן אורך
+                                            המחזור של שלושת
+                                            האובייקטים הוא 30 שניות, כאשר כל אחד מהם יוצג עשר שניות מתוכם.&nbsp;<br>
+                                            "האובייקט יופיע ביחידות 1-10" האובייקט הזה שהוא הראשון שבהם (מס' סידורי 1),
+                                            יופיע בשניות 1-10.
+                                            (האובייקט השני יופיע 11 עד 20, והשלישי 21 עד 30).<br>
+                                            סיכום מקוצר<br>
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image010.png"
+                                                alt="מקוצר" width="300">
+                                            <br>
+                                            תיאור זה יופיע גם ברמז מתחת ללחצן הכניסה לעריכת התנאים כדלהלן: (מוקף בירוק)
+                                        </p>
+                                        <p>
+                                            הסבר: הספרה השמאלית ״3״ מתייחסת למספר היחידות הכולל, לאחריה הספרה ״1״ שמראה
+                                            לנו שהאובייקט הזה הוא
+                                            מספר סידורי 1, לאחר מכן 10 – הוא מספר היחידות המוצג, ו-0 – הוא מספר היחידות
+                                            שהוא מוסתר. ולבסוף
+                                            Seconds שזה אומר מהו סוג היחידות.<br>
+                                            &nbsp;וא
+                                        </p>
+                                        </p>
+                                        <h5 id="condition-fixed-hours">
+                                            טווח שעות קבוע
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image011.png"
+                                            alt="twach" width="100%">
+
+                                        <p>
+                                            כאן מגדירים את טווח השעות ביום שבו יוצג האובייקט, משעת התחלה ועד שעת
+                                            סיום.<br>
+                                            &nbsp;
+                                        </p>
+                                        <h5 id="condition-dynamic-hours">
+                                            טווח שעות דינמי
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image012.png"
+                                            alt="twach2" width="100%">
+                                        <p>
+                                            כאן ניתן להגדיר טווח שעות שמותנה בזמני היום, למשל ניתן להגדיר שהאובייקט
+                                            יתחיל להופיע עשר דקות לפני
+                                            השקיעה עד השקיעה: מגדירים ב'זמן התחלה' "שקיעה", וב"תוספת דקות" – מינוס עשר.
+                                            וב"משך" כותבים
+                                            00:10:00.<br>
+                                            &nbsp;
+                                        </p>
+                                        <h5 id="condition-days-of-week">
+                                            הימים בשבוע
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image014.png"
+                                            alt="yamim" width="100%">
+                                        <p>
+                                            <br>
+                                            כאן מגדירים באילו ימים בשבוע יוצג האובייקט. לדוגמא בתמונה המובאת כאן ^
+                                            האובייקט יוצג כל יום חוץ
+                                            משבת.<br>
+
+
+                                        <h5 id="condition-date-range">
+                                            טווח תאריכים
+                                        </h5>
+                                        <br> <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image015.png"
+                                            alt="yamim" width="100%">
+                                        <br>
+                                        ניתן לבחור תקופה בשנה שבה יוצג האובייקט, בתאריך עברי או לועזי. לדוגמא: מר"ח אדר
+                                        ועד סוף ניסן.<br>
+                                        ברירת המחדל היא, שהתצוגה תתחיל מחצות ליל תאריך ההתחלה, ועד חצות ליל תאריך
+                                        הסיום.<br>
+                                        ניתן לבחור שעת התחלה (בתאריך ההתחלה) ושעת סיום (בתאריך הסיום), ואפשר להגדיר
+                                        שההחלפה תיעשה בשקיעה או
+                                        בצאת הכוכבים במקום בחצות הלילה (ע"י בחירה בחלון "זמן". כשכתוב "התעלם" השעה תוגדר
+                                        לפי החלונות משמאל:
+                                        "שעת התחלה" ו"שעת סיום").<br>
+                                        &nbsp;
+                                        </p>
+                                        <h5 id="condition-day-type">
+                                            סוג היום
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image016.png"
+                                            alt="yamim2" width="100%">
+                                        <p>
+                                            כאן מופיעה לנו רשימה ארוכה של סוגי ימים שבהם ניתן לבחור האם האובייקט יוצג
+                                            ביום זה &nbsp; (כשתיבת
+                                            הסימון מסומנת ב"ווי") או לא יוצג ביום זה &nbsp; (תיבת סימון ריקה), או שהתנאי
+                                            לא יתייחס ליום זה
+                                            &nbsp;(ריבוע בתוך תיבת הסימון).<br>
+                                            אם בחרנו "שבת" או "יום טוב", נוכל להגדיר האם היא מסתיימת בצאת השבת הרגילה
+                                            המקובלת בלוחות (כ36 דקות
+                                            אחרי השקיעה) או לפי ר"ת. ע"י שנסמן את תיבת הסימון "ע"פ ר"ת".<br>
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image020.png"
+                                                alt="רבנו תם" width="100%">
+                                            <br>
+                                            אם בחרנו "ערב שבת" נוכל להגדיר מאיזו שעה בערב שבת יתחיל להציג. (בשעות שלמות
+                                            בלבד)<br>
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image021.png"
+                                                alt="רבנו תם" width="400">
+
+                                            <br>
+                                            אם בחרנו "חנוכה" נוכל לבחור האם בכל ימי החנוכה, או רק באחד מהם:
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image023.png"
+                                            alt="רבנו תם" width="400">
+                                        <p>
+                                            הלחצן C מאפס את כל ההגדרות שהגדרנו בחלון הזה להגדרות ברירת המחדל.<br>
+
+                                            מתחת הלחצן C מופיע חלון "ימי הקדמה", ניתן להגדיר שהתצוגה תקדים עד שלושה ימים
+                                            לפני היום הנבחר.<br>
+                                            אם נבחר למטה את תיבת הסימון: "תיאור היום" יהיה ניתן לבחור עוד כמה ימים
+                                            מהרשימה הנפתחת שמעליו. (פורים
+                                            תשעה באב, יום העצמאות ויום הזיכרון).<br>
+                                            &nbsp;
+                                        </p>
+                                        <h5 id="condition-year-range">
+                                            טווח שנים
+                                        </h5>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/image024.png"
+                                            alt="yamim2" width="100%">
+                                        <p>
+                                            <br>
+                                            ניתן לבחור גם טווח שנים עברי או לועזי שבו האובייקט יוצג.
+                                        </p>
+                                        <p>
+                                            כאמור ניתן לשלב כמה תנאים ביחד, למשל "האובייקט יוצג רק אם יש טקסט, בתזמון של
+                                            שלוש שניות כן ושתים לא,
+                                            החל מהשעה שבע בבוקר ועד עשר בלילה, בימים שני ורביעי, אך לא בשבתות וחגים".
+                                        </p>
+                                        <p>
+                                            &nbsp;
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- תפריט ראשי -->
+                <div class="accordion-section">
+                    <div class="accordion-header">
+                        <span><i class="fas fa-bars topic-icon"></i> תפריט ראשי</span>
+                        <span class="accordion-toggle">▶️</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+
+                            <!-- תפריט קובץ -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-file-alt topic-icon"></i> תפריט קובץ</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+                                    <div class="accordion-paragraph">
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/תפריט-קובץ.png"
+                                            alt="kovetz" class="img-float-left">
+                                        <p id="kovetz">
+
+                                            האפשרות הראשונה בתפריט היא
+
+                                            <strong>
+                                                פרסם
+                                            </strong>
+                                            ונשתמש בה כשאנחנו רוצים שהשינויים שלנו יופיעו גם במחשבים האחרים שבהם פועלת
+                                            התכנה. בעיקר כאשר מדובר
+                                            בתיקייה משותפת בדרופבוקס, וכן כאשר משתמשים בדיסק אונקי להעברת הנתונים ממחשב
+                                            למחשב.
+
+                                            <br>
+                                            לאחר הלחיצה על פרסם, נמתין כמה שניות ותופיע לנו הודעה שהפרסום הסתיים. סמל
+                                            הדרופבוקס בתחתית המסך יראה
+                                            סימני עדכון (אות שהוא שולח את העדכונים), ולאחר מכן בכל מחשב שמסונכרן אתנו
+                                            והתכנה פתוחה - היא תיסגר
+                                            ותפתח מחדש עם הנתונים החדשים.
+
+                                            <br>
+                                            <strong>
+                                                העלאה
+                                            </strong> משמעותה שהתכנה מעלה את כל הנתונים לתצוגת ה'ווב' של הצג החכם (כדי
+                                            להציג את הצג בדפדפן, לא
+                                            לכולם יש אפשרות כזו, תלוי בגירסאות החדשות ובהרשאות החברה). לאחר לחיצה על
+                                            העלאה נמתין כמה שניות ונקבל
+                                            הודעה שההעלאה הסתיימה, ולאחר מכן יהיה ניתן לראות את השינויים באתר האישי של
+                                            הצג שלנו. (אם הוא פתוח
+                                            הוא יתרענן כדי להכניס את השינויים).
+
+                                            <br>
+
+                                            <strong>בחר תיקיית מידע</strong> - אם רוצים לפתוח את התכנה על תצוגה אחרת
+                                            (למשל יש לנו בבית הכנסת שני
+                                            צגים שונים, ואנחנו רוצים לסגור את האחד ולפתוח את השני במקומו).
+                                            נבחר את התיקייה של המחיצה השניה והתכנה תיסגר ותיפתח על המחיצה הנבחרת.
+                                            <br>
+                                            <strong>
+                                                חדש
+                                            </strong> -
+                                            צור סטייל חדש (סטייל הוא בסיס מערכת הצג שעליו יושבים כל האובייקטים).
+                                            <br><strong>טען סטייל</strong> - לפתוח סטייל קיים.
+                                            <strong> שמור סטייל</strong> - לשמור את הסטייל הנוכחי שבו אנו נמצאים כעת.
+                                            <strong>שמור סטייל בשם</strong> - לשמור אותו בשם אחר.
+
+
+                                            <br>
+                                            <strong>
+                                                צא ללא שמירה
+                                            </strong>
+
+
+                                            - אם עשינו שינוי שאנחנו לא מעוניינים בו, פשוט נצא מבלי לשמור והשינוי לא
+                                            ישמר.
+                                            <br>
+                                            <strong>שמור וצא</strong> - לשמור ולסגור את התכנה.
+
+
+                                        </p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- זמן -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-clock topic-icon"></i> אובייקטים - תצוגה - זמן - עזרה</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+
+                                    <div class="accordion-paragraph">
+
+                                        <p id="תפריטים אחרים">
+
+                                            בתפריט
+                                            <strong>
+                                                האובייקטים
+                                            </strong>
+
+
+
+                                            ניתן לפתוח את חלון עריכת האובייקטים. (כמו שכתבנו לעיל, אפשר לפתוח אותו בקלות
+                                            במקש הימני של העכבר, או בקיצור מקשים: קונטרול-פ).
+                                            וכן לרענן את הרקעים.
+
+                                            <br>
+                                            נציין כאן רק את ההסבר לשורה העליונה של חלון עריכת האובייקטים:
+                                            <br>
+                                            <img src="http://cleversign.co.il/wp-content/uploads/2025/07/שורה-עליונה-של-חלונית-עריכת-אובייקטים.png" width="100%" alt="topLine">
+                                            <br>
+                                       להלן הפירוט של הנתונים משמאל לימין:
+                                       
+                                       <br>
+                                       <strong>
+                                        version    
+                                           
+                                       </strong>
+                                         התאריך שאליו מעודכנת גירסת התכנה. כך תוכלו לדעת האם אתם מעודכנים.  
+                                               
+                                       <br>
+                                       <strong>
+                                         מיקום  
+                                           
+                                       </strong> 
+                                          מה המיקום שלפיו מחושבים זמני היום בתכנה. 
+                                           
+                                <br>       <strong>
+                                          שם קובץ הסטייל 
+                                           
+                                       </strong>     
+                                        מהו קובץ הסטייל שבו משתמשת התכנה והאובייקטים.  
+                                <br>       <strong>
+                                         KEY  
+                                           
+                                       </strong>      
+                                        שם המסך שבו משתמשת התכנה כעת.   
+                                <br>       <strong>
+                                         service right   
+                                           
+                                       </strong>     הזכות של רוכש התכנה לקבל שירות היא עד התאריך המפורט כאן.
+                              <br>
+                              בתפריט
+                                            <strong>תצוגה </strong>
+                                            אפשר לבחור מצב תצוגה (התכנה מעל כל החלונות במסך, כולל סמן העכבר, והיא קבועה
+                                            במקומה). או מצב עריכה (שהתכנה בחלון רגיל עם תפריטים ואפשרויות עריכה).
+                                            המעבר בין מצב תצוגה למצב עריכה יכול להעשות בקלות באמצעות מקש ESC (בפינה
+                                            השמאלית העליונה של המקלדת), וכן בקיצורי מקשים אלט-אף, אלט-אי.
+                                            האפשרות השלישית לפתוח לוח מקשים על המסך (למקרה שאין לנו מקלדת מחוברת לצג
+                                            בבית הכנסת, רק עכבר).
+                                            והאופציה הרביעית מסתירה את סרגל הכלים של התכנה. כדי להציג אותו בחזרה עוברים
+                                            למצב תצוגה וחוזרים למצב עריכה (באמצעות המקשים הנ"ל).
+                                            <br>
+                                            <img src="https://cleversign.co.il/wp-content/uploads/2025/05/הצג-תאריכון.png"
+                                                alt="הצג תאריכון">
+                                            <br>
+
+                                            בתפריט
+                                            <strong>
+                                                זמן
+                                            </strong>
+                                            פותחים תאריכון שמאפשר לנו לדפדף קדימה ואחורה בזמן, כדי לראות איך יראה המידע
+                                            שעל הצג בנקודת זמן מסויימת.
+
+                                            לחיצה על תיבת הסימון תגרום לתאריכון להתחיל לפעול בזמן שהוא נמצא בו. (נראה את
+                                            השניות מתחילות לזוז. ללא לחיצה עליו הצג יעמוד ללא תזוזה).
+                                            יש לשים לב שהשעון בצג לא מושפע מהתאריכון. והוא מציג תמיד את השעה נכון
+                                            לעכשיו.
+                                            לחיצה על
+                                            <kbd>Now</kbd> חוזרת לתאריך והשעה של עכשיו.
+
+
+                                            <br>
+
+                                            בתפריט
+                                            <strong>עזרה</strong> ניתן להוריד תכנת שליטה מרחוק. (לא תמיד נציגי התמיכה
+                                            ישתמשו דווקא בתכנה זו, נכון לעכשיו התכנה העיקרית שמשתמשים בה היא Any-Desk,
+
+                                            <a href="https://download.anydesk.com/AnyDesk.exe">לחץ כאן</a> כדי להוריד את
+                                            תכנת אני-דסק.
+                                            )
+                                            ובנוסף ניתן למחוק קבצים מיותרים. התכנה מזהה את הקבצים שאינם בשימוש בתוך
+                                            התיקייה שלה, ומאפשרת לנו למחוק אותם במרוכז. שימו לב שאתם לא מאבדים מידע
+                                            חשוב, כדאי לשמור עותק של התיקייה במקום אחר לפני ביצוע פעולה זו!
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- אפשרויות -->
+                            <div class="accordion-section">
+                                <div class="accordion-header">
+                                    <span><i class="fas fa-cogs topic-icon"></i> אפשרויות</span>
+                                    <span class="accordion-toggle">▶️</span>
+                                </div>
+                                <div class="accordion-content">
+
+
+                                    <div class="accordion-paragraph">
+
+                                        <p id="options">
+                                            לחיצה על
+                                            <strong>
+                                                אפשרויות
+                                            </strong>
+                                            ברצועת הכלים, תפתח לנו את חלון האפשרויות. בחלון זה יש 11 כרטיסיות, ונעבור על
+                                            עשרה מהם.
+                                            <!-- רשימת קישורים עם עוגנים -->
+                                        <ul>
+                                            <li><a href="#ראשי">ראשי</a></li>
+                                            <li><a href="#מנהגים">מנהגים</a></li>
+                                            <li><a href="#זמנים">זמנים</a></li>
+                                            <li><a href="#מיקום">מיקום</a></li>
+                                            <li><a href="#רזולוציה">רזולוציה</a></li>
+                                            <li><a href="#מנהל">מנהל</a></li>
+                                            <li><a href="#סטיילים">סטיילים</a></li>
+                                            <li><a href="#מסכים">מסכים</a></li>
+                                            <li><a href="#כיבוי-מסך">כיבוי מסך</a></li>
+                                            <li><a href="#License">רשיונות</a></li>
+                                        </ul>
+                                        </p>
+                                        <!-- כותרות עם ID עבור כל עוגן -->
+                                        <h5 id="ראשי">ראשי</h5>
+                                        <p>
+                                            בצד ימין מופיע לנו התאריך של גירסת התכנה.
+                                            בצד שמאל ניתן לבחור האם שפת התכנה הכללית תהיה בעברית או אנגלית. (הכוונה
+                                            ללחצנים וההוראות, לא הטקסט שבתוך האובייקטים שאת השפה שלו מגדירים מחלון עריכת
+                                            האובייקטים).
+                                            הלחצן עם החץ המעוגל יוצר קיצור דרך על שולחן העבודה. תכונה זו נחוצה במיוחד
+                                            כשיש לנו שני צגים נפרדים ואנחנו רוצים לערוך את שניהם מאותו מחשב. כדי שנוכל
+                                            לפתוח את הצג הזה בלחיצה אחת ניצור לו קיצור דרך יחודי, וכן לצג השני. אחרת כל
+                                            פעם התכנה תיפתח מהצג האחרון שהוצג בה.
+                                            <br>
+                                            שדה המספר בצבע תכלת מאפשר לבחור את הווליום של השמע במקרה שיש בצג אובייקטים
+                                            שמשמיעים קול בוידאו / אודיו / דף אינטרנט, וכדומה.
+                                            <br>
+                                            ניתן לסמן את התיבה שהזמן יוצג ב24 שעות. מצב AM PM באותיות רישיות. ולבחור
+                                            שהזריחה והשקיעה יהיו ברום מיוחד.
+
+
+                                            <br>
+                                            מוצג כאן באפור שמו של קובץ חזון שמים שהתכנה משתמשת בו לחשב את זמני חזון
+                                            שמים. ומתחתיו מקום לבחור אופציה של זריחה מיוחדת. (אפשר להשתמש בזה במקום
+                                            שאנחנו רוצים להציג רשימת זמני היום מיוחדת שאנחנו הבאנו ממקום אחר או קנינו
+                                            מספק זמני היום כלשהו)
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </p>
+
+
+                                        <!-- תמונה: אפשרויות-1.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/אפשרויות-1.png"
+                                            alt="אפשרויות 1" style="width: 100%;" />
+
+                                        <h5 id="מנהגים">מנהגים</h5>
+                                        <P>
+
+                                            כאן נבחר את המנהגים של הצג שלנו:
+                                            <strong>
+
+
+                                                הפטרה:
+                                            </strong>
+                                            בחירה מתוך חמשה סוגי מנהגים.
+                                            <strong>
+                                                נוסח התפילה:
+                                            </strong>
+                                            בחירה מארבעה סוגי נוסח.
+                                            <strong>
+                                                כללי חודש אדר בשנה מעוברת:
+                                            </strong>
+                                            כשיש שנה מעוברת, מה עושים עם כל האובייקטים שמציגים מידע לפי תאריך: האם יציגו
+                                            את תאריכי אדר סתם רק באדר א'? רק אדר ב? בשניהם או באף אחד מהם.
+                                            תחנון בימי שישי ובחגים, דף יומי כתיב מלא.
+                                            לידם יש לחצן
+                                            <kbd>
+                                                Day Description Selection
+                                            </kbd>
+                                            שניתן לפתוח אותו גם באמצעות לחצן 'סגנון' של עריכת האובייקט מידע יהודי
+                                            והארכנו עליו שם בקישור הזה.~
+                                            <br>
+                                            חמשת הלחצנים שבתחתית החלון מאפשרים לנו לערוך את השמות של כל מה שמופיע שם.
+                                            (תיאורי הימים, שמות הזמנים, שינויים בתפילה, מסר לפרשה, ושמות הפרשיות).
+                                            כך נוכל להציג אותם בצורה מתאימה למנהג המקובל אצלנו.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <br><br><br>
+                                        </P>
+
+
+
+
+
+                                        <!-- תמונה: מנהגים.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מנהגים.png"
+                                            alt="מנהגים" style="width: 100%;" />
+
+                                        <h5 id="זמנים">זמנים</h5>
+
+
+                                        <p>
+
+                                            בחלון זה ניתן לערוך את זמני הצג החכם. כמו שהסברנו כאן ~ זמני הצג החכם
+                                            מחושבים בקלות באמצעות התכנה, וניתן לכל משתמש גישה לערוך אותם לפי שיטתו. כדי
+                                            להגיע להתאמה לשיטות מסויימות ומיוחדות יש לפנות לתמיכה ולקבל קובץ מותאם של
+                                            חזון שמים. ולהלן הסבר על אפשרויות עריכת הזמנים. (ומפאת חשיבות העניין ושרבים
+                                            טועים ומתבלבלים נדגיש שוב: כל עריכת הזמנים פה היא על זמני הצג החכם, ולא תהיה
+                                            תקפה באובייקטים שהשם שלהם כולל את המילים "חזון שמים" או "מתקדם").
+                                            <br>
+                                            מפאת חוסר מקום לא הבאנו את כל צילומי הזמנים והקורא יבין מדעתו לפי ההסברים
+                                            להלן.
+                                            <br>
+
+                                            <strong>עלות השחר</strong> - דקות שוות לפני הזריחה או דקות זמניות (ואז
+                                            מגדירים את מספר הדקות בריבוע הימני), או במעלות מתחת לאופק (ואז מציינים את
+                                            מספר המעלות) <br>
+                                            <strong>טלית ותפילין</strong> - בצד ימין בוחרים כמה דקות לפני הזריחה יהיה
+                                            זמן טלית ותפילין, ובריבוע השמאלי בוחרים אם זה בדקות שוות או זמניות, או
+                                            במעלות ומציינים את מספר המעלות.<br>
+                                            <strong>זריחה</strong> - האם בגובה או לא בגובה.<br>
+                                            <strong>ק"ש מג"א</strong> - כולל את כל זמני המג"א, למשל תפילה חמץ וכו'. עלות
+                                            השחר של זמן זה הוא מה שבחרנו בכרטיסייה עלות השחר. ההבדל בין חישוב מעלות עד
+                                            צאת הכוכבים או עד חצות - שש השעות הראשונות של היום שונות באורכן בכמה שניות
+                                            משש השעות האחרונות. (בתקופה שהימים הולכים ומתקצרים - שעות הבוקר ארוכות משעות
+                                            הערב, וכשהימים מתארכים - שעות הערב ארוכות יותר)<br>
+                                            <strong>ק"ש גר"א</strong> - אין מה להגדיר כאן. כל עם ישראל נוהג אותו דבר,
+                                            וההבדלים בזריחה - הוגדרו כבר בכרטיסייה זריחה, וכן זמני השקיעה.<br>
+                                            <strong>חצות</strong> - גם כאן איננו נותנים בחירה, זמן חצות הוא כשהשמש באמצע
+                                            השמים - בראש כל אדם.<br>
+                                            <strong>מנחה גדולה</strong> - בדקות שוות אחרי חצות, או בדקות זמניות, או
+                                            בחומרא של המאוחר משניהם. או בדקות זמניות ארוכות של המג"א.<br>
+                                            <strong>מנחה קטנה</strong> - לפי מג"א, לפי גר"א, לפי שעות שוות, או לפי צאת
+                                            של 72 שוות.<br>
+                                            <strong>פלג המנחה</strong> - לפני צאת הכוכבים כמג"א (מקובל אצל הספרדים). או
+                                            כגר"א (מקובל אצל אשכנזים), או לפני השקיעה בשעות שוות.<br>
+                                            <strong>שקיעה</strong> - האם בגובה או ללא התחשבות בגובה המקום. (המנהג הנפוץ
+                                            היום להתחשב בגובה המקום בכל המקומות חוץ מבני ברק).<br>
+                                            <strong>צום</strong> - צאת הצום בדקות אחרי השקיעה: שוות / זמניות / או
+                                            במעלות. (המקובל אצל האשכנזים 6.45 מינוס מעלות).<br>
+                                            <strong>צאת הכוכבים</strong> - כנ"ל: דקות שוות או זמניות או מעלות אחרי
+                                            השקיעה.<br>
+                                            <strong>הדלקת נרות</strong> - מספר דקות שוות לפני השקיעה. (המנהג בירושלים
+                                            בית שמש ביתר סובב ירושלים, פתח תקווה ומטולה - 40 דקות. בכל שאר ערי הצפון,
+                                            ובריכוזים החרדיים בפריפריה ובמודיעין עילית - 30 דקות. בגוש דן, אשדוד וערי
+                                            השפלה - 22 דקות. שאר ערי הארץ 20 דקות. ולשיטת הגרע"י - בכל הארץ 20 דקות ללא
+                                            יוצא מן הכלל. באירופה וארה"ב 18 דקות, ובאנגליה 15 דקות.)<br>
+                                            <strong>מוצ"ש</strong> דקות שוות זמניות או מעלות כנ"ל. (המנהג המקובל בכל
+                                            הארץ ורוב העולם מינוס 8.5 מעלות, לשיטת הגרע"י 30 דקות שוות). <br>
+                                            <strong>
+
+                                                ר"ת
+                                            </strong> - תמיד 72 דקות שוות אחרי השקיעה בגובה. (יש עוד מנהגים, אבל זה
+                                            המנהג הרווח, גם במקומות שלא נוהגים להתחשב בגובה, כאן מאפשרים משום תוספת
+                                            שבת).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </p>
+
+                                        <!-- תמונה: הגדרות-זמנים.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/הגדרות-זמנים.png"
+                                            alt="הגדרות זמנים" style="width: 100%;" />
+                                        <h5 id="מיקום">מיקום</h5>
+                                        <p>מוצג לפנינו הפרטים על המיקום שבו אנחנו נמצאים. אין אפשרות לערוך פרטים אלו. אם
+                                            לדעתכם אחד מהפרטים שגוי, פנו לתמיכה. הפרטים המופיעים כאן הם: שם המקום, מעלות
+                                            רוחב (מקו המשווה), מעלות אורך (מזרח מסומן במינוס, מערב ללא מינוס). איזור
+                                            זמן, איזור הנהגת שעון קיץ, וגובה המקום מעל פני הים. בתיבת הסימון למטה יוגדר
+                                            האם מתחשבים בגובה המקום. פרטים אלו ישמשו גם את מחשבון חזון שמים וגם את זה של
+                                            הצג החכם. </p>
+                                        <!-- תמונה: מיקום.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מיקום.png"
+                                            alt="מיקום" style="width: 100%;" />
+                                        <h5 id="resolution">רזולוציה</h5>
+                                        <p>
+                                            האופציות לשינוי רזולוציה נעולות. בדרך כלל המימדים שמופיעים כאן בתמונה (1920
+                                            - 1080) מתאימים לרוב המסכים המקובלים. עליכם לבדוק בהגדרות התצוגה של המחשב
+                                            שהצג מוגדר על רזולוציה זו, ושקנה המידה הוא 100%. ואז לא אמורה להיות בעיה.
+                                            במקרים מיוחדים פנו לתמיכה שלנו.
+                                            <br>
+                                            מצוי הוא שיש כאלו שרוצים לערוך את הצג מתוך המחשב האישי שלהם, שהגדרות התצוגה
+                                            שלו אינן יכולות להיות לפי הרזולוציה של התכנה, (למשל מחשבים נייים עם מסכים
+                                            קטנים, שאם יציגו רזולוציה של 1920, הכתב יהיה קטן מאוד ובלתי קריא). לצורך זה
+                                            יצרנו את תכונת ה'זום', באמצעותו ניתן להגדיל או להקטין את התצוגה של הצג
+                                            אצלנו, מבלי שהדבר ישפיע על התצוגה במחשבים אחרים. יש לדפדף בין המספרים
+                                            באמצעות החיצים, או להזין מספר וללחוץ אנטר. (חשוב ללחוץ אנטר, ללא זה לא ישמר
+                                            המספר).
+                                            וכן ניתן לשחק עם גודל הפונטים בשדה שמשמאלו.
+                                            <br>
+                                            <strong>חשוב:</strong>
+                                            כל שינוי שנעשה ברזולוציה או בזום, הן בהגדרות המחשב והן בהגדרות התכנה - לא
+                                            יוצג כראוי עד שנסגור את התכנה ונפתח אותה שוב.
+
+
+
+                                        </p>
+
+                                        <!-- תמונה: רזולוציה.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/רזולוציה.png"
+                                            alt="רזולוציה" style="width: 100%;" />
+                                        <h5 id="מנהל">מנהל</h5>
+                                        <p>
+
+
+
+                                            קטע זה מיועד עבור נציגי התמיכה, באמצעותו אפשר להזין סיסמא כדי לקבל הרשאת
+                                            מנהל מערכת ולשנות את המאפיינים הנעולים בפני הלקוחות.
+                                        </p>
+                                        <!-- תמונה: מנהל.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מנהל.png"
+                                            alt="מנהל" style="width: 100%;" />
+
+                                        <h5 id="סטיילים">סטיילים</h5>
+                                        <p>
+                                            הסטייל הוא הבסיס שעליו מונחים כל האובייקטים. בבסיסו עומדת תמונת רקע שעליה
+                                            מדביקים את האובייקטים.
+                                            בצד שמאל למעלה יש לחצנים של עריכת הסטיילים, רובם ככולם נעולים למשתמש. ומתחתם
+                                            חלון של רשימת הסטיילים. לרוב הלקוחות יש סטייל אחד או שנים. אלא אם כן קונים
+                                            צג מיוחד בשם: "מסכים מתחלפים".
+                                        </p><!-- תמונה: טיילים.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/טיילים.png"
+                                            alt="טיילים" style="width: 100%;" />
+
+
+
+
+
+                                        <br>
+                                        <p>
+
+                                            לכל סטייל יש תמונת רקע, שניתן לבחור אותה בלחצן בצד. ניתן להגדיר שהרקע יהיה
+                                            צבע ולא תמונה. בשדה העליון מזינים את שם הסטייל.
+                                            ישנם שני לחצני בחירת תמונה. העליון בוחר את תמונת הרקע, והתחתון בוחר את
+                                            ה'מסיכה'. וכאן נסביר בשורות אחדות מהי מסיכה:
+
+
+                                        </p>
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/mask.gif"
+                                            alt="טיילים" class="img-float-left_small" />
+
+                                        <p>
+                                            אם נרצה להציג את הטקסט או את תוכן האובייקט, כאילו הוא מציץ מתוך חלון, כך
+                                            שהמסגרת של החלון נמצאת מעליו ומכסה אותו. כפי שניתן לראות בתמונה בצד: חלק
+                                            מהטקסט 'מוסתר' על ידי המסגרת של החלון. כדי לעשות זאת, יש ליצור תמונת רקע זהה
+                                            לתמונת הרקע הרגילה, ולשמור אותה בשם שונה. (למשל 'מסיכה'), ולהגדיר שקיפות
+                                            בחלונות, כך שיהיה ניתן לראות את מה שנמצא מאחורי החלון. בנוסף יש להגדיר בחלון
+                                            מאפייני האובייקט (בכרטיסייה 'תצוגה'). "הצג מסיכה". וכעת האובייקט מוסתר על
+                                            ידי המסיכה, ונראה מציץ מתוך החלון, כאשר המסגרת של החלון מעליו. וזה נותן
+                                            תחושת עומק נוספת לתצוגה.
+                                            <br>
+                                            ניתן לבחור קובץ סטייל, שהוא קובץ שמגדיר את כל התוכן של הסטייל וכל האובייקטים
+                                            שעליו ומאפייניהם.
+                                            <br>
+                                            בנוסף ניתן לתזמן את תצוגת הסטייל כך שיוצג תמיד, או לעולם לא, או שיוצג רק
+                                            בתנאי. ואת עריכת התנאים ראה כאן ~
+
+
+                                        </p>
+
+
+
+
+
+
+
+                                        <h5 id="מסכים">מסכים</h5>
+
+
+                                        <p>
+
+
+                                            בכרטיסייה זו נגדיר את תצוגת המסכים השונים שיש לנו. לרוב הלקוחות יש רק אחד או
+                                            שנים, חוץ מבעלי מסכים מתחלפים שיש להם הרבה.
+                                            <br>
+
+                                            ניתן להגדיר בטבלה בשמאל, את משך הזמן (בשניות) שבו יוצג כל מסך.
+
+
+
+
+
+
+                                        </p>
+
+
+
+
+
+
+
+                                        <!-- תמונה: מסכים.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מסכים.png"
+                                            alt="מסכים" style="width: 100%;" />
+                                        <h5 id="כיבוי-מסך">כיבוי מסך</h5>
+                                        <p>
+                                            אין כרגע מידע בנושא זה, בע"ה בלי נדר בהמשך יתוקן.
+                                        </p>
+                                        <h5 id="License">רשיונות</h5>
+                                        <p>
+                                            כדי שהתכנה תפעל יש לקבל מהחברה רישיון.
+                                            למחשב שמציג את הצג בבית הכנסת, יש רישיון לתצוגה. וכך הוא מציג את הצג לזמן
+                                            בלתי מוגבל.
+                                            בנוסף אנו מאפשרים לכל מי שרוצה לערוך את הצג שלו, להתקין את התכנה על המחשב
+                                            האישי, ולקבל מאתנו רשיון לעריכה.
+                                            מחשב שנמצא במצב רישיון עריכה, אינו יכול להשאר על מצב תצוגה יותר מכמה דקות.
+                                            והוא עובר אוטומטית בחזרה למצב עריכה.
+
+                                            <br>
+                                            בחלון העליון מופיע מספר ארוך שהוא המזהה של המחשב שלנו. לכל מחשב יש מזהה אחר.
+                                            והחברה יכולה לתת רישיון תצוגה רק לפי המספר הזה. (דהיינו, החברה מאשרת למחשב
+                                            מספר XXX להציג את הצג החכם).
+                                            אם החלפתם את מחשב התצוגה, עליכם להעתיק את המספר הזה (במחשב החדש), ולשלוח
+                                            לתמיכה שיעבירו לכם את ההרשאה מהמחשב הישן למחשב החדש.
+
+                                            <br>
+                                            אם יש לנו הרשאת תצוגה, תופיע הודעה בשדה התחתי שבחלון זה: McAddressOK.
+                                            <br>
+                                            מחשב עריכה לעומת זאת, אינו צריך הרשאה באמצעות המזהה, אלא באמצעות הזנת כתובת
+                                            מייל שמשמשת כסיסמת כניסה בפעם הראשונה שפותחים את התכנה.
+                                            במקרה כזה יופיע בשדה התחתי הכיתוב OK mail, דהיינו: כתובת המייל שהוזנה בכניסה
+                                            למערכת היא תקינה ולמחשב יש הרשאת עריכה.
+                                            <br>
+                                            בחלון המרכזי יש מידע נוסף על הלקוח והתכנה שלו.
+                                            בצד ימין של השדה המרכזי יש לחצן
+                                            <kbd>U</kbd>
+                                            שבודק עדכוני רישיון. רלוונטי למקרה שהתמיכה נתנו לנו רישיון ואנחנו רוצים
+                                            שהתכנה תקבל אותו. לחיצה על הלחצן הנ"ל מעדכנת את מצב הרישיון.
+
+
+
+
+
+
+
+                                        </p>
+                                        <!-- תמונה: רשיונות.png -->
+                                        <img src="https://cleversign.co.il/wp-content/uploads/2025/05/רשיונות.png"
+                                            alt="רשיונות" style="width: 100%;" />
+
+                                        <br>
+
+
+
+                                        הסבר על המידע המצוי בחלון זה:
+                                        <ul>
+                                            <li>
+                                                <strong>Client_Folder:</strong> שם התיקייה שבה נמצא המידע של התכנה.
+                                            </li>
+                                            <li>
+                                                <strong>clName:</strong> שם הלקוח כפי שהוזן בעת ההתקנה.
+                                            </li>
+                                            <li>
+                                                <strong>Client_Status:</strong> האם הצג פעיל או לא. אם התכנה פתוחה זה חייב להיות במצב on.
+                                            </li>
+                                            <li>
+                                                <strong>clID:</strong> מספר הלקוח.
+                                            </li>
+                                            <li>
+                                                <strong>McAddress:</strong> מזהה המחשב שבו יש רישיון תצוגה.
+                                            </li>
+
+                                            <li>
+                                                <strong>Email:</strong> כתובת המייל המשמשת כסיסמא לפתיחת התכנה
+                                            </li>
+
+                                            <li>
+                                                <strong>Styles_Count:</strong> מספר הסטיילים (מסכים) שיש בתכנה.
+                                            </li>
+
+
+                                            <li>
+                                                <strong>Expiration_date:</strong> תאריך תפוגה של הרישיון, (ברוב המקרים נתון זה אינו רלוונטי, רק ללקוח שהרשיון שלו מוגבל בזמן, רוב הלקוחות כעת אינם מוגבלים בזמן).
+                                            </li>
+
+                                            <li>
+                                                <strong>Installation_date:</strong> התאריך שבו רכשתם את התכנה.
+                                            </li>
+
+                                            <li>
+                                                <strong id="Service_Right">Service_Right:</strong> אתם זכאים לקבל שירות בתמיכה מרחוק בחינם עד לתאריך זה. 
+                                                ניתן להאריך את תקופת התמיכה בתשלום סמלי של 540 ש"ח לשנה. לרכישה ניתן ללחוץ על הלחצן הבא:
+                                                <br>
+                                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_s-xclick" />
+  <input type="hidden" name="hosted_button_id" value="4XHANRYH2FJVN" />
+  <input type="hidden" name="currency_code" value="ILS" />
+  <input type="image" src="https://www.paypalobjects.com/he_IL/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" title="PayPal היא הדרך הקלה והבטוחה יותר לשלם באינטרנט!" alt="קנה עכשיו" />
+</form>
+                                            </li>
+
+
+                                           
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // פתיחה רגילה של אקורדיון בלחיצה
+        document.querySelectorAll('.nested-accordion .accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const toggleIcon = header.querySelector('.accordion-toggle');
+
+                content.classList.toggle('active');
+                toggleIcon.textContent = content.classList.contains('active') ? '▼' : '▶️';
+            });
+        });
+
+        // פונקציה שפותחת אקורדיון לפי ID
+        function openAccordionById(id) {
+            const section = document.getElementById(id);
+            if (!section) return;
+
+            let content = section.querySelector('.accordion-content');
+            let header = section.querySelector('.accordion-header');
+
+            // אם ה-id עצמו נמצא על כותרת - נטפל בהתאם
+            if (section.classList.contains('accordion-header')) {
+                header = section;
+                content = section.nextElementSibling;
+            }
+
+            if (content && header && !content.classList.contains('active')) {
+                content.classList.add('active');
+                const toggleIcon = header.querySelector('.accordion-toggle');
+                if (toggleIcon) toggleIcon.textContent = '▼';
+            }
+
+            // פותח גם הורים אם יש (אקורדיון מקונן)
+            let parent = section.parentElement;
+            while (parent && !parent.classList.contains('nested-accordion')) {
+                if (parent.classList.contains('accordion-content') && !parent.classList.contains('active')) {
+                    parent.classList.add('active');
+                    const parentHeader = parent.previousElementSibling;
+                    const toggleIcon = parentHeader?.querySelector('.accordion-toggle');
+                    if (toggleIcon) toggleIcon.textContent = '▼';
+                }
+                parent = parent.parentElement;
+            }
+
+            // גלילה אל המקטע
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // קישור בלחיצה שפותח את האקורדיון הרצוי
+        document.querySelectorAll('.open-accordion-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                if (targetId) openAccordionById(targetId);
+            });
+        });
+
+        // פתיחה אוטומטית לפי anchor (hash) בטעינת הדף
+        document.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const id = hash.replace('#', '');
+                openAccordionById(id);
+            }
+        });
+
+    </script>
+</body>
+
+
+</html>
