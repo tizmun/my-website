@@ -1,0 +1,229 @@
+<html>
+<head>
+    <title>Sample HTML Document</title> 
+    <meta charset="UTF-8">
+    <style>
+       :root {
+  --angle: 45deg;
+}
+
+@layer demo {
+  * {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --circle-size: min(500px, 50vw, 50vh);
+    --circle-border: 3px;
+    --bar-thickness: clamp(2px, 0.6vw, 5px);
+  }
+
+  html {
+    font-family: sans-serif;
+
+    color: white;
+    color-scheme: dark light;
+  }
+
+  body {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+
+    height: 100dvh;
+    padding: 20px;
+
+    background: #262325;
+  }
+
+  .circle {
+    --line-width: 1.5px;
+
+    position: absolute;
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    width: var(--circle-size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: var(--circle-border) dashed white;
+
+    background: linear-gradient(
+        transparent calc(50% - var(--line-width)),
+        #fff5 calc(50% - var(--line-width)) calc(50% + var(--line-width)),
+        transparent calc(50% + var(--line-width))
+      ),
+      linear-gradient(
+        90deg,
+        transparent calc(50% - var(--line-width)),
+        #fff5 calc(50% - var(--line-width)) calc(50% + var(--line-width)),
+        transparent calc(50% + var(--line-width))
+      );
+
+    .line {
+      z-index: 2;
+      position: absolute;
+      top: calc(50% - var(--bar-thickness) / 2);
+      left: 50%;
+
+      display: flex;
+      justify-content: end;
+      align-items: center;
+
+      width: calc(50% + var(--circle-border) * 1.5);
+      height: var(--bar-thickness);
+
+      transform: rotate(calc(-1 * var(--angle)));
+      transform-origin: center left;
+
+      background-color: #ea91ff;
+
+      &::after {
+        content: " ";
+        display: block;
+
+        width: clamp(8px, 1vw, 16px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+
+        background-color: #ea91ff;
+      }
+    }
+
+    .cos {
+      position: absolute;
+      top: calc(50% - var(--bar-thickness) / 2);
+      left: 50%;
+
+      width: var(--bar-thickness);
+      height: calc(50% * abs(cos(var(--angle))));
+
+      transform: rotate(calc(sign(cos(var(--angle))) * -90deg));
+      transform-origin: top center;
+
+      background-color: #ff5757;
+    }
+
+    .sin {
+      position: absolute;
+      top: calc(50% - var(--bar-thickness) / 2);
+      left: calc(50% + 50% * cos(var(--angle)) - var(--bar-thickness) / 2);
+
+      height: var(--bar-thickness);
+      width: calc(50% * abs(sin(var(--angle))));
+
+      transform: rotate(calc(sign(sin(var(--angle))) * -90deg));
+      transform-origin: left center;
+
+      background-color: #5170ff;
+    }
+
+    .angle {
+      --size: calc(var(--circle-size) * 0.25);
+      --line-width: clamp(2px, 0.5vw, 5px);
+
+      position: absolute;
+      top: calc(50% - var(--size) / 2);
+      left: calc(50% - var(--size) / 2);
+
+      width: var(--size);
+      aspect-ratio: 1;
+      border-radius: 50%;
+
+      mask: radial-gradient(
+        closest-side,
+        #0000 calc(100% - var(--line-width)),
+        #000 calc(100% - var(--line-width))
+      );
+
+      background: conic-gradient(
+        from calc(90deg - var(--angle)),
+        #fffa var(--angle),
+        transparent var(--angle)
+      );
+    }
+  }
+
+  form,
+  .info {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 6px;
+
+    width: max-content;
+
+    background-color: #fff2;
+  }
+
+  form {
+    span {
+      display: inline-block;
+      width: 3ch;
+    }
+  }
+
+  .info {
+    flex-flow: column;
+
+    list-style-position: inside;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    span {
+      display: inline-block;
+      height: 3px;
+      width: 80px;
+    }
+
+    .sin span {
+      background-color: #5170ff;
+    }
+
+    .cos span {
+      background-color: #ff5757;
+    }
+  }
+}
+        </style>
+</head>
+<body>
+   <div class="circle">
+  <div class="line"></div>
+  <div class="angle"></div>
+  <div class="cos"></div>
+  <div class="sin"></div>
+</div>
+
+<form>
+  <label for="angle">Angle: <span class="current-angle">45</span>deg</label>
+  <input name="angle" id="angle" type="range" value="45" min="0" max="360" step="1">
+</form>
+
+<ul class="info">
+  <li class="cos">cos(): <span></span></li>
+  <li class="sin">sin(): <span></span></li>
+</ul>
+</body>
+<script>
+   const angleInput = document.getElementById("angle");
+const currentAngleSpan = document.querySelector(".current-angle");
+
+function updateAngle() {
+  const angleValue = angleInput.value;
+  currentAngleSpan.textContent = angleValue;
+
+  document.documentElement.style.setProperty("--angle", `${angleValue}deg`);
+}
+
+angleInput.addEventListener("input", updateAngle);
+updateAngle();
+</script>
+</html>

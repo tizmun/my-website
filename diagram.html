@@ -1,0 +1,72 @@
+<!-- הצגת דיאגרמה עם אפשרות לשינוי המספרים -->
+
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8" />
+    <title>דיאגרמה עם ערכים ניתנים לעריכה</title>
+
+    <!-- טעינת Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: Arial; direction: rtl; padding: 20px; }
+        #form-container { margin-top: 20px; }
+        input { width: 60px; padding: 5px; margin: 5px; }
+        #myChart {
+    background-color: transparent !important;
+}
+
+    </style>
+</head>
+<body>
+
+<h2>דיאגרמה עם ערכים ניתנים לשינוי</h2>
+
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<div id="form-container">
+    <h3>שנה את המספרים:</h3>
+
+    <label>ערך 1: <input type="number" id="val1" value="10"></label>
+    <label>ערך 2: <input type="number" id="val2" value="20"></label>
+    <label>ערך 3: <input type="number" id="val3" value="30"></label>
+
+    <button onclick="updateChart()">עדכן דיאגרמה</button>
+</div>
+
+<script>
+/* יצירת דיאגרמה עם ערכים ניתנים לעריכה */
+
+const ctx = document.getElementById("myChart").getContext("2d");
+
+let chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: ["קטגוריה 1", "קטגוריה 2", "קטגוריה 3"],
+        datasets: [{
+            label: "ערכים",
+            data: [10, 20, 30],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+// פונקציה לעדכון הדיאגרמה לפי הקלט של הלקוח
+function updateChart() {
+    chart.data.datasets[0].data = [
+        Number(document.getElementById("val1").value),
+        Number(document.getElementById("val2").value),
+        Number(document.getElementById("val3").value)
+    ];
+    chart.update();
+}
+</script>
+
+</body>
+</html>
