@@ -52,14 +52,13 @@ https://cleversign.co.il/wp-admin/upload.php
             transition: transform 0.2s ease;
         }
 
-        /* CSS Reset קטע זה גורם שהאקורדיון יהיה סגור ברירת מחדל
-
-=
-=
-= ================================================================================================================================
-=|=============================================================================================================================
-
-
+        /* CSS Reset קטע זה גורם שהאקורדיון יהיה סגור ברירת מחדל00000000000000000000000000000000000000000000000000000000000000  */
+        /* 0000000000000000000000000000000 */
+             /* 0000000000000000000000000000000 */
+                 /* 0000000000000000000000000000000 */
+                     /* 0000000000000000000000000000000 */
+                      /* 0000000000000000000000000000000 */
+                         /* 0000000000000000000000000000000 */
 
 
 
@@ -70,9 +69,6 @@ https://cleversign.co.il/wp-admin/upload.php
   background: #fff;
 } 
 
-*/
- /* ================================================================================================================================
-=|================================================================================================================================ */ 
 
 
         .nested-accordion .accordion-content.active {
@@ -1619,6 +1615,9 @@ https://cleversign.co.il/wp-admin/upload.php
                                             <li>
                                                 <a href="#event-table-appearance-time">זמן הופעה לפני ואחרי האירוע</a>
                                             </li>
+                                            <li>
+                                                <a href="#event-table-header">כותרות לתפילות ולאירועים</a>  
+                                            </li>
                                         </ol>
                                         <p>
                                             ונפרט אותם אחד אחד:
@@ -1795,6 +1794,12 @@ https://cleversign.co.il/wp-admin/upload.php
                                             מתי יופיע האירוע הזה, האם בזמן הקרוב, או מספר דקות לפני ואחרי לפי ההגדרה
                                             שנרצה.
                                         </p>
+                                        <p>
+                                            לדוגמא: אם נרצה שמנחה תופיע חצי שעה לפני הזמן שלה, ונעלם רבע שעה אחרי הזמן
+                                            שלה, נגדיר כאן 30 דקות
+                                            לפני ו-15 דקות אחרי.                                    </p>
+                                      
+                                        <P></P>
                                          <h5 id="event-table-header">
                                            כותרות לתפילות ולאירועים
                                         </h5>
@@ -1804,7 +1809,9 @@ https://cleversign.co.il/wp-admin/upload.php
                                         </p>
                                         <img src="http://cleversign.co.il/wp-content/uploads/2026/01/הגדר-ככותרת.png"
                                             alt="אירועים כיתוב" width="100%">
-
+                                            <p>
+                                              שימו לב שכותרות לא יכולות להיות מודגשות, וגם לא ניתן להגדיר להן זמן הופעה לפני ואחרי, מכיון שאין להן זמן כלל. אם נרצה להוסיף רווח בין השורות, ניתן להוסיף שורות ריקות ללא תוכן וללא זמן.
+                                            </p>
 
 
                                     </div>
@@ -2475,7 +2482,7 @@ https://cleversign.co.il/wp-admin/upload.php
 
                                         <img src="https://cleversign.co.il/wp-content/uploads/2025/05/כרטיסיית-תצוגה.jpg"
                                             class="img-float-left_small">
-                                        <p id="תנאי תצוגה">
+                                        <p id="display_conditions">
                                             במידה ואנו רוצים שאחד האובייקטים יוצג רק בתנאי כלשהו, יש לפעול לפי הסדר
                                             הבא:<br>
                                             נכנס למאפייני האובייקט<br>
@@ -2969,20 +2976,20 @@ https://cleversign.co.il/wp-admin/upload.php
                                             עשרה מהם.
                                             <!-- רשימת קישורים עם עוגנים -->
                                         <ul>
-                                            <li><a href="#ראשי">ראשי</a></li>
-                                            <li><a href="#מנהגים">מנהגים</a></li>
-                                            <li><a href="#זמנים">זמנים</a></li>
-                                            <li><a href="#מיקום">מיקום</a></li>
-                                            <li><a href="#רזולוציה">רזולוציה</a></li>
-                                            <li><a href="#מנהל">מנהל</a></li>
-                                            <li><a href="#סטיילים">סטיילים</a></li>
-                                            <li><a href="#מסכים">מסכים</a></li>
-                                            <li><a href="#כיבוי-מסך">כיבוי מסך</a></li>
+                                            <li><a href="#OptionsMain">ראשי</a></li>
+                                            <li><a href="#OptionsCustomization">מנהגים</a></li>
+                                            <li><a href="#OptionsTime">זמנים</a></li>
+                                            <li><a href="#OptionsLocation">מיקום</a></li>
+                                            <li><a href="#OptionsResolution">רזולוציה</a></li>
+                                            <li><a href="#OptionsManager">מנהל</a></li>
+                                            <li><a href="#OptionsStyles">סטיילים</a></li>
+                                            <li><a href="#OptionsScreens">מסכים</a></li>
+                                            <li><a href="#OptionsScreenOff">כיבוי מסך</a></li>
                                             <li><a href="#License">רשיונות</a></li>
                                         </ul>
                                         </p>
                                         <!-- כותרות עם ID עבור כל עוגן -->
-                                        <h5 id="ראשי">ראשי</h5>
+                                        <h5 id="OptionsMain">ראשי</h5>
                                         <p>
                                             בצד ימין מופיע לנו התאריך של גירסת התכנה.
                                             בצד שמאל ניתן לבחור האם שפת התכנה הכללית תהיה בעברית או אנגלית. (הכוונה
@@ -3079,7 +3086,7 @@ https://cleversign.co.il/wp-admin/upload.php
                                         <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מנהגים.png"
                                             alt="מנהגים" style="width: 100%;" />
 
-                                        <h5 id="זמנים">זמנים</h5>
+                                        <h5 id="#OptionsTime">זמנים</h5>
 
 
                                         <p>
@@ -3159,7 +3166,7 @@ https://cleversign.co.il/wp-admin/upload.php
                                         <!-- תמונה: הגדרות-זמנים.png -->
                                         <img src="https://cleversign.co.il/wp-content/uploads/2025/05/הגדרות-זמנים.png"
                                             alt="הגדרות זמנים" style="width: 100%;" />
-                                        <h5 id="מיקום">מיקום</h5>
+                                        <h5 id="OptionsLocation">מיקום</h5>
                                         <p>מוצג לפנינו הפרטים על המיקום שבו אנחנו נמצאים. אין אפשרות לערוך פרטים אלו. אם
                                             לדעתכם אחד מהפרטים שגוי, פנו לתמיכה. הפרטים המופיעים כאן הם: שם המקום, מעלות
                                             רוחב (מקו המשווה), מעלות אורך (מזרח מסומן במינוס, מערב ללא מינוס). איזור
@@ -3169,7 +3176,7 @@ https://cleversign.co.il/wp-admin/upload.php
                                         <!-- תמונה: מיקום.png -->
                                         <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מיקום.png"
                                             alt="מיקום" style="width: 100%;" />
-                                        <h5 id="resolution">רזולוציה</h5>
+                                        <h5 id="OptionsResolution">רזולוציה</h5>
                                         <p>
                                             האופציות לשינוי רזולוציה נעולות. בדרך כלל המימדים שמופיעים כאן בתמונה (1920
                                             - 1080) מתאימים לרוב המסכים המקובלים. עליכם לבדוק בהגדרות התצוגה של המחשב
@@ -3196,7 +3203,7 @@ https://cleversign.co.il/wp-admin/upload.php
                                         <!-- תמונה: רזולוציה.png -->
                                         <img src="https://cleversign.co.il/wp-content/uploads/2025/05/רזולוציה.png"
                                             alt="רזולוציה" style="width: 100%;" />
-                                        <h5 id="מנהל">מנהל</h5>
+                                        <h5 id="OptionsManager">מנהל</h5>
                                         <p>
 
 
@@ -3208,7 +3215,7 @@ https://cleversign.co.il/wp-admin/upload.php
                                         <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מנהל.png"
                                             alt="מנהל" style="width: 100%;" />
 
-                                        <h5 id="סטיילים">סטיילים</h5>
+                                        <h5 id="OptionsStyles">סטיילים</h5>
                                         <p>
                                             הסטייל הוא הבסיס שעליו מונחים כל האובייקטים. בבסיסו עומדת תמונת רקע שעליה
                                             מדביקים את האובייקטים.
@@ -3261,7 +3268,7 @@ https://cleversign.co.il/wp-admin/upload.php
 
 
 
-                                        <h5 id="מסכים">מסכים</h5>
+                                        <h5 id="#OptionsScreens">מסכים</h5>
 
 
                                         <p>
@@ -3289,7 +3296,7 @@ https://cleversign.co.il/wp-admin/upload.php
                                         <!-- תמונה: מסכים.png -->
                                         <img src="https://cleversign.co.il/wp-content/uploads/2025/05/מסכים.png"
                                             alt="מסכים" style="width: 100%;" />
-                                        <h5 id="כיבוי-מסך">כיבוי מסך</h5>
+                                        <h5 id="OptionsScreenOff">כיבוי מסך</h5>
                                         <p>
                                             אין כרגע מידע בנושא זה, בע"ה בלי נדר בהמשך יתוקן.
                                         </p>

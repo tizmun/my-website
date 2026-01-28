@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>השלמה אוטומטית</title>
+  <style>
+    .suggestions {
+      border: 1px solid #ccc;
+      max-height: 150px;
+      overflow-y: auto;
+      position: absolute;
+      background: white;
+      z-index: 1000;
+    }
+    .suggestion {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .suggestion:hover {
+      background-color: #f0f0f0;
+    }
+    .highlight {
+      font-weight: bold;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+<input type="text" id="input" placeholder="🔎 לחיפוש בהדרכה הקלד כאן מילות חיפוש...">
+<div id="suggestions" class="suggestions"></div>
+
+<script>
+  const items = [
+      
+      
+      
+      
+      
+{name: 'ההבדל בין זמני הצג החכם לזמני חזון שמים', anchor: 'tzagcalculator'},
+{name: 'תוכן', anchor: 'content_object'},
+{name: 'טקסט פשוט', anchor: 'h4-plain-text'},
+{name: 'טקסט עשיר', anchor: 'h4-rich-text'},
+{name: 'שעון דיגיטלי', anchor: 'h4-digital-clock'},
+{name: 'שעון אנלוגי', anchor: 'h4-analog-clock'},
+{name: 'מדיה בודדת', anchor: 'h4-single-media'},
+{name: 'תמונה', anchor: 'h4-image'},
+{name: 'דפדפן', anchor: 'h4-new-browser'},
+{name: 'תיקיית תמונות', anchor: 'h4-image-folder'},
+{name: 'אוסף מדיות מתוזמנות', anchor: 'h4-timed-media-collection'},
+{name: 'פליי ליסט', anchor: 'h4-playlist'},
+{name: 'אוסף מדיות', anchor: 'h4-media-collection'},
+{name: 'מדיה לתאריך', anchor: 'h4-media-by-date'},
+{name: 'מידע יהודי', anchor: 'h4-jewish-info'},
+{name: '', anchor: 'h4-style-button'},
+{name: 'זמני שבת', anchor: 'h4-shabbat-times'},
+{name: 'טבלת אירועים', anchor: 'h4-event-table'},
+{name: 'טבלת זמנים', anchor: 'h4-times-table'},
+{name: 'התראה על זמן', anchor: 'h4-time-alert'},
+{name: 'טקסט פשוט לתאריך', anchor: 'h4-date-plain-text'},
+{name: 'טקסט עשיר לתאריך', anchor: 'h4-date-rich-text'},
+{name: 'טבלת יארצייט', anchor: 'h4-yahrzeit-table'},
+{name: 'שורת יארצייט', anchor: 'edit_yrz_line'},
+{name: 'ערוך יארצייט סטייל', anchor: 'edit_yrz_style'},
+{name: 'טבלת יארצייט סוג שני', anchor: 'h4-yahrzeit-table2'},
+{name: 'רשימת יארצייט', anchor: 'h4-yahrzeit-list'},
+{name: 'ערוך טבלת אירועים', anchor: 'event-table-anchor'},
+{name: 'ערוך טבלת אירועים - כיתוב', anchor: 'event-table-title'},
+{name: 'ערוך טבלת אירועים - סוג הזמן', anchor: 'event-table-time-type'},
+{name: 'ערוך טבלת אירועים - התאריך לפיו יחושב הזמן', anchor: 'event-table-date-calc'},
+{name: 'ערוך טבלת אירועים - עיגול הזמן', anchor: 'event-table-rounding'},
+{name: 'ערוך טבלת אירועים - אופן התצוגה', anchor: 'event-table-display'},
+{name: 'ערוך טבלת אירועים - תנאי התצוגה', anchor: 'event-table-display-leading-zero'},
+{name: 'ערוך טבלת אירועים - תנאי הדגשה', anchor: 'event-table-highlight-condition'},
+{name: 'ערוך טבלת אירועים - הופעה לפני ואחרי האירוע', anchor: 'event-table-appearance-time'},
+{name: 'קבוצות', anchor: 'groups'},
+{name: 'עיצוב טקסט', anchor: 'text-style'},
+{name: 'כרטיסיית טקסט', anchor: 'perek-text'},
+{name: 'כרטיסיית סגנון', anchor: 'signon'},
+{name: 'תצוגת אובייקט', anchor: 'display_object'},
+{name: 'תנאי תצוגה', anchor: 'display_conditions'},
+{name: 'תנאי תצוגה - כללי', anchor: 'condition-general'},
+{name: 'תנאי תצוגה - טקסט', anchor: 'condition-text'},
+{name: 'תנאי תצוגה - תזמון', anchor: 'condition-timing'},
+{name: 'תנאי תצוגה - משך', anchor: 'condition-timing-duration'},
+{name: 'תנאי תצוגה - שעות קבועות', anchor: 'condition-fixed-hours'},
+{name: 'תנאי תצוגה - זמן דינמי', anchor: 'condition-dynamic-hours'},
+{name: 'תנאי תצוגה - יום בשבוע', anchor: 'condition-days-of-week'},
+{name: 'תנאי תצוגה - טווח תאריכים', anchor: 'condition-date-range'},
+{name: 'תנאי תצוגה - סוג היום', anchor: 'condition-day-type'},
+{name: 'תנאי תצוגה - טווח שנים', anchor: 'condition-year-range'},
+{name: 'תפריט קובץ', anchor: 'kovetz'},
+{name: 'תפריטים אחרים', anchor: 'תפריטים אחרים'},
+{name: 'תפריט אפשרויות', anchor: 'options'},
+{name: 'תפריט אפשרויות - ראשי', anchor: 'OptionsMain'},
+{name: 'תפריט אפשרויות - מנהגים', anchor: 'OptionsCustomization'},
+{name: 'תפריט אפשרויות - זמנים', anchor: 'OptionsTime'},
+{name: 'תפריט אפשרויות - מיקום', anchor: 'OptionsLocation'},
+{name: 'תפריט אפשרויות - רזולוציה', anchor:'OptionsResolution'},
+{name: 'תפריט אפשרויות - מנהל', anchor: 'OptionsManager'},
+{name: 'תפריט אפשרויות - סטיילים', anchor: 'OptionsStyles'},
+{name: 'תפריט אפשרויות - מסכים', anchor: 'OptionsScreens'},
+{name: 'תפריט אפשרויות - כיבוי מסך', anchor: 'OptionsScreenOff'},
+{name: 'החלפת רקע לתכנה', anchor: 'OptionsStyles'},
+{name: 'כרטיסיית תצוגה',anchor:'display_object'},
+
+
+{name: 'איך להסתיר אובייקט',anchor:'display_object'},
+{name: 'התראה על אירוע' , anchor: 'event-alert-format'},
+{name: 'זכות לשירות בתמיכה מרחוק', anchor: 'Service_Right'},
+{name: 'שלם על תמיכה מרחוק', anchor: 'Service_Right'},
+{name: 'תשלום על שירות שנתי', anchor: 'Service_Right'},
+
+{name: 'להציג את המניין הבא' , anchor: 'event-alert-format'},
+{name: 'תפריט אפשרויות - רשיונות', anchor: 'License'},
+{name: 'מידע על גירסת התכנה', anchor: 'תפריטים אחרים'},
+    {name: 'שנה צבע טקסט', anchor: 'signon'},
+    {name: 'שנה רקע של אובייקט', anchor: 'signon'},
+    {name: 'ישור טקסט', anchor: 'yasher'}
+    
+    
+    
+    
+  ];
+
+
+
+  const input = document.getElementById('input');
+  const suggestionsDiv = document.getElementById('suggestions');
+
+  input.addEventListener('input', () => {
+    const value = input.value.toLowerCase();
+    suggestionsDiv.innerHTML = '';
+
+    if (value) {
+      const filteredItems = items.filter(item => item.name.toLowerCase().includes(value));
+      filteredItems.forEach(item => {
+        const suggestion = document.createElement('div');
+        suggestion.classList.add('suggestion');
+
+        const highlightedName = item.name.replace(new RegExp(value, 'gi'), match => `<span class="highlight">${match}</span>`);
+        suggestion.innerHTML = highlightedName;
+
+        suggestion.onclick = () => {
+          input.value = item.name;
+          suggestionsDiv.innerHTML = '';
+          openAccordionById(item.anchor); // כאן השינוי העיקרי
+        };
+        suggestionsDiv.appendChild(suggestion);
+      });
+    }
+  });
+
+
+
+// 💡 פונקציה לפתיחת אקורדיון + גלילה מדויקת עם קיזוז הדר דינמי
+function openAccordionById(id) {
+  const section = document.getElementById(id);
+  if (!section) return;
+
+  // פותח אקורדיון אם צריך
+  const openParents = () => {
+    let parent = section.parentElement;
+    while (parent) {
+      if (
+        parent.classList.contains('elementor-tab-content') ||
+        parent.classList.contains('elementor-toggle-content')
+      ) {
+        const toggleHeader = parent.previousElementSibling;
+        if (toggleHeader && parent.style.display === 'none') {
+          toggleHeader.click();
+        }
+      }
+      parent = parent.parentElement;
+    }
+  };
+
+  openParents();
+
+  // מחכה לשינויים בדף (כמו פתיחת אקורדיון) ואז גולל
+  const scrollAfterContentIsVisible = () => {
+    const header = document.querySelector('header, .elementor-sticky--effects, .site-header, .main-header');
+    const headerHeight = header ? header.offsetHeight : 0;
+
+    const y = section.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  };
+
+  // מחכה שהגובה יתייצב לפני הגלילה (יעיל נגד אנימציות/אלמנטור)
+  let previousHeight = 0;
+  let tries = 0;
+  const checkStability = () => {
+    const currentHeight = section.offsetHeight;
+    if (currentHeight === previousHeight || tries > 10) {
+      scrollAfterContentIsVisible();
+    } else {
+      previousHeight = currentHeight;
+      tries++;
+      setTimeout(checkStability, 100);
+    }
+  };
+
+  setTimeout(checkStability, 300); // התחלה אחרי פתיחה
+}
+
+
+
+</script>
+
+</body>
+</html>

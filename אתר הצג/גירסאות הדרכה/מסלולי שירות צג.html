@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  
+  body {
+  font-family: Arial, sans-serif;
+  direction: rtl;
+  background: #f7f9fa;
+}
+
+.pricing-wrapper {
+  max-width: 1000px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+.pricing-table {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.plan {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  width: 280px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.plan.featured {
+  background: #f1f7f6;
+  border: 2px solid #2f8f8b;
+  transform: scale(1.05);
+}
+
+.plan-header h3 {
+  margin: 10px 0;
+}
+
+.icon {
+  font-size: 26px;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.old-price {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 6px;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.badge.green { background: #e6f7ee; color: #1e8e5a; }
+.badge.blue  { background: #e6f2f9; color: #1b6fa8; }
+.badge.gray  { background: #eee; color: #555; }
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: right;
+}
+
+.features li {
+  margin: 10px 0;
+  position: relative;
+  padding-right: 24px;
+}
+
+.features li.yes::before {
+  content: "✔";
+  color: #2f8f8b;
+  position: absolute;
+  right: 0;
+}
+
+.features li.no::before {
+  content: "✖";
+  color: #ccc;
+  position: absolute;
+  right: 0;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #2f8f8b;
+  background: transparent;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #2f8f8b;
+  color: #fff;
+}
+
+</style>
+<!-- כותרת: טבלת בחירת מסלול -->
+<div class="pricing-wrapper">
+  <h2 class="title">בחירת מסלול</h2>
+
+  <div class="pricing-table">
+
+    <!-- מסלול פרימיום -->
+    <div class="plan">
+      <div class="plan-header">
+        <span class="icon">🚀</span>
+        <h3>פרימיום</h3>
+        <div class="price">
+          ₪250 <span class="old-price">₪340</span>
+        </div>
+        <span class="badge green">לחודש</span>
+      </div>
+
+      <ul class="features">
+         <li class="yes">אחריות לתפעול התכנה</li>
+        <li class="yes">סינכרון בין מחשבים</li>
+        <li class="yes">צג אונליין</li>
+        <li class="yes">הזנת תוכן מקצועי</li>
+      </ul>
+
+      <button class="btn">בחירת מסלול</button>
+    </div>
+
+    <!-- מסלול מקודם (מודגש) -->
+    <div class="plan featured">
+      <div class="plan-header">
+        <span class="icon">📣</span>
+        <h3>מקודם</h3>
+        <div class="price">
+          ₪540 <span class="old-price">₪620</span>
+        </div>
+        <span class="badge blue">לשנה</span>
+      </div>
+
+      <ul class="features">
+        <li class="yes">אחריות לתפעול התכנה</li>
+        <li class="yes">סינכרון בין מחשבים</li>
+        <li class="yes">צג אונליין</li>
+        <li class="no">הזנת תוכן מקצועי</li>
+      </ul>
+
+      <button class="btn primary">בחירת מסלול</button>
+    </div>
+
+    <!-- מסלול חינם -->
+    <div class="plan">
+      <div class="plan-header">
+        <span class="icon">🖱️</span>
+        <h3>חינם</h3>
+        <div class="price">₪0</div>
+        <span class="badge gray">ללא הגבלה</span>
+      </div>
+
+      <ul class="features">
+        <li class="yes">אחריות לתפעול התכנה</li>
+        <li class="no">סינכרון בין מחשבים</li>
+        <li class="no">צג אונליין</li>
+        <li class="no">הזנת תוכן מקצועי</li>
+      </ul>
+
+      <button class="btn">בחירת מסלול</button>
+    </div>
+
+  </div>
+</div>
